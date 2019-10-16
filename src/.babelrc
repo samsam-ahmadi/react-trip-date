@@ -1,0 +1,44 @@
+{
+  "plugins": [
+    [
+      "inline-react-svg",
+      {
+        "svgo": {
+          "plugins": [
+            { "cleanupAttrs": false },
+            { "removeDoctype": false },
+            { "removeXMLProcInst": false },
+            { "removeComments": true },
+            { "removeMetadata": false },
+            { "removeDesc": false },
+            { "removeUselessDefs": false },
+            { "removeEditorsNSData": false },
+            { "removeEmptyAttrs": false },
+            { "removeHiddenElems": false },
+            { "removeEmptyText": true },
+            { "removeEmptyContainers": false },
+            { "cleanupEnableBackground": false },
+            { "minifyStyles": true },
+            { "convertStyleToAttrs": true },
+            { "convertColors": false },
+            { "convertPathData": false },
+            { "convertTransform": true },
+            { "removeUnknownsAndDefaults": true },
+            { "removeNonInheritableGroupAttrs": false },
+            { "removeUselessStrokeAndFill": false },
+            { "removeUnusedNS": false },
+            { "cleanupIDs": false },
+            { "cleanupNumericValues": false },
+            { "cleanupListOfValues": false },
+            { "moveElemsAttrsToGroup": false },
+            { "moveGroupAttrsToElems": false },
+            { "collapseGroups": false },
+            { "mergePaths": false },
+            { "convertShapeToPath": false },
+            { "removeXMLNS": false }
+          ]
+        }
+      }
+    ]
+  ]
+}
