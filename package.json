@@ -1,9 +1,10 @@
 {
   "name": "react-trip-date",
-  "version": "0.0.1",
+  "version": "0.0.3",
   "description": "date-picker and range-picker for React applications",
-  "author": "samsam-ahmadi",
-  "license": "MIT",
+  "author": "samsam_ahmadi",
+  "license": "GPL-3.0",
+  "repository": "samsam-ahmadi/react-trip-date",
   "main": "dist/index.js",
   "module": "dist/index.es.js",
   "jsnext:main": "dist/index.es.js",
