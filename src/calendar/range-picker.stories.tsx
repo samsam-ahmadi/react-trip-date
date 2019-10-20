@@ -38,8 +38,8 @@ export const Day: React.FC<{ day: any }> = ({ day }) => {
 const stories = storiesOf('Range picker', module);
 
 stories
-  .add('simple', () => <RangePicker handleChange={handleChange} />)
-  .add('selected days', () => (
+  .add('Simple', () => <RangePicker handleChange={handleChange} />)
+  .add('Pre-Selected Days', () => (
     <RangePicker
       handleChange={handleChange}
       selectedDays={{
@@ -48,47 +48,47 @@ stories
       }}
     />
   ))
-  .add('jalali', () => (
+  .add('Jalali', () => (
     <RangePicker handleChange={handleChange} jalali={boolean('jalali', true)} />
   ))
-  .add('number of months', () => (
+  .add('Number Of Months', () => (
     <RangePicker
       handleChange={handleChange}
       numberOfMonths={number('number of month', 3)}
     />
   ))
-  .add('disabled days', () => (
+  .add('Disabled Days', () => (
     <RangePicker
       handleChange={handleChange}
       disabledDays={array('disabled dates', disabledDays)}
     />
   ))
-  .add('responsive', () => (
+  .add('Responsive', () => (
     <RangePicker handleChange={handleChange} responsive={responsiveChecking} />
   ))
-  .add('hoverable', () => (
+  .add('Hoverable', () => (
     <RangePicker
       handleChange={handleChange}
       hoverable={boolean('hoverable', false)}
     />
   ))
-  .add('disabled before today', () => (
+  .add('Disabled Before Today', () => (
     <RangePicker
       handleChange={handleChange}
       disabledBeforToday={boolean('disabledBeforToday', false)}
     />
   ))
-  .add('custom day component', () => (
+  .add('Custom Day Component', () => (
     <RangePicker handleChange={handleChange} dayComponent={Day} />
   ))
-  .add('custom title weeks component', () => (
+  .add('Custom Title For Weekdays', () => (
     <RangePicker
       handleChange={handleChange}
       titleComponent={Title}
       numberOfMonths={number('number of month', 3)}
     />
   ))
-  .add('all props', () => (
+  .add('All Props', () => (
     <RangePicker
       handleChange={handleChange}
       selectedDays={{

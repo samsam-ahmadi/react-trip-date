@@ -31,62 +31,62 @@ export const responsiveChecking = setNumberOfMonth => {
 };
 
 stories
-  .add('simple', () => <DatePicker handleChange={handleChange} />)
-  .add('selected days', () => (
+  .add('Simple', () => <DatePicker handleChange={handleChange} />)
+  .add('Selected Days', () => (
     <DatePicker
       handleChange={handleChange}
       selectedDays={array('selected days', selectedDays)}
     />
   ))
-  .add('jalali', () => (
+  .add('Jalali', () => (
     <DatePicker handleChange={handleChange} jalali={boolean('Jalali', true)} />
   ))
-  .add('number of months', () => (
+  .add('Number Of Months', () => (
     <DatePicker
       handleChange={handleChange}
       numberOfMonths={number('number of month', 3)}
     />
   ))
-  .add('number of selectable days', () => (
+  .add('Number Of Selectable Days', () => (
     <DatePicker
       handleChange={handleChange}
-      numberOfSelectableDays={number('how many day you want?', 3)}
+      numberOfSelectableDays={number('How many days should be selectable?', 3)}
     />
   ))
-  .add('responsive', () => (
+  .add('Responsive', () => (
     <DatePicker handleChange={handleChange} responsive={responsiveChecking} />
   ))
-  .add('disabled days', () => (
+  .add('Disabled Days', () => (
     <DatePicker
       handleChange={handleChange}
       disabledDays={array('disabled days', disabledDays)}
     />
   ))
-  .add('disabled before today', () => (
+  .add('Disabled Before Today', () => (
     <DatePicker
       handleChange={handleChange}
       disabledBeforToday={boolean('disabledBeforToday', true)}
     />
   ))
-  .add('disabled', () => (
+  .add('Disabled', () => (
     <DatePicker
       handleChange={handleChange}
       disabled={boolean('disabled', true)}
     />
   ))
-  .add('custom day component', () => (
+  .add('Custom Day Component', () => (
     <DatePicker handleChange={handleChange} dayComponent={Day} />
   ))
-  .add('custom title weeks component', () => (
+  .add('Custom Title For Weekdays', () => (
     <DatePicker handleChange={handleChange} titleComponent={Title} />
   ))
-  .add('all props', () => (
+  .add('All Props', () => (
     <DatePicker
       handleChange={handleChange}
       selectedDays={array('selected days', selectedDays)}
       jalali={boolean('Jalali', false)}
       numberOfMonths={number('number of month', 3)}
-      numberOfSelectableDays={number('how many day you want?', 3)}
+      numberOfSelectableDays={number('How many days should be selectable?', 3)}
       disabledDays={array('disabled days', disabledDays)}
       responsive={responsiveChecking}
       disabledBeforToday={boolean('disabledBeforToday', true)}
