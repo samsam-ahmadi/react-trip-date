@@ -9,7 +9,7 @@ it was a package for `Tripema.com`
 * Multiple Month, Custom Responsive, Number Of Selectable Days 
 * Range Picker, Hoverable, Theme base
 * Support Jalali & Gregorian
-* Use Day.js (2KB immutable date and NO moment.js needed)
+* Use Day.js (2KB immutable date and NO moment.js is needed)
 * Bundle size, 30kB (minified + GZipped  9.2 kB) 
 
 
