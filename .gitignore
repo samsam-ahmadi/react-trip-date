@@ -9,7 +9,6 @@ node_modules
 build
 dist
 storybook-static
-.rpt2_cache
 
 # misc
 .vs-code
