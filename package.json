@@ -26,7 +26,8 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "sort": "import-sort --write 'src/**/*.{ts,tsx,js,jsx}'",
+    "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -46,6 +47,10 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
-    "husky": "^4.2.5"
+    "husky": "^4.2.5",
+    "import-sort-cli": "^6.0.0",
+    "import-sort-style-renke": "^6.0.0",
+    "lint-staged": "^10.2.6",
+    "prettier": "^2.0.5"
   }
 }

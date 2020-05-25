@@ -1,5 +1,5 @@
-import React, { useEffect, useRef } from 'react';
 import ReactDOM from 'react-dom';
+import React, { useEffect, useRef } from 'react';
 
 export interface PortalProps {
   children: React.ReactNode;
