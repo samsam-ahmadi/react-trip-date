@@ -27,7 +27,9 @@
     "build": "react-scripts build",
     "test": "react-scripts test",
     "sort": "import-sort --write 'src/**/*.{ts,tsx,js,jsx}'",
-    "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'"
+    "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'",
+    "storybook": "start-storybook -p 9009",
+    "build-storybook": "build-storybook"
   },
   "eslintConfig": {
     "extends": "react-app"
@@ -47,6 +49,12 @@
   "devDependencies": {
     "@commitlint/cli": "^8.3.5",
     "@commitlint/config-conventional": "^8.3.4",
+    "@storybook/addon-actions": "^5.3.19",
+    "@storybook/addon-links": "^5.3.19",
+    "@storybook/addon-storysource": "^5.3.19",
+    "@storybook/addons": "^5.3.19",
+    "@storybook/preset-create-react-app": "^3.0.0",
+    "@storybook/react": "^5.3.19",
     "husky": "^4.2.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-renke": "^6.0.0",
