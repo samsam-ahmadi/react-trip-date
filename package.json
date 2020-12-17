@@ -2,25 +2,38 @@
   "name": "react-trip-date",
   "version": "0.1.0",
   "description": "date-picker and range-picker for React applications",
-  "author": "samsam_ahmadi",
+  "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
-  "repository": "samsam-ahmadi/react-trip-date",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/samsam-ahmadi/react-trip-date.git"
+  },
+  "bugs": {
+    "url": "https://github.com/samsam-ahmadi/react-trip-date/issues"
+  },
+  "homepage": "https://killthejs.com/react-trip-date/",
+  "keywords": [
+    "reactDatePicker",
+    "reactRangePicker",
+    "rangePicker",
+    "datePicker"
+  ],
   "dependencies": {
-    "@testing-library/jest-dom": "^4.2.4",
-    "@testing-library/react": "^9.3.2",
-    "@testing-library/user-event": "^7.1.2",
-    "@types/jest": "^24.0.0",
+    "@testing-library/jest-dom": "^5.11.4",
+    "@testing-library/react": "^11.1.0",
+    "@testing-library/user-event": "^12.1.10",
+    "@types/jest": "^26.0.15",
     "@types/node": "^12.0.0",
-    "@types/react": "^16.9.0",
-    "@types/react-dom": "^16.9.0",
+    "@types/react": "^16.9.53",
+    "@types/react-dom": "^16.9.8",
     "@types/styled-components": "^5.1.0",
     "dayjs": "^1.8.27",
     "jalaliday": "^2.3.0",
-    "react": "^16.13.1",
-    "react-dom": "^16.13.1",
-    "react-scripts": "3.4.1",
-    "styled-components": "^5.1.0",
-    "typescript": "~3.7.2"
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1",
+    "react-scripts": "4.0.1",
+    "typescript": "^4.0.3",
+    "styled-components": "^5.1.0"
   },
   "scripts": {
     "start": "react-scripts start",
@@ -32,7 +45,10 @@
     "build-storybook": "build-storybook"
   },
   "eslintConfig": {
-    "extends": "react-app"
+    "extends": [
+      "react-app",
+      "react-app/jest"
+    ]
   },
   "browserslist": {
     "production": [
