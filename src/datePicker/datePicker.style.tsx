@@ -17,10 +17,10 @@ type MonthProps = {
 };
 
 export const Month = styled.div<MonthProps>`
+  height: 350px;
   display: flex;
-  justify-content: center;
-  align-items: center;
   position: relative;
+  align-items: center;
   flex-direction: column;
   width: ${({ numberOfMonths }) => `${100 / numberOfMonths}%`};
 `;

@@ -21,7 +21,14 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
 
   return (
     <ThemeProvider theme={theme}>
-      <Header displayMonths={false} setDisplayMonths={setDisplayMonths} />
+      <Header
+        jalali={jalali}
+        source={source}
+        setSource={setSource}
+        displayMonths={displayMonths}
+        numberOfMonths={numberOfMonths}
+        setDisplayMonths={setDisplayMonths}
+      />
       {displayMonths ? (
         <DisplayMonths
           jalali={jalali}
