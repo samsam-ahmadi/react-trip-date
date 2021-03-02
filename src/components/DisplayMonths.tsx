@@ -1,6 +1,6 @@
 import styled from 'styled-components';
 import { Dayjs } from 'dayjs';
-import { Dispatch, SetStateAction, useEffect, useState } from 'react';
+import { Dispatch, SetStateAction } from 'react';
 
 type Props = {
   source: Dayjs;
@@ -15,32 +15,28 @@ export const DisplayMonths = ({
   setDisplayMonths,
   jalali,
 }: Props) => {
-  const [months, setMonths] = useState<Dayjs[]>([]);
-
-  useEffect(() => {
-    let months = [];
-    for (let i = 0; i < 12; i++) {
-      months[i] = source.month(i);
-    }
-    setMonths(months);
-  }, [jalali, source]);
-
   const selectMonth = (source: Dayjs) => {
+    if (source.get('day') === 0) {
+      source = source.add(1, 'day');
+    }
     setSource(source.month(+source.subtract(1, 'month').format('M')));
     setDisplayMonths(false);
   };
 
-  return (
-    <Wrapper jalali={jalali}>
-      {months.map(item => {
-        return (
-          <div key={item.format('MMMM')} onClick={() => selectMonth(item)}>
-            <p>{item.format('MMMM')}</p>
-          </div>
-        );
-      })}
-    </Wrapper>
-  );
+  const renderMonths = () => {
+    let months = [];
+    for (let i = 0; i < 12; i++) {
+      months[i] = source.month(i);
+    }
+    return months.map(item => {
+      return (
+        <div key={item.format('MM-MMMM')} onClick={() => selectMonth(item)}>
+          <p>{item.format('MMMM')}</p>
+        </div>
+      );
+    });
+  };
+  return <Wrapper jalali={jalali}>{renderMonths()}</Wrapper>;
 };
 
 type StyleProps = {
