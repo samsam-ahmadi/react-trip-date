@@ -1,4 +1,4 @@
-import { Dayjs } from 'dayjs';
+import { Dayjs } from "dayjs";
 
 export const sliceDaysOfMonthToWeeks = (days: Dayjs[], len: number) => {
   let i = 0;

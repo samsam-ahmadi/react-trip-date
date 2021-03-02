@@ -1,5 +1,5 @@
-import styled from 'styled-components';
-import { Dayjs } from 'dayjs';
+import styled from "styled-components";
+import { Dayjs } from "dayjs";
 
 type Props = {
   day: Dayjs;
@@ -7,7 +7,7 @@ type Props = {
 
 export const Day: React.FC<Props> = ({ day }) => {
   return (
-    <Wrapper data-test={day.format('MM-DD-dddd')}>{day.format('DD')}</Wrapper>
+    <Wrapper data-test={day.format("MM-DD-dddd")}>{day.format("DD")}</Wrapper>
   );
 };
 

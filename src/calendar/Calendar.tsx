@@ -1,10 +1,10 @@
-import { Dayjs } from 'dayjs';
-import { ReactElement } from 'react';
-import { createCalendar } from 'libs/createCalendar';
-import { dayjs } from 'libs/dayjs-config';
-import { sliceDaysOfMonthToWeeks } from 'libs/sliceDaysOfMonthToWeeks';
+import { Dayjs } from "dayjs";
+import { ReactElement } from "react";
+import { createCalendar } from "libs/createCalendar";
+import { dayjs } from "libs/dayjs-config";
+import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
-import { CalendarProps } from './calendar.type';
+import { CalendarProps } from "./calendar.type";
 
 export const Calendar: React.FC<CalendarProps> = ({
   source = dayjs(),
@@ -13,9 +13,9 @@ export const Calendar: React.FC<CalendarProps> = ({
   children,
 }): ReactElement => {
   let daysInMonth = source.daysInMonth(),
-    firstDay = source.startOf('month').day();
-  if (source.get('day') === 0) {
-    source = source.add(1, 'day');
+    firstDay = source.startOf("month").day();
+  if (source.get("day") === 0) {
+    source = source.add(1, "day");
   }
   let weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
     createCalendar({

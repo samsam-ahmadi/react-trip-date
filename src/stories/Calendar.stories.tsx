@@ -1,9 +1,9 @@
-import React from 'react';
-import styled from 'styled-components';
-import { Calendar } from 'calendar';
-import { storiesOf } from '@storybook/react';
+import React from "react";
+import styled from "styled-components";
+import { Calendar } from "calendar";
+import { storiesOf } from "@storybook/react";
 
-storiesOf('Calendar Component', module).add('Sample', () => {
+storiesOf("Calendar Component", module).add("Sample", () => {
   return (
     <div>
       <Calendar jalali={false}>
@@ -11,7 +11,7 @@ storiesOf('Calendar Component', module).add('Sample', () => {
           return month.map(week => (
             <div key={Math.random()}>
               {week.map(day => (
-                <Day key={Math.random()}>{day.format('MM-DD-dddd')}</Day>
+                <Day key={Math.random()}>{day.format("MM-DD-dddd")}</Day>
               ))}
             </div>
           ));

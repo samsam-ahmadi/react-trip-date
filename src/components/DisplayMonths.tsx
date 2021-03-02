@@ -1,6 +1,6 @@
-import styled from 'styled-components';
-import { Dayjs } from 'dayjs';
-import { Dispatch, SetStateAction } from 'react';
+import styled from "styled-components";
+import { Dayjs } from "dayjs";
+import { Dispatch, SetStateAction } from "react";
 
 type Props = {
   source: Dayjs;
@@ -16,10 +16,10 @@ export const DisplayMonths = ({
   jalali,
 }: Props) => {
   const selectMonth = (source: Dayjs) => {
-    if (source.get('day') === 0) {
-      source = source.add(1, 'day');
+    if (source.get("day") === 0) {
+      source = source.add(1, "day");
     }
-    setSource(source.month(+source.subtract(1, 'month').format('M')));
+    setSource(source.month(+source.subtract(1, "month").format("M")));
     setDisplayMonths(false);
   };
 
@@ -30,8 +30,8 @@ export const DisplayMonths = ({
     }
     return months.map(item => {
       return (
-        <div key={item.format('MM-MMMM')} onClick={() => selectMonth(item)}>
-          <p>{item.format('MMMM')}</p>
+        <div key={item.format("MM-MMMM")} onClick={() => selectMonth(item)}>
+          <p>{item.format("MMMM")}</p>
         </div>
       );
     });
@@ -50,7 +50,7 @@ const Wrapper = styled.div<StyleProps>`
   height: 350px;
   flex-wrap: wrap;
   flex-direction: ${({ jalali }: StyleProps) =>
-    jalali ? 'row-reverse' : 'row'};
+    jalali ? "row-reverse" : "row"};
   > div {
     flex-basis: calc(25% - 4px);
     justify-content: center;

@@ -1,12 +1,12 @@
-import { DisplayMonths } from 'components/DisplayMonths';
-import { Header } from 'components';
-import { ThemeProvider } from 'styled-components';
-import { dayjsLocalized } from 'libs/dayjsLocalized';
-import { theme } from 'constant';
-import { useEffect, useState } from 'react';
+import { DisplayMonths } from "components/DisplayMonths";
+import { Header } from "components";
+import { ThemeProvider } from "styled-components";
+import { dayjsLocalized } from "libs/dayjsLocalized";
+import { theme } from "constant";
+import { useEffect, useState } from "react";
 
-import { DatePickerProps } from './datePicker.type';
-import { Months } from './Months';
+import { DatePickerProps } from "./datePicker.type";
+import { Months } from "./Months";
 
 export const DatePicker: React.FC<DatePickerProps> = props => {
   const { jalali = false, startOfWeek = 0, numberOfMonths = 1 } = props;
