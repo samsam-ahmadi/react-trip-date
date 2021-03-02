@@ -1,11 +1,12 @@
-import React from 'react';
 import styled from 'styled-components';
+import React, { Dispatch, SetStateAction } from 'react';
 
 import { ReactComponent as ArrowLeft } from '../assets/chevron-left.svg';
 import { ReactComponent as ArrowRight } from '../assets/chevron-right.svg';
 
 type Props = {
   displayMonths: boolean;
+  setDisplayMonths: Dispatch<SetStateAction<boolean>>;
 };
 
 export const Header = ({ displayMonths }: Props) => {
@@ -13,11 +14,11 @@ export const Header = ({ displayMonths }: Props) => {
   const nextMonth = () => {};
   return (
     <Wrapper jalali={true}>
-      <div className="action" onClick={prevMonth}>
+      <div onClick={prevMonth}>
         <ArrowRight />
         {displayMonths ? <ArrowRight /> : null}
       </div>
-      <div className="action" onClick={nextMonth}>
+      <div onClick={nextMonth}>
         <ArrowLeft />
         {displayMonths ? <ArrowLeft className={'next-month'} /> : null}
       </div>
@@ -37,7 +38,7 @@ const Wrapper = styled.div<WrapperProps>`
   position: relative;
   background-color: ${({ theme }) => theme.primary.main};
   flex-direction: ${({ jalali }) => (jalali ? 'row-reverse' : 'row')};
-  .action svg {
+  svg {
     width: 30px;
     height: 15px;
     color: ${({ theme }) => theme.background.default};
