@@ -15,9 +15,9 @@ export interface DatePickerProps {
   disabledDays?: string[];
   disabled?: boolean;
   jalali?: boolean;
-  numberOfMonths?: number;
   startOfWeek?: number;
   selectedDays?: string[];
-  onChange?: DatePickerOnChange;
+  numberOfMonths?: number;
+  onChange: DatePickerOnChange;
   responsive?: ResponsiveHandler;
 }

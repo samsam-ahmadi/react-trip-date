@@ -9,10 +9,20 @@ import { DatePickerProps } from "./datePicker.type";
 import { Months } from "./Months";
 
 export const DatePicker: React.FC<DatePickerProps> = props => {
-  const { jalali = false, startOfWeek = 0, numberOfMonths = 1 } = props;
+  const {
+    jalali = false,
+    startOfWeek = 0,
+    numberOfMonths = 1,
+    disabledDays = [],
+    numberOfSelectableDays = 0,
+    disabledBeforeToday = false,
+    selectedDays: selectedDaysProps = [],
+    onChange,
+  } = props;
+
+  const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
 
   const [displayMonths, setDisplayMonths] = useState(false);
-
   const [source, setSource] = useState(dayjsLocalized(jalali));
 
   useEffect(() => {
@@ -38,11 +48,17 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
         />
       ) : (
         <Months
-          startOfWeek={startOfWeek}
-          jalali={jalali}
-          numberOfMonths={numberOfMonths}
           source={source}
+          jalali={jalali}
+          onChange={onChange}
           setSource={setSource}
+          startOfWeek={startOfWeek}
+          disabledDays={disabledDays}
+          selectedDays={selectedDays}
+          numberOfMonths={numberOfMonths}
+          setSelectedDays={setSelectedDays}
+          disabledBeforeToday={disabledBeforeToday}
+          numberOfSelectableDays={numberOfSelectableDays}
         />
       )}
     </ThemeProvider>

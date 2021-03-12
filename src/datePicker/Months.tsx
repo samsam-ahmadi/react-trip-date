@@ -4,25 +4,39 @@ import { TitleOfWeek } from "components/TitleOfWeek";
 import { createCalendar } from "libs/createCalendar";
 import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
+import { DatePickerOnChange } from "./datePicker.type";
 import { Day } from "./Day";
 import { Month, Weeks, Wrapper } from "./datePicker.style";
 
 interface Props {
-  numberOfMonths: number;
-  startOfWeek: number;
-  jalali: boolean;
   source: Dayjs;
+  jalali: boolean;
+  startOfWeek: number;
+  numberOfMonths: number;
+  selectedDays: string[];
+  disabledDays: string[];
+  disabledBeforeToday: boolean;
+  numberOfSelectableDays: number;
+  onChange: DatePickerOnChange;
   setSource: Dispatch<SetStateAction<Dayjs>>;
+  setSelectedDays: Dispatch<SetStateAction<string[]>>;
 }
 
 export const Months = ({
+  numberOfSelectableDays,
   numberOfMonths,
   startOfWeek,
+  selectedDays,
+  disabledDays,
+  setSelectedDays,
+  disabledBeforeToday,
   jalali,
-  source,
+  onChange,
+  source: sourceProp,
 }: Props) => {
   const renderMonths = () => {
     let months = [];
+    let source = sourceProp;
     for (let i = 0; i < numberOfMonths; i++) {
       source = source.add(i, "month");
       const daysInMonth = source.daysInMonth();
@@ -50,7 +64,19 @@ export const Months = ({
               key={dayjs().set("month", 1).set("day", 1).diff(week[0])}
             >
               {week.map(day => (
-                <Day day={day} key={day.format("MM-DD-dddd")} />
+                <Day
+                  day={day}
+                  jalali={jalali}
+                  numberOfMonth={i}
+                  onChange={onChange}
+                  source={sourceProp}
+                  disabledDays={disabledDays}
+                  key={day.format("YYYY-MM-DD")}
+                  selectedDays={selectedDays}
+                  setSelectedDays={setSelectedDays}
+                  disabledBeforeToday={disabledBeforeToday}
+                  numberOfSelectableDays={numberOfSelectableDays}
+                />
               ))}
             </Weeks>
           ))}
