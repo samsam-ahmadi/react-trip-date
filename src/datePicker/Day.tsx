@@ -117,8 +117,7 @@ export const Day: React.FC<Props> = ({
       data-test={day.format("YYYY-MM-DD")}
       onClick={handleClick}
       className={classNames({
-        inactive:
-          day.month() !== source.subtract(-numberOfMonth, "month").month(),
+        inactive: day.month() !== source.add(numberOfMonth, "month").month(),
         selected: handleSelectedDate(),
         disabled: handleDisabledDate(),
         today:

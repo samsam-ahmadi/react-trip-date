@@ -36,9 +36,8 @@ export const Months = ({
 }: Props) => {
   const renderMonths = () => {
     let months = [];
-    let source = sourceProp;
     for (let i = 0; i < numberOfMonths; i++) {
-      source = source.add(i, "month");
+      let source = sourceProp.add(i, "month");
       const daysInMonth = source.daysInMonth();
       const firstDay = source.startOf("month").day();
       const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
