@@ -1,33 +1,41 @@
-import dayjs, { Dayjs } from "dayjs";
+import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
+import { Month, Weeks, Wrapper } from "datePicker/datePicker.style";
 import { TitleOfWeek } from "components/TitleOfWeek";
 import { createCalendar } from "libs/createCalendar";
+import { dayjs } from "libs/dayjs-config";
 import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
-import { DatePickerOnChange } from "./datePicker.type";
 import { Day } from "./Day";
-import { Month, Weeks, Wrapper } from "./datePicker.style";
+import {
+  RangePickerOnChange,
+  RangePickerSelectedDays,
+} from "./rangePicker.type";
 
 interface Props {
   source: Dayjs;
   jalali: boolean;
   startOfWeek: number;
+  hoverDay?: string;
   numberOfMonths: number;
-  selectedDays: string[];
+  selectedDays?: RangePickerSelectedDays;
   disabledDays: string[];
   disabledBeforeToday: boolean;
-  numberOfSelectableDays: number;
-  onChange: DatePickerOnChange;
+  onChange: RangePickerOnChange;
   setSource: Dispatch<SetStateAction<Dayjs>>;
-  setSelectedDays: Dispatch<SetStateAction<string[]>>;
+  setHoverDay: Dispatch<SetStateAction<string | undefined>>;
+  setSelectedDays: Dispatch<
+    SetStateAction<RangePickerSelectedDays | undefined>
+  >;
 }
 
 export const Months = ({
-  numberOfSelectableDays,
   numberOfMonths,
   startOfWeek,
   selectedDays,
   disabledDays,
+  hoverDay,
+  setHoverDay,
   setSelectedDays,
   disabledBeforeToday,
   jalali,
@@ -70,6 +78,8 @@ export const Months = ({
                   day={day}
                   jalali={jalali}
                   numberOfMonth={i}
+                  hoverDay={hoverDay}
+                  setHoverDay={setHoverDay}
                   onChange={onChange}
                   source={sourceProp}
                   disabledDays={disabledDays}
@@ -77,7 +87,6 @@ export const Months = ({
                   selectedDays={selectedDays}
                   setSelectedDays={setSelectedDays}
                   disabledBeforeToday={disabledBeforeToday}
-                  numberOfSelectableDays={numberOfSelectableDays}
                 />
               ))}
             </Weeks>
@@ -87,5 +96,6 @@ export const Months = ({
     }
     return months;
   };
+
   return <Wrapper jalali={jalali}>{renderMonths()}</Wrapper>;
 };

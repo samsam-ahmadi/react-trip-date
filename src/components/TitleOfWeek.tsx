@@ -18,7 +18,7 @@ export const TitleOfWeek: React.FunctionComponent<Props> = ({ jalali }) => {
   );
 };
 
-export const Wrapper = styled.div<Props>`
+const Wrapper = styled.div<Props>`
   display: flex;
   text-align: center;
   justify-content: center;

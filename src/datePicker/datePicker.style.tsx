@@ -25,10 +25,7 @@ export const Month = styled.div<MonthProps>`
   width: ${({ numberOfMonths }) => `${100 / numberOfMonths}%`};
 `;
 
-type WeeksProps = {
-  jalali: boolean;
-};
-export const Weeks = styled.div<WeeksProps>`
+export const Weeks = styled.div<WrapperProps>`
   display: flex;
   align-items: center;
   position: relative;
