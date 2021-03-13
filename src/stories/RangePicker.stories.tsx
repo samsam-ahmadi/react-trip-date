@@ -1,5 +1,5 @@
 import { FORMAT_DATE } from "constant";
-import { RangePicker } from "rangePicker/RangePicker";
+import { RangePicker } from "rangePicker";
 import { array, boolean, number, withKnobs } from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
