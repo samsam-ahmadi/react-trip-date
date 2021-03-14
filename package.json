@@ -47,7 +47,8 @@
     "sort": "import-sort --write 'src/**/*.{ts,tsx,js,jsx}'",
     "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'",
     "storybook": "start-storybook -p 9009",
-    "build-storybook": "build-storybook"
+    "deploy": "gh-pages -d storybook-static",
+    "build-storybook": "build-storybook -c .storybook -o storybook-static"
   },
   "eslintConfig": {
     "extends": [
@@ -81,6 +82,7 @@
     "@storybook/preset-create-react-app": "^3.0.0",
     "@storybook/react": "^5.3.19",
     "@svgr/rollup": "^5.5.0",
+    "gh-pages": "^3.1.0",
     "husky": "^4.2.5",
     "import-sort-cli": "^6.0.0",
     "import-sort-style-renke": "^6.0.0",
