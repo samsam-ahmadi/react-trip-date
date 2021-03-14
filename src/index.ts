@@ -1,3 +1,3 @@
-export { default as DatePicker } from './calendar/date-picker';
-export { default as RangePicker } from './calendar/date-picker';
-export { default as theme } from './utils/theme';
+export { RangePicker } from "./rangePicker";
+export { DatePicker } from "./datePicker";
+export * from "./datePicker/datePicker.type";
