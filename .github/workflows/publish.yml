@@ -1,0 +1,39 @@
+name: Release And Publish Package
+on:
+  push:
+    tags:
+      - 'v*.*.*'
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Repository 
+        uses: actions/checkout@v2
+      - name: Create Release 
+        uses: ntltd/release-generator@master
+        with:
+          baseTag: ${{ github.event.release.tag_name }}
+          releaseTag: ${{ github.event.release.tag_name }}
+          prerelease: false
+          draft: false
+          releaseName: ${{ github.event.release.tag_name }}
+          templatePath: templates/release.md
+          token: ${{ github.token }}
+  build:
+      runs-on: ubuntu-latest
+      steps:
+        - name: Checkout Repository 
+          uses: actions/checkout@v2
+        - name: Setup Node
+          uses: actions/setup-node@v1
+          with:
+            node-version: 14
+            registry-url: https://registry.npmjs.org/
+        - name: Install and Build 🔧
+          run: |
+            npm install
+            npm run build
+        - name: Deploy 🚀
+          run: npm publish --access public
+          env:
+            NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}
