@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "1.1.0",
+  "version": "1.1.1",
   "description": "date-picker and range-picker for React applications",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -48,7 +48,7 @@
     "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'",
     "storybook": "start-storybook -p 9009",
     "deploy": "gh-pages -d storybook-static",
-    "build-storybook": "build-storybook -c .storybook -o storybook-static"
+    "build-storybook": "build-storybook -c .storybook -o docs-build"
   },
   "eslintConfig": {
     "extends": [
