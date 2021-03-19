@@ -91,7 +91,8 @@
     "rollup": "^2.41.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
-    "rollup-plugin-typescript2": "^0.30.0"
+    "rollup-plugin-typescript2": "^0.30.0",
+    "tslib": "^2.1.0"
   },
   "files": [
     "dist"
