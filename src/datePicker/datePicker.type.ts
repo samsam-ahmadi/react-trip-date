@@ -11,6 +11,7 @@ export interface DatePickerProps {
   disabledBeforeToday?: boolean;
   disabledDays?: string[];
   jalali?: boolean;
+  disabled?: boolean;
   startOfWeek?: number;
   selectedDays?: string[];
   numberOfMonths?: number;

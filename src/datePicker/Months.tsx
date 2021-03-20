@@ -11,6 +11,7 @@ import { Month, Weeks, Wrapper } from "./datePicker.style";
 interface Props {
   source: Dayjs;
   jalali: boolean;
+  disabled: boolean;
   startOfWeek: number;
   numberOfMonths: number;
   selectedDays: string[];
@@ -31,6 +32,7 @@ export const Months = ({
   setSelectedDays,
   disabledBeforeToday,
   jalali,
+  disabled,
   onChange,
   source: sourceProp,
 }: Props) => {
@@ -70,6 +72,7 @@ export const Months = ({
                   day={day}
                   jalali={jalali}
                   numberOfMonth={i}
+                  disabled={disabled}
                   onChange={onChange}
                   source={sourceProp}
                   disabledDays={disabledDays}

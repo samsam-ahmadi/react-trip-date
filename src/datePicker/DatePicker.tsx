@@ -11,6 +11,7 @@ import { Months } from "./Months";
 export const DatePicker: React.FC<DatePickerProps> = props => {
   const {
     jalali = false,
+    disabled = false,
     startOfWeek = 0,
     numberOfMonths = 1,
     disabledDays = [],
@@ -51,6 +52,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
           source={source}
           jalali={jalali}
           onChange={onChange}
+          disabled={disabled}
           setSource={setSource}
           startOfWeek={startOfWeek}
           disabledDays={disabledDays}

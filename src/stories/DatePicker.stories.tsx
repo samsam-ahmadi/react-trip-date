@@ -30,6 +30,7 @@ stories.add("All Props", () => {
   return (
     <DatePicker
       jalali={boolean("jalali", false)}
+      disabled={boolean("disabled", true)}
       disabledBeforeToday={boolean("disabled before today", false)}
       numberOfMonths={number("number of months", 4)}
       numberOfSelectableDays={number("number of selectable days", 5)}
@@ -54,6 +55,17 @@ stories.add("Multiple Month", () => {
       numberOfMonths={2}
       onChange={dates => console.log("dates", dates)}
     />
+  );
+});
+
+stories.add("Disabled Calendar", () => {
+  return (
+    <div>
+      <DatePicker
+        disabled={boolean("disabled", true)}
+        onChange={dates => console.log("dates", dates)}
+      />
+    </div>
   );
 });
 

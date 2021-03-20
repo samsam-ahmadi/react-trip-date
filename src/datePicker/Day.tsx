@@ -12,6 +12,7 @@ type Props = {
   day: Dayjs;
   source: Dayjs;
   jalali: boolean;
+  disabled: boolean;
   numberOfMonth: number;
   selectedDays: string[];
   disabledDays: string[];
@@ -25,6 +26,7 @@ export const Day: React.FC<Props> = ({
   day,
   jalali,
   source,
+  disabled,
   onChange,
   selectedDays,
   disabledDays,
@@ -47,6 +49,8 @@ export const Day: React.FC<Props> = ({
   };
 
   const handleClick = () => {
+    if (disabled) return;
+
     const date = getDayFormat(day, jalali);
 
     if (
@@ -120,6 +124,7 @@ export const Day: React.FC<Props> = ({
         inactive: day.month() !== source.add(numberOfMonth, "month").month(),
         selected: handleSelectedDate(),
         disabled: handleDisabledDate(),
+        disable: disabled,
         today:
           dayjs()
             .calendar(jalali ? "jalali" : "gregory")
@@ -144,9 +149,16 @@ const Wrapper = styled.div`
   justify-content: center;
   flex-direction: column;
   cursor: pointer;
+  color: ${({ theme }) => theme.grey[900]};
+
   &:hover {
     background-color: ${({ theme }) => theme.primary.light};
     color: ${({ theme }) => theme.grey[700]};
+    &.disable {
+      cursor: default;
+      background-color: transparent;
+      color: ${({ theme }) => theme.grey[900]};
+    }
   }
 
   &.inactive {
@@ -157,6 +169,10 @@ const Wrapper = styled.div`
   &.today {
     background-color: ${({ theme }) => theme.primary.light};
     color: ${({ theme }) => theme.primary.dark};
+    &:hover {
+      background-color: ${({ theme }) => theme.primary.light};
+      color: ${({ theme }) => theme.primary.dark};
+    }
   }
 
   &.disabled {
@@ -165,6 +181,7 @@ const Wrapper = styled.div`
 
     &:hover {
       background-color: transparent;
+      color: ${({ theme }) => theme.text.disabled};
       cursor: not-allowed;
     }
 
@@ -184,6 +201,9 @@ const Wrapper = styled.div`
 
     &:hover {
       background-color: ${props => props.theme.primary.main};
+      &.disable {
+        color: #fff;
+      }
     }
 
     p {
