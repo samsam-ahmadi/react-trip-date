@@ -7,6 +7,7 @@ export type DatePickerOnChange = (days: string[]) => void;
 export type ResponsiveHandler = (howManyDoYouWantToShow: any) => boolean;
 
 export interface DatePickerProps {
+  autoResponsive?: boolean;
   numberOfSelectableDays?: number;
   disabledBeforeToday?: boolean;
   disabledDays?: string[];

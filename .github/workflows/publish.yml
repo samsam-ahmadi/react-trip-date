@@ -16,7 +16,7 @@ jobs:
       - name: Create Release 
         uses: ntltd/release-generator@master
         with:
-          baseTag: ${{ env.RELEASE_VERSION }}
+          baseTag: ${{ steps.bump_version.outputs.previous_version }}
           releaseTag: ${{ env.RELEASE_VERSION }}
           prerelease: false
           draft: false
