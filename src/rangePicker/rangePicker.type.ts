@@ -10,14 +10,14 @@ export type RangePickerSelectedDays = {
   from: string;
   to: string;
 };
-
 export interface RangePickerProps {
   disabledBeforeToday?: boolean;
   disabledDays?: string[];
+  disabled?: boolean;
   jalali?: boolean;
   startOfWeek?: number;
   selectedDays?: RangePickerSelectedDays;
   numberOfMonths?: number;
-  disabled?: boolean;
+  autoResponsive?: boolean;
   onChange: RangePickerOnChange;
 }

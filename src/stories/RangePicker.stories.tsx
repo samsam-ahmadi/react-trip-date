@@ -28,6 +28,7 @@ stories.add("All Props", () => {
     <RangePicker
       jalali={boolean("jalali", false)}
       disabled={boolean("disabled", false)}
+      autoResponsive={boolean("auto responsive", true)}
       disabledBeforeToday={boolean("disabled before today", false)}
       numberOfMonths={number("number of months", 4)}
       selectedDays={selectedDays}
@@ -68,6 +69,16 @@ stories.add("Number Of Months", () => {
   return (
     <RangePicker
       numberOfMonths={number("number of months", 3)}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Auto Responsive", () => {
+  return (
+    <RangePicker
+      autoResponsive={boolean("auto responsive", true)}
+      numberOfMonths={number("number of months", 4)}
       onChange={dates => console.log("dates", dates)}
     />
   );
