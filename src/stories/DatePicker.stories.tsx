@@ -30,7 +30,7 @@ stories.add("All Props", () => {
   return (
     <DatePicker
       jalali={boolean("jalali", false)}
-      disabled={boolean("disabled", true)}
+      disabled={boolean("disabled", false)}
       autoResponsive={boolean("auto responsive", true)}
       disabledBeforeToday={boolean("disabled before today", false)}
       numberOfMonths={number("number of months", 4)}
