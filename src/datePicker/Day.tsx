@@ -69,6 +69,7 @@ export const Day: React.FC<Props> = ({
     if (numberOfSelectableDays) {
       if (numberOfSelectableDays === 1) {
         setSelectedDays([date]);
+        onChange([date]);
         return;
       }
       if (
