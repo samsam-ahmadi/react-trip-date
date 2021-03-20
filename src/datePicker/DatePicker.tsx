@@ -16,6 +16,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
     startOfWeek = 0,
     numberOfMonths: numberOfMonthsProps = 1,
     disabledDays = [],
+    theme: themeProps,
     numberOfSelectableDays = 0,
     disabledBeforeToday = false,
     selectedDays: selectedDaysProps = [],
@@ -60,7 +61,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
 
   return (
     <div className="tp-calendar">
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeProps ? themeProps : theme}>
         <Header
           jalali={jalali}
           source={source}

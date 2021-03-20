@@ -1,3 +1,5 @@
+import { DefaultTheme } from "styled-components";
+
 export type DatePickerType = {
   jalali?: boolean;
 };
@@ -8,6 +10,7 @@ export type ResponsiveHandler = (howManyDoYouWantToShow: any) => boolean;
 
 export interface DatePickerProps {
   autoResponsive?: boolean;
+  theme?: DefaultTheme;
   numberOfSelectableDays?: number;
   disabledBeforeToday?: boolean;
   disabledDays?: string[];

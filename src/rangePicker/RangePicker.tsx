@@ -15,6 +15,7 @@ export const RangePicker = ({
   disabledDays = [],
   disabledBeforeToday = false,
   disabled = false,
+  theme: themeProps,
   autoResponsive = true,
   selectedDays: selectedDaysProps,
   onChange,
@@ -57,7 +58,7 @@ export const RangePicker = ({
 
   return (
     <div className="tp-calendar">
-      <ThemeProvider theme={theme}>
+      <ThemeProvider theme={themeProps ? themeProps : theme}>
         <Header
           jalali={jalali}
           source={source}

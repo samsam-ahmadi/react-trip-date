@@ -1,3 +1,5 @@
+import { DefaultTheme } from "styled-components";
+
 export type RangePickerType = {
   jalali?: boolean;
 };
@@ -15,6 +17,7 @@ export interface RangePickerProps {
   disabledDays?: string[];
   disabled?: boolean;
   jalali?: boolean;
+  theme?: DefaultTheme;
   startOfWeek?: number;
   selectedDays?: RangePickerSelectedDays;
   numberOfMonths?: number;

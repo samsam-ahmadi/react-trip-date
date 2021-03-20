@@ -38,6 +38,32 @@ stories.add("All Props", () => {
   );
 });
 
+stories.add("Theme", () => {
+  const theme = {
+    primary: {
+      light: "#757ce8",
+      main: "#3f50b5",
+      dark: "#002884",
+    },
+    grey: {
+      700: "#707070",
+      900: "#1b1b1d",
+    },
+    background: {
+      default: "#f5f5f5",
+    },
+    text: {
+      disabled: "#BABABA",
+    },
+  };
+
+  return (
+    <RangePicker
+      theme={theme}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
 stories.add("Jalali", () => {
   return (
     <RangePicker
