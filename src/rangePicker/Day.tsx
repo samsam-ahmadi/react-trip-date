@@ -17,6 +17,7 @@ interface Props {
   source: Dayjs;
   jalali: boolean;
   hoverDay?: string;
+  disabled: boolean;
   numberOfMonth: number;
   disabledDays: string[];
   disabledBeforeToday: boolean;
@@ -35,6 +36,7 @@ export const Day = ({
   selectedDays,
   disabledDays,
   hoverDay,
+  disabled,
   onChange,
   setHoverDay,
   setSelectedDays,
@@ -50,6 +52,8 @@ export const Day = ({
   };
 
   const handleChangeState = (from: string, to: string) => {
+    if (disabled) return;
+
     if (dayjs(from).isBefore(to)) {
       setSelectedDays({
         from,
@@ -71,6 +75,7 @@ export const Day = ({
     }
   };
   const onClick = () => {
+    if (disabled) return;
     // Handle disable dates
     if (disabledDays) {
       if (
@@ -98,9 +103,14 @@ export const Day = ({
       // Check if we have a disabled days between them
       if (disables.length) {
         disables.sort((prev, next) => {
-          return dayjs(prev).isSameOrBefore(next) ? -1 : 1;
+          return dayjs(disables[0]).isBefore(hoverDay!)
+            ? dayjs(prev).isSameOrBefore(next)
+              ? -1
+              : 1
+            : dayjs(prev).isSameOrBefore(next)
+            ? 1
+            : -1;
         });
-
         // We check here to ensure we set the day before the disabled day
         if (dayjs(disables[0]).isBefore(hoverDay!)) {
           handleChangeState(
@@ -159,6 +169,7 @@ export const Day = ({
         disabled: handleDisabledDate(),
         "range-select": handleRangeStyle(),
         jalali: jalali,
+        disable: disabled,
         same: selectedDays && dayjs(selectedDays.from).isSame(selectedDays.to),
         "start-date":
           selectedDays &&
@@ -199,9 +210,15 @@ const Wrapper = styled.div`
   flex-direction: column;
   margin-bottom: 5px;
   cursor: pointer;
+  color: ${({ theme }) => theme.grey[900]};
   &:hover {
     background-color: ${({ theme }) => theme.primary.light};
     color: ${({ theme }) => theme.grey[700]};
+    &.disable {
+      background-color: transparent;
+      color: ${({ theme }) => theme.grey[900]};
+      cursor: default;
+    }
   }
 
   &.inactive {
@@ -219,6 +236,7 @@ const Wrapper = styled.div`
 
     &:hover {
       background-color: transparent;
+      color: ${({ theme }) => theme.text.disabled};
       cursor: not-allowed;
     }
 
@@ -235,7 +253,10 @@ const Wrapper = styled.div`
   &.range-select {
     background-color: ${({ theme }) => theme.primary.main};
     color: #fff;
-
+    &:hover {
+      background-color: ${({ theme }) => theme.primary.main};
+      color: #fff;
+    }
     filter: drop-shadow(4px 0px 2px rgba(0, 0, 0, 0.1))
       drop-shadow(4px 0px 2px rgba(0, 0, 0, 0.1));
 

@@ -18,5 +18,6 @@ export interface RangePickerProps {
   startOfWeek?: number;
   selectedDays?: RangePickerSelectedDays;
   numberOfMonths?: number;
+  disabled?: boolean;
   onChange: RangePickerOnChange;
 }

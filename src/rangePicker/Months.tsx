@@ -21,6 +21,7 @@ interface Props {
   selectedDays?: RangePickerSelectedDays;
   disabledDays: string[];
   disabledBeforeToday: boolean;
+  disabled: boolean;
   onChange: RangePickerOnChange;
   setSource: Dispatch<SetStateAction<Dayjs>>;
   setHoverDay: Dispatch<SetStateAction<string | undefined>>;
@@ -39,6 +40,7 @@ export const Months = ({
   setSelectedDays,
   disabledBeforeToday,
   jalali,
+  disabled,
   onChange,
   source: sourceProp,
 }: Props) => {
@@ -82,6 +84,7 @@ export const Months = ({
                   setHoverDay={setHoverDay}
                   onChange={onChange}
                   source={sourceProp}
+                  disabled={disabled}
                   disabledDays={disabledDays}
                   key={day.format("YYYY-MM-DD")}
                   selectedDays={selectedDays}
