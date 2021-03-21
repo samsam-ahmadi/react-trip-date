@@ -4,7 +4,7 @@ import { TitleOfWeek } from "components/TitleOfWeek";
 import { createCalendar } from "libs/createCalendar";
 import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
-import { DatePickerOnChange } from "./datePicker.type";
+import { DatePickerComponents, DatePickerOnChange } from "./datePicker.type";
 import { Day } from "./Day";
 import { Month, Weeks, Wrapper } from "./datePicker.style";
 
@@ -19,6 +19,7 @@ interface Props {
   disabledBeforeToday: boolean;
   numberOfSelectableDays: number;
   onChange: DatePickerOnChange;
+  components?: DatePickerComponents;
   setSource: Dispatch<SetStateAction<Dayjs>>;
   setSelectedDays: Dispatch<SetStateAction<string[]>>;
 }
@@ -30,6 +31,7 @@ export const Months = ({
   selectedDays,
   disabledDays,
   setSelectedDays,
+  components,
   disabledBeforeToday,
   jalali,
   disabled,
@@ -57,7 +59,7 @@ export const Months = ({
           key={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
           data-test={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
         >
-          <TitleOfWeek jalali={jalali} />
+          <TitleOfWeek jalali={jalali} components={components?.titleOfWeek} />
           {weeksDays.map(week => (
             <Weeks
               jalali={jalali}
@@ -75,6 +77,7 @@ export const Months = ({
                   disabled={disabled}
                   onChange={onChange}
                   source={sourceProp}
+                  components={components}
                   disabledDays={disabledDays}
                   key={day.format("YYYY-MM-DD")}
                   selectedDays={selectedDays}

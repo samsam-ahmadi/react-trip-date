@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { DatePickerComponents } from "datePicker/datePicker.type";
 import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
 
@@ -10,6 +11,7 @@ type Props = {
   jalali: boolean;
   numberOfMonths: number;
   source: Dayjs;
+  components?: DatePickerComponents;
   setDisplayMonths: Dispatch<SetStateAction<boolean>>;
   setSource: Dispatch<SetStateAction<Dayjs>>;
 };
@@ -18,6 +20,7 @@ export const Header = ({
   jalali,
   source,
   setSource,
+  components,
   displayMonths,
   numberOfMonths,
   setDisplayMonths,
@@ -46,7 +49,13 @@ export const Header = ({
       }
       titles.push(
         <p key={Math.random()} onClick={() => setDisplayMonths(prev => !prev)}>
-          {source.add(i, "month").format("YYYY-MMMM")}
+          {source
+            .add(i, "month")
+            .format(
+              components?.header?.format
+                ? components?.header?.format
+                : "YYYY-MMMM",
+            )}
         </p>,
       );
     }

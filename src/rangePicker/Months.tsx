@@ -8,6 +8,7 @@ import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
 import { Day } from "./Day";
 import {
+  RangePickerComponents,
   RangePickerOnChange,
   RangePickerSelectedDays,
 } from "./rangePicker.type";
@@ -22,6 +23,7 @@ interface Props {
   disabledDays: string[];
   disabledBeforeToday: boolean;
   disabled: boolean;
+  components?: RangePickerComponents;
   onChange: RangePickerOnChange;
   setSource: Dispatch<SetStateAction<Dayjs>>;
   setHoverDay: Dispatch<SetStateAction<string | undefined>>;
@@ -37,6 +39,7 @@ export const Months = ({
   disabledDays,
   hoverDay,
   setHoverDay,
+  components,
   setSelectedDays,
   disabledBeforeToday,
   jalali,
@@ -65,7 +68,7 @@ export const Months = ({
           key={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
           data-test={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
         >
-          <TitleOfWeek jalali={jalali} />
+          <TitleOfWeek jalali={jalali} components={components?.titleOfWeek} />
           {weeksDays.map(week => (
             <Weeks
               jalali={jalali}
@@ -83,6 +86,7 @@ export const Months = ({
                   hoverDay={hoverDay}
                   setHoverDay={setHoverDay}
                   onChange={onChange}
+                  components={components}
                   source={sourceProp}
                   disabled={disabled}
                   disabledDays={disabledDays}

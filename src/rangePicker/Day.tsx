@@ -8,6 +8,7 @@ import { dayjsLocalized } from "libs/dayjsLocalized";
 import { getDayFormat } from "libs/getDayFormat";
 
 import {
+  RangePickerComponents,
   RangePickerOnChange,
   RangePickerSelectedDays,
 } from "./rangePicker.type";
@@ -21,6 +22,7 @@ interface Props {
   numberOfMonth: number;
   disabledDays: string[];
   disabledBeforeToday: boolean;
+  components?: RangePickerComponents;
   onChange: RangePickerOnChange;
   selectedDays?: RangePickerSelectedDays;
   setHoverDay: Dispatch<SetStateAction<string | undefined>>;
@@ -37,6 +39,7 @@ export const Day = ({
   disabledDays,
   hoverDay,
   disabled,
+  components,
   onChange,
   setHoverDay,
   setSelectedDays,
@@ -159,6 +162,7 @@ export const Day = ({
     }
   };
 
+  const DayComponent = components?.days;
   return (
     <Wrapper
       data-test={day.format(FORMAT_DATE)}
@@ -194,7 +198,10 @@ export const Day = ({
             .format(FORMAT_DATE) === day.format(FORMAT_DATE),
       })}
     >
-      {day.format("DD")}
+      {DayComponent && (
+        <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
+      )}
+      {!DayComponent && day.format("DD")}
     </Wrapper>
   );
 };

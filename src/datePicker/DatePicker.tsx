@@ -8,21 +8,20 @@ import { useEffect, useState } from "react";
 import { DatePickerProps } from "./datePicker.type";
 import { Months } from "./Months";
 
-export const DatePicker: React.FC<DatePickerProps> = props => {
-  const {
-    jalali = false,
-    disabled = false,
-    autoResponsive = true,
-    startOfWeek = 0,
-    numberOfMonths: numberOfMonthsProps = 1,
-    disabledDays = [],
-    theme: themeProps,
-    numberOfSelectableDays = 0,
-    disabledBeforeToday = false,
-    selectedDays: selectedDaysProps = [],
-    onChange,
-  } = props;
-
+export const DatePicker: React.FC<DatePickerProps> = ({
+  jalali = false,
+  disabled = false,
+  autoResponsive = true,
+  startOfWeek = 0,
+  numberOfMonths: numberOfMonthsProps = 1,
+  disabledDays = [],
+  components,
+  theme: themeProps,
+  numberOfSelectableDays = 0,
+  disabledBeforeToday = false,
+  selectedDays: selectedDaysProps = [],
+  onChange,
+}) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
@@ -66,6 +65,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
           jalali={jalali}
           source={source}
           setSource={setSource}
+          components={components}
           displayMonths={displayMonths}
           numberOfMonths={numberOfMonths}
           setDisplayMonths={setDisplayMonths}
@@ -84,6 +84,7 @@ export const DatePicker: React.FC<DatePickerProps> = props => {
             onChange={onChange}
             disabled={disabled}
             setSource={setSource}
+            components={components}
             startOfWeek={startOfWeek}
             disabledDays={disabledDays}
             selectedDays={selectedDays}

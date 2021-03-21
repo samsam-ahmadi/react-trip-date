@@ -15,6 +15,7 @@ export const RangePicker = ({
   disabledDays = [],
   disabledBeforeToday = false,
   disabled = false,
+  components,
   theme: themeProps,
   autoResponsive = true,
   selectedDays: selectedDaysProps,
@@ -63,6 +64,7 @@ export const RangePicker = ({
           jalali={jalali}
           source={source}
           setSource={setSource}
+          components={components}
           displayMonths={displayMonths}
           numberOfMonths={numberOfMonths}
           setDisplayMonths={setDisplayMonths}
@@ -82,6 +84,7 @@ export const RangePicker = ({
             disabled={disabled}
             setSource={setSource}
             hoverDay={hoverDay}
+            components={components}
             setHoverDay={setHoverDay}
             startOfWeek={startOfWeek}
             disabledDays={disabledDays}

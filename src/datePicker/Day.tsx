@@ -1,12 +1,13 @@
 import styled from "styled-components";
 import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
+import { FORMAT_DATE } from "constant";
 import { classNames } from "libs/classNames";
 import { convertDatesToArray } from "libs/convertDatesToArray";
 import { dayjs } from "libs/dayjs-config";
 import { getDayFormat } from "libs/getDayFormat";
 
-import { DatePickerOnChange } from "./datePicker.type";
+import { DatePickerComponents, DatePickerOnChange } from "./datePicker.type";
 
 type Props = {
   day: Dayjs;
@@ -18,6 +19,7 @@ type Props = {
   disabledDays: string[];
   numberOfSelectableDays: number;
   disabledBeforeToday: boolean;
+  components?: DatePickerComponents;
   onChange: DatePickerOnChange;
   setSelectedDays: Dispatch<SetStateAction<string[]>>;
 };
@@ -28,6 +30,7 @@ export const Day: React.FC<Props> = ({
   source,
   disabled,
   onChange,
+  components,
   selectedDays,
   disabledDays,
   numberOfMonth,
@@ -44,7 +47,7 @@ export const Day: React.FC<Props> = ({
     let date = getDayFormat(day, jalali);
     return (
       disabledDays.includes(date) ||
-      (disabledBeforeToday && dayjs(day).isBefore(dayjs().format("YYYY-MM-DD")))
+      (disabledBeforeToday && dayjs(day).isBefore(dayjs().format(FORMAT_DATE)))
     );
   };
 
@@ -117,9 +120,11 @@ export const Day: React.FC<Props> = ({
       }
     }
   };
+
+  const DayComponent = components?.days;
   return (
     <Wrapper
-      data-test={day.format("YYYY-MM-DD")}
+      data-test={day.format(FORMAT_DATE)}
       onClick={handleClick}
       className={classNames({
         inactive: day.month() !== source.add(numberOfMonth, "month").month(),
@@ -129,10 +134,13 @@ export const Day: React.FC<Props> = ({
         today:
           dayjs()
             .calendar(jalali ? "jalali" : "gregory")
-            .format("YYYY-MM-DD") === day.format("YYYY-MM-DD"),
+            .format(FORMAT_DATE) === day.format(FORMAT_DATE),
       })}
     >
-      {day.format("DD")}
+      {DayComponent && (
+        <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
+      )}
+      {!DayComponent && day.format("DD")}
     </Wrapper>
   );
 };

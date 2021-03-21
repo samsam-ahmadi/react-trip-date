@@ -1,19 +1,33 @@
 import styled from "styled-components";
+import { ElementType } from "react";
 
 type Props = {
   jalali: boolean;
+  components?: {
+    titles?: string[];
+    wrapper?: ElementType<{ jalali: boolean }>;
+  };
 };
 
-export const TitleOfWeek: React.FunctionComponent<Props> = ({ jalali }) => {
+export const TitleOfWeek: React.FunctionComponent<Props> = ({
+  jalali,
+  components,
+}) => {
   let titleDayFa = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
   let titleDayEn = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   let title = jalali ? titleDayFa : titleDayEn;
 
+  if (components?.wrapper) {
+    const WrapperC = components?.wrapper;
+    return <WrapperC jalali={jalali} />;
+  }
+
   return (
     <Wrapper jalali={jalali}>
-      {title.map(item => (
-        <p key={item}>{item}</p>
-      ))}
+      {components?.titles &&
+        components?.titles.map(item => <p key={item}>{item}</p>)}
+
+      {!components?.titles && title.map(item => <p key={item}>{item}</p>)}
     </Wrapper>
   );
 };
