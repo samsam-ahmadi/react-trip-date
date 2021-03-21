@@ -146,3 +146,55 @@ stories.add("Number of Selectable Days", () => {
     />
   );
 });
+
+stories.add("Custom components - Header component", () => {
+  return (
+    <DatePicker
+      components={{
+        titleOfWeek: {
+          wrapper: ({ jalali }) => (
+            <div>this is a custom title of weeks component</div>
+          ),
+        },
+      }}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Custom components - Header titles", () => {
+  return (
+    <DatePicker
+      components={{
+        titleOfWeek: {
+          titles: ["1", "2", "3", "4", "5", "6", "7"],
+        },
+      }}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Custom components - Header Calendar format", () => {
+  return (
+    <DatePicker
+      components={{
+        header: {
+          format: "YY**MMMM",
+        },
+      }}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Custom components - Day", () => {
+  return (
+    <DatePicker
+      components={{
+        days: ({ day, jalali }) => <div style={{ color: "red" }}>{day}</div>,
+      }}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});

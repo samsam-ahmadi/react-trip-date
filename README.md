@@ -40,17 +40,18 @@ Your project needs to use React 16 or later. If you use older version of React, 
 
 #### Props
 
-| Prop name              | Description                                                                                      | Default value | Example values                                         |
-| ---------------------- | ------------------------------------------------------------------------------------------------ | ------------- | ------------------------------------------------------ |
-| onChange               | this function return an array of days                                                            | n/a           | `(days:string[]) => console.log('selected days',days)` |
-| selectedDays           | the initial array of days                                                                        | `[]`          | `['2019-10-01','2019-11-06']`                          |
-| jalali                 | choice jalali or gregorian calendar                                                              | `false`       | `false`/`true`                                         |
-| numberOfMonths         | number of months you need to show                                                                | `1`           | `7`                                                    |
-| numberOfSelectableDays | number of days you need                                                                          | 0/Infiniti    | `3`                                                    |
-| disabledDays           | the disabled days that you don't want clickable to choice                                        | `[]`          | `['2019-11-04',2019-12-14]`                            |
-| autoResponsive         | makes your calendar responsive but you can handle it by your self by change the `numberOfMonths` | `true`        | `false/true`                                           |
-| disabledBeforeToday    | disabled days before today                                                                       | `false`       | `true`/`false`                                         |
-| disabled               | disabled calendar                                                                                | `false`       | `true`/`false`                                         |
+| Prop name              | Description                                                                                      | Default value | Example values                                                                                                                                                  |
+| ---------------------- | ------------------------------------------------------------------------------------------------ | ------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onChange               | this function return an array of days                                                            | n/a           | `(days:string[]) => console.log('selected days',days)`                                                                                                          |
+| selectedDays           | the initial array of days                                                                        | `[]`          | `['2019-10-01','2019-11-06']`                                                                                                                                   |
+| jalali                 | choice jalali or gregorian calendar                                                              | `false`       | `false`/`true`                                                                                                                                                  |
+| numberOfMonths         | number of months you need to show                                                                | `1`           | `7`                                                                                                                                                             |
+| numberOfSelectableDays | number of days you need                                                                          | 0/Infiniti    | `3`                                                                                                                                                             |
+| disabledDays           | the disabled days that you don't want clickable to choice                                        | `[]`          | `['2019-11-04',2019-12-14]`                                                                                                                                     |
+| autoResponsive         | makes your calendar responsive but you can handle it by your self by change the `numberOfMonths` | `true`        | `false/true`                                                                                                                                                    |
+| disabledBeforeToday    | disabled days before today                                                                       | `false`       | `true`/`false`                                                                                                                                                  |
+| disabled               | disabled calendar                                                                                | `false`       | `true`/`false`                                                                                                                                                  |
+| components             | update header title, week title and day component                                                | `undefined`   | `{days?: ElementType<{day:string;jalali: boolean;}>;header?: {format?: string;};titleOfWeek?:{titles?: string[];wrapper?: ElementType<{ jalali: boolean }>;};}` |
 
 ##
 
@@ -58,16 +59,17 @@ Your project needs to use React 16 or later. If you use older version of React, 
 
 #### Props
 
-| Prop name           | Description                                                                                      | Default value     | Example values                                         |
-| ------------------- | ------------------------------------------------------------------------------------------------ | ----------------- | ------------------------------------------------------ |
-| onChange            | this function return an array of days                                                            | n/a               | `(days:string[]) => console.log('selected days',days)` |
-| selectedDays        | the initial range date                                                                           | `{from:'',to:''}` | `{from:'2019-12-12',to:'2019-12-18'}`                  |
-| jalali              | choice jalali or gregorian calendar                                                              | `false`           | `false`/`true`                                         |
-| numberOfMonths      | number of months you need to show                                                                | `1`               | `7`                                                    |
-| disabledDays        | the disabled days that you don't want clickable to choice                                        | `[]`              | `['2019-11-04',2019-12-14]`                            |
-| autoResponsive      | makes your calendar responsive but you can handle it by your self by change the `numberOfMonths` | `true`            | `false/true`                                           |
-| disabledBeforeToday | disabled days before today                                                                       | `false`           | `true`/`false`                                         |
-| disabled            | disabled calendar                                                                                | `false`           | `true`/`false`                                         |
+| Prop name           | Description                                                                                      | Default value     | Example values                                                                                                                                                  |
+| ------------------- | ------------------------------------------------------------------------------------------------ | ----------------- | --------------------------------------------------------------------------------------------------------------------------------------------------------------- |
+| onChange            | this function return an array of days                                                            | n/a               | `(days:string[]) => console.log('selected days',days)`                                                                                                          |
+| selectedDays        | the initial range date                                                                           | `{from:'',to:''}` | `{from:'2019-12-12',to:'2019-12-18'}`                                                                                                                           |
+| jalali              | choice jalali or gregorian calendar                                                              | `false`           | `false`/`true`                                                                                                                                                  |
+| numberOfMonths      | number of months you need to show                                                                | `1`               | `7`                                                                                                                                                             |
+| disabledDays        | the disabled days that you don't want clickable to choice                                        | `[]`              | `['2019-11-04',2019-12-14]`                                                                                                                                     |
+| autoResponsive      | makes your calendar responsive but you can handle it by your self by change the `numberOfMonths` | `true`            | `false/true`                                                                                                                                                    |
+| disabledBeforeToday | disabled days before today                                                                       | `false`           | `true`/`false`                                                                                                                                                  |
+| disabled            | disabled calendar                                                                                | `false`           | `true`/`false`                                                                                                                                                  |
+| components          | update header title, week title and day component                                                | `undefined`       | `{days?: ElementType<{day:string;jalali: boolean;}>;header?: {format?: string;};titleOfWeek?:{titles?: string[];wrapper?: ElementType<{ jalali: boolean }>;};}` |
 
 #### special thanks to:
 
