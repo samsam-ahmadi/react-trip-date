@@ -43,6 +43,21 @@ export const Header = ({
 
   const renderTitles = () => {
     let titles = [];
+
+    if (displayMonths) {
+      return (
+        <p key={Math.random()} onClick={() => setDisplayMonths(prev => !prev)}>
+          {source.format(
+            components?.header?.format
+              ? components?.header?.format
+              : displayMonths
+              ? "YYYY"
+              : "YYYY-MMMM",
+          )}
+        </p>
+      );
+    }
+
     for (let i = 0; i < numberOfMonths; i++) {
       if (source.get("day") === 0) {
         source = source.add(1, "day");
@@ -63,7 +78,11 @@ export const Header = ({
   };
 
   return (
-    <Wrapper numberOfMonths={numberOfMonths} jalali={jalali}>
+    <Wrapper
+      numberOfMonths={numberOfMonths}
+      jalali={jalali}
+      displayMonths={displayMonths}
+    >
       <div className="action right" onClick={prevMonth}>
         <ArrowRight />
         {displayMonths ? <ArrowRight /> : null}
@@ -80,6 +99,7 @@ export const Header = ({
 type WrapperProps = {
   jalali: boolean;
   numberOfMonths: number;
+  displayMonths: boolean;
 };
 
 const Wrapper = styled.div<WrapperProps>`
@@ -95,7 +115,8 @@ const Wrapper = styled.div<WrapperProps>`
     text-align: center;
     cursor: pointer;
     direction: ${({ jalali }) => (jalali ? "ltr" : "rtl")};
-    width: ${({ numberOfMonths }) => `${100 / numberOfMonths}% `};
+    width: ${({ numberOfMonths, displayMonths }) =>
+      displayMonths ? "100%" : `${100 / numberOfMonths}% `};
   }
   .action {
     position: absolute;
