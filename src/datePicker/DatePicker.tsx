@@ -1,7 +1,8 @@
+import { DefaultTheme, ThemeProvider } from "styled-components";
 import { DisplayMonths } from "components/DisplayMonths";
 import { Header } from "components";
-import { ThemeProvider } from "styled-components";
 import { dayjsLocalized } from "libs/dayjsLocalized";
+import { deepMerge } from "libs/mergeObjects";
 import { theme } from "constant";
 import { useEffect, useState } from "react";
 
@@ -60,7 +61,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
 
   return (
     <div className="tp-calendar">
-      <ThemeProvider theme={themeProps ? themeProps : theme}>
+      <ThemeProvider
+        theme={
+          themeProps ? (deepMerge(theme, themeProps) as DefaultTheme) : theme!
+        }
+      >
         <Header
           jalali={jalali}
           source={source}

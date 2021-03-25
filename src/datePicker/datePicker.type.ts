@@ -21,7 +21,7 @@ export type DatePickerComponents = {
 };
 export interface DatePickerProps {
   autoResponsive?: boolean;
-  theme?: DefaultTheme;
+  theme?: DeepPartial<DefaultTheme>;
   numberOfSelectableDays?: number;
   disabledBeforeToday?: boolean;
   disabledDays?: string[];
@@ -33,3 +33,7 @@ export interface DatePickerProps {
   numberOfMonths?: number;
   onChange: DatePickerOnChange;
 }
+
+export type DeepPartial<T> = {
+  [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P];
+};

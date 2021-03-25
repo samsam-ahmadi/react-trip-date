@@ -1,3 +1,4 @@
+import { DeepPartial } from "datePicker/datePicker.type";
 import { DefaultTheme } from "styled-components";
 import { ElementType } from "react";
 
@@ -33,7 +34,7 @@ export interface RangePickerProps {
   disabledDays?: string[];
   disabled?: boolean;
   jalali?: boolean;
-  theme?: DefaultTheme;
+  theme?: DeepPartial<DefaultTheme>;
   components?: RangePickerComponents;
   startOfWeek?: number;
   selectedDays?: RangePickerSelectedDays;

@@ -159,6 +159,7 @@ const Wrapper = styled.div`
   flex-direction: column;
   cursor: pointer;
   color: ${({ theme }) => theme.grey[900]};
+  user-select: none;
 
   &:hover {
     background-color: ${({ theme }) => theme.primary.light};
@@ -176,12 +177,7 @@ const Wrapper = styled.div`
   }
 
   &.today {
-    background-color: ${({ theme }) => theme.primary.light};
-    color: ${({ theme }) => theme.primary.dark};
-    &:hover {
-      background-color: ${({ theme }) => theme.primary.light};
-      color: ${({ theme }) => theme.primary.dark};
-    }
+    border: 1px solid #e2e2e2;
   }
 
   &.disabled {
@@ -205,8 +201,8 @@ const Wrapper = styled.div`
   }
   &.selected {
     color: #fff;
-    background-color: ${props => props.theme.primary.main};
-    box-shadow: 0 2px 5px 0 rgba(0, 0, 0, 0.2);
+    background-color: ${props => props.theme.primary.dark};
+    box-shadow: 0px 10px 30px -12px ${props => props.theme.primary.main};
 
     &:hover {
       background-color: ${props => props.theme.primary.main};

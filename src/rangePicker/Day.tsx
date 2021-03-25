@@ -234,7 +234,8 @@ const Wrapper = styled.div`
   }
 
   &.today {
-    color: ${({ theme }) => theme.primary.dark};
+    border: 1px solid #e2e2e2;
+    border-radius: 50%;
   }
 
   &.disabled {
@@ -258,18 +259,19 @@ const Wrapper = styled.div`
   }
 
   &.range-select {
-    background-color: ${({ theme }) => theme.primary.main};
+    background-color: ${({ theme }) => theme.primary.dark};
     color: #fff;
+    border: 0;
+    border-radius: 0;
+
     &:hover {
-      background-color: ${({ theme }) => theme.primary.main};
+      background-color: ${({ theme }) => theme.primary.dark};
       color: #fff;
     }
-    filter: drop-shadow(4px 0px 2px rgba(0, 0, 0, 0.1))
-      drop-shadow(4px 0px 2px rgba(0, 0, 0, 0.1));
+    box-shadow: 0px 10px 30px -12px ${({ theme }) => theme.primary.dark};
 
     &.jalali {
-      filter: drop-shadow(-4px 0px 2px rgba(0, 0, 0, 0.1))
-        drop-shadow(-4px 0px 2px rgba(0, 0, 0, 0.1));
+      box-shadow: 0px 10px 30px -12px ${({ theme }) => theme.primary.dark};
     }
 
     &.end-date {
@@ -296,6 +298,7 @@ const Wrapper = styled.div`
       }
     }
   }
+
   &.same {
     border-top-left-radius: 25px !important;
     border-bottom-left-radius: 25px !important;
