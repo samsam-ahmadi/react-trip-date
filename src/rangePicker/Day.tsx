@@ -22,6 +22,8 @@ interface Props {
   numberOfMonth: number;
   disabledDays: string[];
   disabledBeforeToday: boolean;
+  disabledBeforeDate?: string;
+  disabledAfterDate?: string;
   components?: RangePickerComponents;
   onChange: RangePickerOnChange;
   selectedDays?: RangePickerSelectedDays;
@@ -45,12 +47,22 @@ export const Day = ({
   setSelectedDays,
   numberOfMonth,
   disabledBeforeToday,
+  disabledBeforeDate,
+  disabledAfterDate,
 }: Props) => {
+  if (disabledBeforeToday) {
+    const today = dayjs().format(FORMAT_DATE);
+    disabledBeforeDate =
+      disabledBeforeDate && dayjs(disabledBeforeDate).isAfter(today)
+        ? disabledBeforeDate
+        : today;
+  }
   let dateFormat = getDayFormat(day, jalali);
   const handleDisabledDate = () => {
     return (
       disabledDays.includes(dateFormat) ||
-      (disabledBeforeToday && dayjs(day).isBefore(dayjs().format(FORMAT_DATE)))
+      (disabledBeforeDate && dayjs(day).isBefore(disabledBeforeDate)) ||
+      (disabledAfterDate && dayjs(day).isAfter(disabledAfterDate))
     );
   };
 
@@ -82,8 +94,16 @@ export const Day = ({
     // Handle disable dates
     if (disabledDays) {
       if (
-        (disabledBeforeToday &&
-          dayjs(dateFormat).isBefore(dayjsLocalized(jalali), "day")) ||
+        (disabledBeforeDate &&
+          dayjs(dateFormat).isBefore(
+            dayjsLocalized(jalali, disabledBeforeDate),
+            "day",
+          )) ||
+        (disabledAfterDate &&
+          dayjs(dateFormat).isAfter(
+            dayjsLocalized(jalali, disabledAfterDate),
+            "day",
+          )) ||
         disabledDays.includes(dateFormat)
       ) {
         return false;

@@ -20,6 +20,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   theme: themeProps,
   numberOfSelectableDays = 0,
   disabledBeforeToday = false,
+  disabledBeforeDate,
+  disabledAfterDate,
   selectedDays: selectedDaysProps = [],
   onChange,
 }) => {
@@ -95,6 +97,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
             selectedDays={selectedDays}
             numberOfMonths={numberOfMonths}
             setSelectedDays={setSelectedDays}
+            disabledAfterDate={disabledAfterDate}
+            disabledBeforeDate={disabledBeforeDate}
             disabledBeforeToday={disabledBeforeToday}
             numberOfSelectableDays={numberOfSelectableDays}
           />

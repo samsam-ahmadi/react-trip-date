@@ -31,6 +31,8 @@ export type RangePickerComponents = {
 
 export interface RangePickerProps {
   disabledBeforeToday?: boolean;
+  disabledBeforeDate?: string;
+  disabledAfterDate?: string;
   disabledDays?: string[];
   disabled?: boolean;
   jalali?: boolean;
