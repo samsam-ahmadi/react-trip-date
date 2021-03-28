@@ -1,6 +1,12 @@
 import { FORMAT_DATE } from "constant";
 import { RangePicker } from "rangePicker";
-import { array, boolean, number, withKnobs } from "@storybook/addon-knobs";
+import {
+  array,
+  boolean,
+  number,
+  text,
+  withKnobs,
+} from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
 
@@ -8,6 +14,9 @@ let selectedDays = {
   from: dayjs().add(2, "day").format(FORMAT_DATE),
   to: dayjs().add(20, "day").format(FORMAT_DATE),
 };
+
+let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
+let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
 
 let disabledDays = [
   dayjs().add(3, "day").format(FORMAT_DATE),
@@ -30,6 +39,8 @@ stories.add("All Props", () => {
       disabled={boolean("disabled", false)}
       autoResponsive={boolean("auto responsive", true)}
       disabledBeforeToday={boolean("disabled before today", false)}
+      disabledBeforeDate={text("disabled before date", disabledBeforeDate)}
+      disabledAfterDate={text("disabled after date", disabledAfterDate)}
       numberOfMonths={number("number of months", 4)}
       selectedDays={selectedDays}
       disabledDays={array("disabled days", disabledDays)}
@@ -86,6 +97,26 @@ stories.add("Disabled Before Today", () => {
   return (
     <RangePicker
       disabledBeforeToday={boolean("disabled before today", true)}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Disabled Before Date and Disabled after Date", () => {
+  return (
+    <RangePicker
+      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
+      disabledAfterDate={text("disabled after", disabledAfterDate)}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Disabled Before Today and Disabled Before Date", () => {
+  return (
+    <RangePicker
+      disabledBeforeToday={boolean("disabled before today", true)}
+      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
       onChange={dates => console.log("dates", dates)}
     />
   );

@@ -24,6 +24,8 @@ export interface DatePickerProps {
   theme?: DeepPartial<DefaultTheme>;
   numberOfSelectableDays?: number;
   disabledBeforeToday?: boolean;
+  disabledBeforeDate?: string;
+  disabledAfterDate?: string;
   disabledDays?: string[];
   jalali?: boolean;
   components?: DatePickerComponents;

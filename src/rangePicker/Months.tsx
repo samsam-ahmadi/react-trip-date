@@ -22,6 +22,8 @@ interface Props {
   selectedDays?: RangePickerSelectedDays;
   disabledDays: string[];
   disabledBeforeToday: boolean;
+  disabledBeforeDate?: string;
+  disabledAfterDate?: string;
   disabled: boolean;
   components?: RangePickerComponents;
   onChange: RangePickerOnChange;
@@ -42,6 +44,8 @@ export const Months = ({
   components,
   setSelectedDays,
   disabledBeforeToday,
+  disabledBeforeDate,
+  disabledAfterDate,
   jalali,
   disabled,
   onChange,
@@ -94,6 +98,8 @@ export const Months = ({
                   selectedDays={selectedDays}
                   setSelectedDays={setSelectedDays}
                   disabledBeforeToday={disabledBeforeToday}
+                  disabledBeforeDate={disabledBeforeDate}
+                  disabledAfterDate={disabledAfterDate}
                 />
               ))}
             </Weeks>

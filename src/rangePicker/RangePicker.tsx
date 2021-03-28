@@ -15,6 +15,8 @@ export const RangePicker = ({
   numberOfMonths: numberOfMonthsProps = 1,
   disabledDays = [],
   disabledBeforeToday = false,
+  disabledBeforeDate,
+  disabledAfterDate,
   disabled = false,
   components,
   theme: themeProps,
@@ -97,6 +99,8 @@ export const RangePicker = ({
             numberOfMonths={numberOfMonths}
             setSelectedDays={setSelectedDays}
             disabledBeforeToday={disabledBeforeToday}
+            disabledBeforeDate={disabledBeforeDate}
+            disabledAfterDate={disabledAfterDate}
           />
         )}
       </ThemeProvider>

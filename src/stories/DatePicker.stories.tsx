@@ -1,11 +1,21 @@
 import React from "react";
-import { array, boolean, number, withKnobs } from "@storybook/addon-knobs";
+import { FORMAT_DATE } from "constant";
+import {
+  array,
+  boolean,
+  number,
+  text,
+  withKnobs,
+} from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
 
 import { DatePicker } from "../datePicker";
 
 const format = "YYYY-MM-DD";
+
+let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
+let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
 
 let selectedDays = [
   dayjs().add(2, "day").format(format),
@@ -33,6 +43,8 @@ stories.add("All Props", () => {
       disabled={boolean("disabled", false)}
       autoResponsive={boolean("auto responsive", true)}
       disabledBeforeToday={boolean("disabled before today", false)}
+      disabledBeforeDate={text("disabled before date", disabledBeforeDate)}
+      disabledAfterDate={text("disabled after date", disabledAfterDate)}
       numberOfMonths={number("number of months", 4)}
       numberOfSelectableDays={number("number of selectable days", 5)}
       selectedDays={array("selected days", selectedDays)}
@@ -113,6 +125,28 @@ stories.add("Disabled Before Today", () => {
         onChange={dates => console.log("dates", dates)}
       />
     </div>
+  );
+});
+
+stories.add("Disabled Before Date and Disabled after Date", () => {
+  return (
+    <DatePicker
+      numberOfMonths={2}
+      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
+      disabledAfterDate={text("disabled after", disabledAfterDate)}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Disabled Before Today and Disabled Before Date", () => {
+  return (
+    <DatePicker
+      numberOfMonths={2}
+      disabledBeforeToday={boolean("disabled before today", true)}
+      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
+      onChange={dates => console.log("dates", dates)}
+    />
   );
 });
 

@@ -19,6 +19,8 @@ type Props = {
   disabledDays: string[];
   numberOfSelectableDays: number;
   disabledBeforeToday: boolean;
+  disabledBeforeDate?: string;
+  disabledAfterDate?: string;
   components?: DatePickerComponents;
   onChange: DatePickerOnChange;
   setSelectedDays: Dispatch<SetStateAction<string[]>>;
@@ -37,7 +39,16 @@ export const Day: React.FC<Props> = ({
   setSelectedDays,
   disabledBeforeToday,
   numberOfSelectableDays,
+  disabledBeforeDate,
+  disabledAfterDate,
 }) => {
+  if (disabledBeforeToday) {
+    const today = dayjs().format(FORMAT_DATE);
+    disabledBeforeDate =
+      disabledBeforeDate && dayjs(disabledBeforeDate).isAfter(today)
+        ? disabledBeforeDate
+        : today;
+  }
   const handleSelectedDate = () => {
     const date = getDayFormat(day, jalali);
     return selectedDays.includes(date);
@@ -47,7 +58,8 @@ export const Day: React.FC<Props> = ({
     let date = getDayFormat(day, jalali);
     return (
       disabledDays.includes(date) ||
-      (disabledBeforeToday && dayjs(day).isBefore(dayjs().format(FORMAT_DATE)))
+      (disabledBeforeDate && dayjs(date).isBefore(disabledBeforeDate)) ||
+      (disabledAfterDate && dayjs(date).isAfter(disabledAfterDate))
     );
   };
 
@@ -57,7 +69,8 @@ export const Day: React.FC<Props> = ({
     const date = getDayFormat(day, jalali);
 
     if (
-      (disabledBeforeToday && dayjs(day).isBefore(dayjs())) ||
+      (disabledBeforeDate && dayjs(day).isBefore(disabledBeforeDate)) ||
+      (disabledAfterDate && dayjs(day).isAfter(disabledAfterDate)) ||
       disabledDays.includes(date) ||
       selectedDays.includes(date)
     ) {
