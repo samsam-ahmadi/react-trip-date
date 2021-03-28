@@ -3,11 +3,20 @@ import { DisplayMonths } from "components/DisplayMonths";
 import { Header } from "components";
 import { dayjsLocalized } from "libs/dayjsLocalized";
 import { deepMerge } from "libs/mergeObjects";
+import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
 import { useEffect, useState } from "react";
 
 import { Months } from "./Months";
 import { RangePickerProps } from "./rangePicker.type";
+
+const initialDate = (initialMonth?: number, jalali?: boolean) => {
+  const initialDate = dayjsLocalized(jalali);
+  if (initialMonth !== undefined) {
+    return initialDate.month(initialMonth);
+  }
+  return initialDate;
+};
 
 export const RangePicker = ({
   jalali = false,
@@ -23,16 +32,30 @@ export const RangePicker = ({
   autoResponsive = true,
   selectedDays: selectedDaysProps,
   onChange,
+  initialMonth,
+  onUpdateWindow,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
   const [displayMonths, setDisplayMonths] = useState(false);
-  const [source, setSource] = useState(dayjsLocalized(jalali));
+  const [source, setSource] = useState(initialDate(initialMonth, jalali));
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
   useEffect(() => {
-    setSource(dayjsLocalized(jalali));
-  }, [jalali]);
+    if (onUpdateWindow) {
+      let endDate = source.add(Math.max(0, numberOfMonths - 1), "month");
+      endDate = endDate.date(endDate.daysInMonth());
+      const startDate = source.date(1);
+      onUpdateWindow({
+        start: getDayFormat(startDate, jalali),
+        end: getDayFormat(endDate),
+      });
+    }
+  }, [jalali, numberOfMonths, onUpdateWindow, source]);
+
+  useEffect(() => {
+    setSource(initialDate(initialMonth, jalali));
+  }, [jalali, initialMonth]);
 
   useEffect(() => {
     setSelectedDays(selectedDaysProps);

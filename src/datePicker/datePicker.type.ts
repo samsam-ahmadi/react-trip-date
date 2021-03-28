@@ -7,6 +7,9 @@ export type DatePickerType = {
 
 export type DatePickerOnChange = (days: string[]) => void;
 
+export type DatePickerWindow = { start: string; end: string };
+export type DatePickerWindowUpdated = (window: DatePickerWindow) => void;
+
 export type ResponsiveHandler = (howManyDoYouWantToShow: any) => boolean;
 
 export type DatePickerComponents = {
@@ -34,6 +37,8 @@ export interface DatePickerProps {
   selectedDays?: string[];
   numberOfMonths?: number;
   onChange: DatePickerOnChange;
+  initialMonth?: number;
+  onUpdateWindow?: DatePickerWindowUpdated;
 }
 
 export type DeepPartial<T> = {

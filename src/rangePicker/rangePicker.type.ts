@@ -15,6 +15,9 @@ export type RangePickerSelectedDays = {
   to: string;
 };
 
+export type RangePickerWindow = { start: string; end: string };
+export type RangePickerWindowUpdated = (window: RangePickerWindow) => void;
+
 export type RangePickerComponents = {
   days?: ElementType<{
     day: string;
@@ -43,4 +46,6 @@ export interface RangePickerProps {
   numberOfMonths?: number;
   autoResponsive?: boolean;
   onChange: RangePickerOnChange;
+  initialMonth?: number;
+  onUpdateWindow?: RangePickerWindowUpdated;
 }
