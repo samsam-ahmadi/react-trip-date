@@ -61,8 +61,8 @@ export const Day = ({
   const handleDisabledDate = () => {
     return (
       disabledDays.includes(dateFormat) ||
-      (disabledBeforeDate && dayjs(day).isBefore(disabledBeforeDate)) ||
-      (disabledAfterDate && dayjs(day).isAfter(disabledAfterDate))
+      (disabledBeforeDate && dayjs(dateFormat).isBefore(disabledBeforeDate)) ||
+      (disabledAfterDate && dayjs(dateFormat).isAfter(disabledAfterDate))
     );
   };
 

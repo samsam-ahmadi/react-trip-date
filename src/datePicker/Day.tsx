@@ -58,8 +58,8 @@ export const Day: React.FC<Props> = ({
     let date = getDayFormat(day, jalali);
     return (
       disabledDays.includes(date) ||
-      (disabledBeforeDate && dayjs(day).isBefore(disabledBeforeDate)) ||
-      (disabledAfterDate && dayjs(day).isAfter(disabledAfterDate))
+      (disabledBeforeDate && dayjs(date).isBefore(disabledBeforeDate)) ||
+      (disabledAfterDate && dayjs(date).isAfter(disabledAfterDate))
     );
   };
 
