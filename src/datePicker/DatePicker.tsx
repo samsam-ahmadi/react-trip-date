@@ -36,6 +36,10 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }, [jalali]);
 
   useEffect(() => {
+    setSelectedDays(selectedDaysProps);
+  }, [selectedDaysProps]);
+
+  useEffect(() => {
     const handleResize = () => {
       let width = document.querySelector(".tp-calendar")!.clientWidth;
       if (width < 580) {
