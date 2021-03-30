@@ -22,12 +22,11 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   disabledBeforeToday = false,
   disabledBeforeDate,
   disabledAfterDate,
-  selectedDays: selectedDaysProps = [],
+  selectedDays: selectedDaysProps,
   onChange,
 }) => {
-  const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
+  const [selectedDays, setSelectedDays] = useState(selectedDaysProps || []);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
-
   const [displayMonths, setDisplayMonths] = useState(false);
   const [source, setSource] = useState(dayjsLocalized(jalali));
 
@@ -36,16 +35,18 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }, [jalali]);
 
   useEffect(() => {
-    setSelectedDays(selectedDaysProps);
+    selectedDaysProps && setSelectedDays(selectedDaysProps);
   }, [selectedDaysProps]);
 
   useEffect(() => {
     const handleResize = () => {
-      let width = document.querySelector(".tp-calendar")!.clientWidth;
-      if (width < 580) {
-        setNumberOfMonths(1);
-      } else {
-        setNumberOfMonths(Math.floor(width / 320));
+      if (document.querySelector(".tp-calendar")) {
+        let width = document.querySelector(".tp-calendar")!.clientWidth;
+        if (width < 580) {
+          setNumberOfMonths(1);
+        } else {
+          setNumberOfMonths(Math.floor(width / 320));
+        }
       }
     };
 
