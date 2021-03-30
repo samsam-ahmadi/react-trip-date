@@ -7,11 +7,11 @@ import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 import { CalendarProps } from "./calendar.type";
 
 export const Calendar: React.FC<CalendarProps> = ({
-  source = dayjs(),
   jalali,
   startOfWeek = 1,
   children,
 }): ReactElement => {
+  let source = dayjs();
   let daysInMonth = source.daysInMonth(),
     firstDay = source.startOf("month").day();
   if (source.get("day") === 0) {
