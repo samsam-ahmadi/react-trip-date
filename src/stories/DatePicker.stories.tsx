@@ -35,11 +35,11 @@ let disabledDays = [
 const stories = storiesOf("Date Picker Component", module).addDecorator(
   withKnobs,
 );
-
 stories.add("All Props", () => {
   return (
     <DatePicker
       jalali={boolean("jalali", false)}
+      startOfWeek={number("start of week", 0)}
       disabled={boolean("disabled", false)}
       autoResponsive={boolean("auto responsive", true)}
       disabledBeforeToday={boolean("disabled before today", false)}

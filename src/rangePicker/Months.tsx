@@ -55,13 +55,9 @@ export const Months = ({
     let months = [];
     for (let i = 0; i < numberOfMonths; i++) {
       let source = sourceProp.add(i, "month");
-      const daysInMonth = source.daysInMonth();
-      const firstDay = source.startOf("month").day();
       const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
         createCalendar({
           source: source,
-          daysInMonth: daysInMonth,
-          firstDay: firstDay,
           startOfWeek: jalali ? 6 : startOfWeek || 0,
         }),
         7,

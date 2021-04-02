@@ -2,15 +2,19 @@ import { Dayjs } from "dayjs";
 
 const createCalendar = ({
   source,
-  daysInMonth,
-  firstDay,
   startOfWeek,
 }: CreateCalendarType): Dayjs[] => {
   let days: Dayjs[] = [];
+  const daysInMonth = source.daysInMonth();
+  const firstDay = source.startOf("month").day();
+
   let shift =
-    firstDay === startOfWeek
+    firstDay + startOfWeek === 7
       ? 0
-      : firstDay + (startOfWeek === 0 ? 0 : 7 - startOfWeek);
+      : firstDay + startOfWeek < 7
+      ? firstDay + startOfWeek
+      : 7 - firstDay + startOfWeek;
+
   let tmpDay = source.startOf("month").subtract(shift, "day");
   let totalDays = daysInMonth + shift;
   let remaining = totalDays % 7;
@@ -25,7 +29,5 @@ export { createCalendar };
 
 interface CreateCalendarType {
   source: Dayjs;
-  daysInMonth: number;
-  firstDay: number;
   startOfWeek: number;
 }
