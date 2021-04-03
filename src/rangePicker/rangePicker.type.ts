@@ -52,5 +52,5 @@ export interface RangePickerProps {
   autoResponsive?: boolean;
   onChange: RangePickerOnChange;
   initialMonthAndYear?: MonthAndYear;
-  onUpdateWindow?: RangePickerWindowUpdated;
+  onRangeDateInScreen?: RangePickerWindowUpdated;
 }

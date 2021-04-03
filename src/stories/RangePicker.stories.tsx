@@ -49,7 +49,7 @@ stories.add("All Props", () => {
         month: number("initial month", initialMonth),
         year: number("initial year", initialYear),
       }}
-      onUpdateWindow={window => console.log("window changed", window)}
+      onRangeDateInScreen={window => console.log("window changed", window)}
       selectedDays={selectedDays}
       disabledDays={array("disabled days", disabledDays)}
       onChange={dates => console.log("dates", dates)}
@@ -149,14 +149,14 @@ stories.add("Auto Responsive", () => {
   );
 });
 
-stories.add("Initial Month/Year and onUpdateWindow callback", () => {
+stories.add("Initial Month/Year and onRangeDateInScreen callback", () => {
   return (
     <RangePicker
       initialMonthAndYear={{
         month: number("initial month", initialMonth),
         year: number("initial year", initialYear),
       }}
-      onUpdateWindow={window => console.log("window changed", window)}
+      onRangeDateInScreen={window => console.log("window changed", window)}
       numberOfMonths={number("number of months", 2)}
       jalali={boolean("jalali", false)}
       onChange={dates => console.log("dates", dates)}

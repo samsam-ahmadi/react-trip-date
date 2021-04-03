@@ -36,7 +36,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   selectedDays: selectedDaysProps = [],
   onChange,
   initialMonthAndYear,
-  onUpdateWindow,
+  onRangeDateInScreen,
 }) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
@@ -47,16 +47,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   );
 
   useEffect(() => {
-    if (onUpdateWindow) {
+    if (onRangeDateInScreen) {
       let endDate = source.add(Math.max(0, numberOfMonths - 1), "month");
       endDate = endDate.date(endDate.daysInMonth());
       const startDate = source.date(1);
-      onUpdateWindow({
+      onRangeDateInScreen({
         start: getDayFormat(startDate, jalali),
         end: getDayFormat(endDate),
       });
     }
-  }, [jalali, numberOfMonths, onUpdateWindow, source]);
+  }, [jalali, numberOfMonths, onRangeDateInScreen, source]);
 
   useEffect(() => {
     setSource(initialDate(initialMonthAndYear, jalali));

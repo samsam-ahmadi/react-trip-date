@@ -43,7 +43,7 @@ export interface DatePickerProps {
   numberOfMonths?: number;
   onChange: DatePickerOnChange;
   initialMonthAndYear?: MonthAndYear;
-  onUpdateWindow?: DatePickerWindowUpdated;
+  onRangeDateInScreen?: DatePickerWindowUpdated;
 }
 
 export type DeepPartial<T> = {

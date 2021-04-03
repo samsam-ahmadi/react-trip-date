@@ -35,7 +35,7 @@ export const RangePicker = ({
   selectedDays: selectedDaysProps,
   onChange,
   initialMonthAndYear,
-  onUpdateWindow,
+  onRangeDateInScreen,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
@@ -46,16 +46,16 @@ export const RangePicker = ({
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
   useEffect(() => {
-    if (onUpdateWindow) {
+    if (onRangeDateInScreen) {
       let endDate = source.add(Math.max(0, numberOfMonths - 1), "month");
       endDate = endDate.date(endDate.daysInMonth());
       const startDate = source.date(1);
-      onUpdateWindow({
+      onRangeDateInScreen({
         start: getDayFormat(startDate, jalali),
         end: getDayFormat(endDate),
       });
     }
-  }, [jalali, numberOfMonths, onUpdateWindow, source]);
+  }, [jalali, numberOfMonths, onRangeDateInScreen, source]);
 
   useEffect(() => {
     setSource(initialDate(initialMonthAndYear, jalali));
