@@ -7,13 +7,15 @@ import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
 import { useEffect, useState } from "react";
 
-import { DatePickerProps } from "./datePicker.type";
+import { DatePickerProps, MonthAndYear } from "./datePicker.type";
 import { Months } from "./Months";
 
-const initialDate = (initialMonth?: number, jalali?: boolean) => {
+const initialDate = (initialMonthAndYear?: MonthAndYear, jalali?: boolean) => {
   const initialDate = dayjsLocalized(jalali);
-  if (initialMonth !== undefined) {
-    return initialDate.month(initialMonth);
+  if (initialMonthAndYear !== undefined) {
+    return initialDate
+      .month(initialMonthAndYear.month)
+      .year(initialMonthAndYear.year);
   }
   return initialDate;
 };
@@ -33,14 +35,16 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   disabledAfterDate,
   selectedDays: selectedDaysProps = [],
   onChange,
-  initialMonth,
+  initialMonthAndYear,
   onUpdateWindow,
 }) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
   const [displayMonths, setDisplayMonths] = useState(false);
-  const [source, setSource] = useState(initialDate(initialMonth, jalali));
+  const [source, setSource] = useState(
+    initialDate(initialMonthAndYear, jalali),
+  );
 
   useEffect(() => {
     if (onUpdateWindow) {
@@ -55,8 +59,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }, [jalali, numberOfMonths, onUpdateWindow, source]);
 
   useEffect(() => {
-    setSource(initialDate(initialMonth, jalali));
-  }, [jalali, initialMonth]);
+    setSource(initialDate(initialMonthAndYear, jalali));
+  }, [jalali, initialMonthAndYear]);
 
   useEffect(() => {
     setSelectedDays(selectedDaysProps);

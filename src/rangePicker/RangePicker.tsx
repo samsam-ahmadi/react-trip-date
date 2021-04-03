@@ -7,13 +7,15 @@ import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
 import { useEffect, useState } from "react";
 
+import { MonthAndYear, RangePickerProps } from "./rangePicker.type";
 import { Months } from "./Months";
-import { RangePickerProps } from "./rangePicker.type";
 
-const initialDate = (initialMonth?: number, jalali?: boolean) => {
+const initialDate = (initialMonthAndYear?: MonthAndYear, jalali?: boolean) => {
   const initialDate = dayjsLocalized(jalali);
-  if (initialMonth !== undefined) {
-    return initialDate.month(initialMonth);
+  if (initialMonthAndYear !== undefined) {
+    return initialDate
+      .month(initialMonthAndYear.month)
+      .year(initialMonthAndYear.year);
   }
   return initialDate;
 };
@@ -32,13 +34,15 @@ export const RangePicker = ({
   autoResponsive = true,
   selectedDays: selectedDaysProps,
   onChange,
-  initialMonth,
+  initialMonthAndYear,
   onUpdateWindow,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
   const [displayMonths, setDisplayMonths] = useState(false);
-  const [source, setSource] = useState(initialDate(initialMonth, jalali));
+  const [source, setSource] = useState(
+    initialDate(initialMonthAndYear, jalali),
+  );
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
   useEffect(() => {
@@ -54,8 +58,8 @@ export const RangePicker = ({
   }, [jalali, numberOfMonths, onUpdateWindow, source]);
 
   useEffect(() => {
-    setSource(initialDate(initialMonth, jalali));
-  }, [jalali, initialMonth]);
+    setSource(initialDate(initialMonthAndYear, jalali));
+  }, [jalali, initialMonthAndYear]);
 
   useEffect(() => {
     setSelectedDays(selectedDaysProps);

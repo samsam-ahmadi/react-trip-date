@@ -18,6 +18,7 @@ let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
 let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
 
 let initialMonth = dayjs().month();
+let initialYear = dayjs().year();
 
 let selectedDays = [
   dayjs().add(2, "day").format(format),
@@ -48,7 +49,10 @@ stories.add("All Props", () => {
       disabledBeforeDate={text("disabled before date", disabledBeforeDate)}
       disabledAfterDate={text("disabled after date", disabledAfterDate)}
       numberOfMonths={number("number of months", 4)}
-      initialMonth={number("initial month", initialMonth)}
+      initialMonthAndYear={{
+        month: number("initial month", initialMonth),
+        year: number("initial year", initialYear),
+      }}
       onUpdateWindow={window => console.log("window changed", window)}
       numberOfSelectableDays={number("number of selectable days", 5)}
       selectedDays={array("selected days", selectedDays)}
@@ -109,10 +113,13 @@ stories.add("Auto Responsive", () => {
   );
 });
 
-stories.add("Initial Month and onUpdateWindow callback", () => {
+stories.add("Initial Month/Year and onUpdateWindow callback", () => {
   return (
     <DatePicker
-      initialMonth={number("initial month", initialMonth)}
+      initialMonthAndYear={{
+        month: number("initial month", initialMonth),
+        year: number("initial year", initialYear),
+      }}
       onUpdateWindow={window => console.log("window changed", window)}
       numberOfMonths={number("number of months", 2)}
       jalali={boolean("jalali", false)}
