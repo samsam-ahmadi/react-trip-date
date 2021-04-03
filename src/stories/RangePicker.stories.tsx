@@ -18,8 +18,8 @@ let selectedDays = {
 let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
 let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
 
-let initialMonth = dayjs().month();
-let initialYear = dayjs().year();
+let initialMonth = dayjs().subtract(1, "month").month();
+let initialYear = dayjs().add(1, "year").year();
 
 let disabledDays = [
   dayjs().add(3, "day").format(FORMAT_DATE),
