@@ -32,11 +32,6 @@ export type RangePickerComponents = {
   };
 };
 
-export interface MonthAndYear {
-  month: number;
-  year: number;
-}
-
 export interface RangePickerProps {
   disabledBeforeToday?: boolean;
   disabledBeforeDate?: string;
@@ -51,6 +46,6 @@ export interface RangePickerProps {
   numberOfMonths?: number;
   autoResponsive?: boolean;
   onChange: RangePickerOnChange;
-  initialMonthAndYear?: MonthAndYear;
+  initialMonthAndYear?: string;
   onRangeDateInScreen?: RangePickerWindowUpdated;
 }

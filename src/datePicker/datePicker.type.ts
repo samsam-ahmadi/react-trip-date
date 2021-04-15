@@ -5,11 +5,6 @@ export type DatePickerType = {
   jalali?: boolean;
 };
 
-export interface MonthAndYear {
-  month: number;
-  year: number;
-}
-
 export type DatePickerOnChange = (days: string[]) => void;
 
 export type DatePickerWindow = { start: string; end: string };
@@ -42,7 +37,7 @@ export interface DatePickerProps {
   selectedDays?: string[];
   numberOfMonths?: number;
   onChange: DatePickerOnChange;
-  initialMonthAndYear?: MonthAndYear;
+  initialMonthAndYear?: string;
   onRangeDateInScreen?: DatePickerWindowUpdated;
 }
 
