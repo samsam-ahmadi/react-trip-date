@@ -51,9 +51,8 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   useEffect(() => {
     if (selectedDays.length) {
       setSource(dayjsLocalized(jalali, selectedDays[0]));
-    } else {
-      initialMonthAndYear &&
-        setSource(dayjsLocalized(jalali, initialMonthAndYear));
+    } else if (initialMonthAndYear) {
+      setSource(dayjsLocalized(jalali, initialMonthAndYear));
     }
   }, [jalali, initialMonthAndYear, selectedDays]);
 

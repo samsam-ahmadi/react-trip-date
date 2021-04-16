@@ -50,9 +50,8 @@ export const RangePicker = ({
   useEffect(() => {
     if (selectedDays?.from) {
       setSource(dayjsLocalized(jalali, selectedDays?.from));
-    } else {
-      initialMonthAndYear &&
-        setSource(dayjsLocalized(jalali, initialMonthAndYear));
+    } else if (initialMonthAndYear) {
+      setSource(dayjsLocalized(jalali, initialMonthAndYear));
     }
   }, [jalali, initialMonthAndYear, selectedDays]);
 
