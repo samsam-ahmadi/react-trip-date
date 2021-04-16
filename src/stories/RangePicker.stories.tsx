@@ -18,6 +18,8 @@ let selectedDays = {
 let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
 let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
 
+let initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
+
 let disabledDays = [
   dayjs().add(3, "day").format(FORMAT_DATE),
   dayjs().add(9, "day").format(FORMAT_DATE),
@@ -43,6 +45,8 @@ stories.add("All Props", () => {
       disabledBeforeDate={text("disabled before date", disabledBeforeDate)}
       disabledAfterDate={text("disabled after date", disabledAfterDate)}
       numberOfMonths={number("number of months", 4)}
+      initialMonthAndYear={text("initial month and year", initialMonthAndYear)}
+      onRangeDateInScreen={window => console.log("window changed", window)}
       selectedDays={selectedDays}
       disabledDays={array("disabled days", disabledDays)}
       onChange={dates => console.log("dates", dates)}
@@ -137,6 +141,18 @@ stories.add("Auto Responsive", () => {
     <RangePicker
       autoResponsive={boolean("auto responsive", true)}
       numberOfMonths={number("number of months", 4)}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Initial Month/Year and onRangeDateInScreen callback", () => {
+  return (
+    <RangePicker
+      initialMonthAndYear={text("initial month and year", initialMonthAndYear)}
+      onRangeDateInScreen={window => console.log("window changed", window)}
+      numberOfMonths={number("number of months", 2)}
+      jalali={boolean("jalali", false)}
       onChange={dates => console.log("dates", dates)}
     />
   );

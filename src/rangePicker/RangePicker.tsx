@@ -3,6 +3,7 @@ import { DisplayMonths } from "components/DisplayMonths";
 import { Header } from "components";
 import { dayjsLocalized } from "libs/dayjsLocalized";
 import { deepMerge } from "libs/mergeObjects";
+import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
 import { useEffect, useState } from "react";
 
@@ -23,16 +24,38 @@ export const RangePicker = ({
   autoResponsive = true,
   selectedDays: selectedDaysProps,
   onChange,
+  initialMonthAndYear,
+  onRangeDateInScreen,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
   const [displayMonths, setDisplayMonths] = useState(false);
-  const [source, setSource] = useState(dayjsLocalized(jalali));
+  const [source, setSource] = useState(
+    dayjsLocalized(jalali, initialMonthAndYear),
+  );
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
   useEffect(() => {
-    setSource(dayjsLocalized(jalali));
-  }, [jalali]);
+    if (onRangeDateInScreen) {
+      let endDate = source.add(Math.max(0, numberOfMonths - 1), "month");
+      endDate = endDate.date(endDate.daysInMonth());
+      const startDate = source.date(1);
+      onRangeDateInScreen({
+        start: getDayFormat(startDate, jalali),
+        end: getDayFormat(endDate),
+      });
+    }
+  }, [jalali, numberOfMonths, onRangeDateInScreen, source]);
+
+  useEffect(() => {
+    if (!initialMonthAndYear && selectedDays?.from) {
+      setSource(dayjsLocalized(jalali, selectedDays?.from));
+    } else if (initialMonthAndYear) {
+      setSource(dayjsLocalized(jalali, initialMonthAndYear));
+    }
+    // we remove selectedDays and jalali dependency to just run if we have any changes for initialMonthAndYear
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialMonthAndYear]);
 
   useEffect(() => {
     setSelectedDays(selectedDaysProps);
