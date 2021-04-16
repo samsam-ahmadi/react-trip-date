@@ -49,12 +49,14 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   }, [jalali, numberOfMonths, onRangeDateInScreen, source]);
 
   useEffect(() => {
-    if (selectedDays.length) {
+    if (!initialMonthAndYear && selectedDays.length) {
       setSource(dayjsLocalized(jalali, selectedDays[0]));
     } else if (initialMonthAndYear) {
       setSource(dayjsLocalized(jalali, initialMonthAndYear));
     }
-  }, [jalali, initialMonthAndYear, selectedDays]);
+    // we remove selectedDays and jalali dependency to just run if we have any changes for initialMonthAndYear
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, [initialMonthAndYear]);
 
   useEffect(() => {
     setSelectedDays(selectedDaysProps);
