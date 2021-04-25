@@ -3,7 +3,6 @@ import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
 import { FORMAT_DATE } from "constant";
 import { classNames } from "libs/classNames";
-import { convertDatesToArray } from "libs/convertDatesToArray";
 import { dayjs } from "libs/dayjs-config";
 import { getDayFormat } from "libs/getDayFormat";
 
@@ -98,14 +97,14 @@ export const Day: React.FC<Props> = ({
           });
           setSelectedDays(dates);
           if (jalali) {
-            onChange(convertDatesToArray(dates, !jalali));
+            onChange(dates);
           } else {
             onChange(dates);
           }
         } else {
           setSelectedDays([...selectedDays, date]);
           if (jalali) {
-            onChange(convertDatesToArray(selectedDays.concat([date]), !jalali));
+            onChange(selectedDays.concat([date]));
           } else {
             onChange([...selectedDays, date]);
           }
@@ -120,14 +119,14 @@ export const Day: React.FC<Props> = ({
       });
       setSelectedDays(dates);
       if (jalali) {
-        onChange(convertDatesToArray(dates, !jalali));
+        onChange(dates);
       } else {
         onChange(dates);
       }
     } else {
       setSelectedDays(selectedDays.concat([date]));
       if (jalali) {
-        onChange(convertDatesToArray(selectedDays.concat([date]), !jalali));
+        onChange(selectedDays.concat([date]));
       } else {
         onChange(selectedDays.concat([date]));
       }
