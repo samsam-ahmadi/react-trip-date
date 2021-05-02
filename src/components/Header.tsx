@@ -1,7 +1,7 @@
 import styled from "styled-components";
-import { DatePickerComponents } from "datePicker/datePicker.type";
 import { Dayjs } from "dayjs";
 import { Dispatch, SetStateAction } from "react";
+import { InitialComponents } from "constant";
 
 import { ReactComponent as ArrowLeft } from "../assets/chevron-left.svg";
 import { ReactComponent as ArrowRight } from "../assets/chevron-right.svg";
@@ -11,7 +11,7 @@ type Props = {
   jalali: boolean;
   numberOfMonths: number;
   source: Dayjs;
-  components?: DatePickerComponents;
+  components?: InitialComponents;
   setDisplayMonths: Dispatch<SetStateAction<boolean>>;
   setSource: Dispatch<SetStateAction<Dayjs>>;
 };
@@ -25,7 +25,7 @@ export const Header = ({
   numberOfMonths,
   setDisplayMonths,
 }: Props) => {
-  const prevMonth = () => {
+  const prev = () => {
     if (displayMonths) {
       setSource(source.subtract(1, "year"));
     } else {
@@ -33,7 +33,7 @@ export const Header = ({
     }
   };
 
-  const nextMonth = () => {
+  const next = () => {
     if (displayMonths) {
       setSource(source.add(1, "year"));
     } else {
@@ -83,14 +83,50 @@ export const Header = ({
       jalali={jalali}
       displayMonths={displayMonths}
     >
-      <div className="action right" onClick={prevMonth}>
-        <ArrowRight />
-        {displayMonths ? <ArrowRight /> : null}
+      <div
+        className={components?.header?.monthIcons?.left ? "" : "action left"}
+        onClick={prev}
+      >
+        {/* Display month icons */}
+        {components?.header?.monthIcons?.left &&
+          !displayMonths &&
+          components.header.monthIcons.left}
+
+        {/* Display Year icons */}
+        {components?.header?.yearIcons?.left &&
+          displayMonths &&
+          components.header.yearIcons.left}
+
+        {/* Display default icons */}
+        {!components?.header?.monthIcons?.left && (
+          <>
+            <ArrowLeft />
+            {displayMonths ? <ArrowLeft /> : null}
+          </>
+        )}
       </div>
       {renderTitles()}
-      <div className="action left" onClick={nextMonth}>
-        <ArrowLeft />
-        {displayMonths ? <ArrowLeft className={"next-month"} /> : null}
+      <div
+        className={components?.header?.monthIcons?.right ? "" : "action right"}
+        onClick={next}
+      >
+        {/* Display month icons */}
+        {components?.header?.monthIcons?.right &&
+          !displayMonths &&
+          components.header.monthIcons.right}
+
+        {/* Display Year icons */}
+        {components?.header?.yearIcons?.right &&
+          displayMonths &&
+          components.header.yearIcons.right}
+
+        {/* Display default icons */}
+        {!components?.header?.monthIcons?.right && (
+          <>
+            <ArrowRight />
+            {displayMonths ? <ArrowRight /> : null}
+          </>
+        )}
       </div>
     </Wrapper>
   );
@@ -126,12 +162,15 @@ const Wrapper = styled.div<WrapperProps>`
     align-items: center;
     justify-content: center;
     cursor: pointer;
-    transform: ${({ jalali }) => (jalali ? "rotate(0deg)" : "rotate(180deg)")};
     &.right {
-      ${({ jalali }) => (!jalali ? "left:0;" : "right: 0;")}
+      transform: ${({ jalali }) =>
+        !jalali ? "rotate(0deg)" : "rotate(180deg)"};
+      ${({ jalali }) => (jalali ? "left:0;" : "right: 0;")}
     }
     &.left {
-      ${({ jalali }) => (jalali ? "left:0;" : "right: 0;")}
+      transform: ${({ jalali }) =>
+        !jalali ? "rotate(0deg)" : "rotate(180deg)"};
+      ${({ jalali }) => (jalali ? "right:0;" : "left: 0;")}
     }
   }
   svg {

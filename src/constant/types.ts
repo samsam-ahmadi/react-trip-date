@@ -1,5 +1,10 @@
 import { DefaultTheme } from "styled-components";
-import { ElementType } from "react";
+import { ElementType, ReactNode } from "react";
+
+type HeaderIconsPosition = {
+  right: ReactNode;
+  left: ReactNode;
+};
 
 export type InitialComponents = {
   days?: ElementType<{
@@ -8,6 +13,8 @@ export type InitialComponents = {
   }>;
   header?: {
     format?: string;
+    monthIcons?: HeaderIconsPosition;
+    yearIcons?: HeaderIconsPosition;
   };
   titleOfWeek?: {
     titles?: string[];

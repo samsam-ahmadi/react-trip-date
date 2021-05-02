@@ -176,14 +176,34 @@ stories.add("Disabled Days", () => {
   );
 });
 
-stories.add("Custom components - Header component", () => {
+stories.add("Custom components - Title of weeks Component", () => {
   return (
     <RangePicker
       components={{
         titleOfWeek: {
           wrapper: ({ jalali }) => (
-            <div>this is a custom title of weeks component</div>
+            <div>This is a custom title of weeks component</div>
           ),
+        },
+      }}
+      onChange={dates => console.log("dates", dates)}
+    />
+  );
+});
+
+stories.add("Custom components - Header Icons component", () => {
+  return (
+    <RangePicker
+      components={{
+        header: {
+          monthIcons: {
+            right: <span>next month</span>,
+            left: <span>prev month</span>,
+          },
+          yearIcons: {
+            right: <span>next year</span>,
+            left: <span>prev year</span>,
+          },
         },
       }}
       onChange={dates => console.log("dates", dates)}
