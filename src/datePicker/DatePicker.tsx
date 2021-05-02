@@ -10,7 +10,7 @@ import { useEffect, useState } from "react";
 import { DatePickerProps } from "./datePicker.type";
 import { Months } from "./Months";
 
-export const DatePicker: React.FC<DatePickerProps> = ({
+export const DatePicker = ({
   jalali = false,
   disabled = false,
   autoResponsive = true,
@@ -27,7 +27,7 @@ export const DatePicker: React.FC<DatePickerProps> = ({
   onChange,
   initialMonthAndYear,
   onRangeDateInScreen,
-}) => {
+}: DatePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps || []);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
   const [displayMonths, setDisplayMonths] = useState(false);

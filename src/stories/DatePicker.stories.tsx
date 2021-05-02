@@ -1,5 +1,3 @@
-import React from "react";
-import { FORMAT_DATE } from "constant";
 import {
   array,
   boolean,
@@ -7,10 +5,11 @@ import {
   text,
   withKnobs,
 } from "@storybook/addon-knobs";
-import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
 
 import { DatePicker } from "../datePicker";
+import { FORMAT_DATE } from "../constant";
+import { dayjs } from "../libs/dayjs-config";
 
 const format = "YYYY-MM-DD";
 
