@@ -16,10 +16,7 @@ export const DisplayMonths = ({
   jalali,
 }: Props) => {
   const selectMonth = (source: Dayjs) => {
-    if (source.get("day") === 0) {
-      source = source.add(1, "day");
-    }
-    setSource(source.month(+source.subtract(1, "month").format("M")));
+    setSource(source.month(+source.format("M") - 1));
     setDisplayMonths(false);
   };
 
