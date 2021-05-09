@@ -18,7 +18,7 @@ export const Calendar: React.FC<CalendarProps> = ({
   let weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
     createCalendar({
       source: source,
-      startOfWeek: jalali ? 6 : startOfWeek,
+      startOfWeek: jalali ? 7 : startOfWeek,
     }),
     7,
   );

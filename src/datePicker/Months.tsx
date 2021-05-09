@@ -49,7 +49,7 @@ export const Months = ({
       const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
         createCalendar({
           source: source,
-          startOfWeek: jalali ? 6 : startOfWeek || 0,
+          startOfWeek: jalali ? 7 : startOfWeek || 0,
         }),
         7,
       );
