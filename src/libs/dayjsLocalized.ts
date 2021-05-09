@@ -9,8 +9,5 @@ export const dayjsLocalized = (
   let source = dayjs(date)
     .calendar(jalali ? "jalali" : "gregory")
     .locale(jalali ? "fa" : "en");
-  if (source.get("day") === 0) {
-    source = source.add(1, "day");
-  }
   return source;
 };
