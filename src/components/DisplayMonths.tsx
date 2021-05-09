@@ -27,7 +27,11 @@ export const DisplayMonths = ({
     }
     return months.map(item => {
       return (
-        <div key={item.format("MM-MMMM")} onClick={() => selectMonth(item)}>
+        <div
+          key={item.format("MM-MMMM")}
+          onClick={() => selectMonth(item)}
+          data-testid="month-item-to-select"
+        >
           <p>{item.format("MMMM")}</p>
         </div>
       );
