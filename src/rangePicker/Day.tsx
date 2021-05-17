@@ -113,6 +113,10 @@ export const Day = ({
     // First click and set the from date
     if (!selectedDays?.from && !selectedDays?.to) {
       setSelectedDays({ from: dateFormat, to: "" });
+      onChange({
+        from: dateFormat,
+        to: "",
+      });
     }
     // Second click and set the to date
     if (disabledDays && !selectedDays?.to && selectedDays?.from) {
@@ -156,6 +160,10 @@ export const Day = ({
     // Third click and set the from date and set the "to" date
     if (selectedDays?.from && selectedDays?.to) {
       setSelectedDays({ from: dateFormat, to: "" });
+      onChange({
+        from: dateFormat,
+        to: "",
+      });
       setHoverDay(dateFormat);
     }
   };
