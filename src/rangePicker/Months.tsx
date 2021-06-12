@@ -25,6 +25,7 @@ interface Props {
   disabledBeforeDate?: string;
   disabledAfterDate?: string;
   disabled: boolean;
+  allowDisabledDaysSpan: boolean;
   components?: RangePickerComponents;
   onChange: RangePickerOnChange;
   setSource: Dispatch<SetStateAction<Dayjs>>;
@@ -35,6 +36,7 @@ interface Props {
 }
 
 export const Months = ({
+  allowDisabledDaysSpan,
   numberOfMonths,
   startOfWeek,
   selectedDays,
@@ -94,6 +96,7 @@ export const Months = ({
                   selectedDays={selectedDays}
                   setSelectedDays={setSelectedDays}
                   disabledBeforeToday={disabledBeforeToday}
+                  allowDisabledDaysSpan={allowDisabledDaysSpan}
                   disabledBeforeDate={disabledBeforeDate}
                   disabledAfterDate={disabledAfterDate}
                 />

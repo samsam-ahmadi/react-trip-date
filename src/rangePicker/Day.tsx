@@ -24,6 +24,7 @@ interface Props {
   disabledBeforeToday: boolean;
   disabledBeforeDate?: string;
   disabledAfterDate?: string;
+  allowDisabledDaysSpan: boolean;
   components?: RangePickerComponents;
   onChange: RangePickerOnChange;
   selectedDays?: RangePickerSelectedDays;
@@ -39,6 +40,7 @@ export const Day = ({
   jalali,
   selectedDays,
   disabledDays,
+  allowDisabledDaysSpan,
   hoverDay,
   disabled,
   components,
@@ -128,7 +130,7 @@ export const Day = ({
         return false;
       });
       // Check if we have a disabled days between them
-      if (disables.length) {
+      if (disables.length && !allowDisabledDaysSpan) {
         disables.sort((prev, next) => {
           return dayjs(disables[0]).isBefore(hoverDay!)
             ? dayjs(prev).isSameOrBefore(next)
@@ -198,7 +200,7 @@ export const Day = ({
       onMouseEnter={hoverOnDay}
       className={classNames({
         inactive: day.month() !== source.add(numberOfMonth, "month").month(),
-        disabled: handleDisabledDate(),
+        disabled: handleDisabledDate() && !handleRangeStyle(),
         "range-select": handleRangeStyle(),
         jalali: jalali,
         disable: disabled,

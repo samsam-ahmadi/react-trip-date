@@ -176,6 +176,47 @@ stories.add("Disabled Days", () => {
   );
 });
 
+stories.add("Allow Disabled Days Span", () => {
+  return (
+    <RangePicker
+      numberOfMonths={1}
+      allowDisabledDaysSpan
+      autoResponsive={false}
+      initialMonthAndYear="2021-08"
+      onChange={dates => window.console.log(dates)}
+      disabledDays={[
+        "2021-08-01",
+        "2021-08-02",
+        "2021-08-03",
+        "2021-08-04",
+        "2021-08-05",
+        "2021-08-06",
+        "2021-08-08",
+        "2021-08-09",
+        "2021-08-10",
+        "2021-08-11",
+        "2021-08-12",
+        "2021-08-13",
+        "2021-08-15",
+        "2021-08-16",
+        "2021-08-17",
+        "2021-08-18",
+        "2021-08-19",
+        "2021-08-20",
+        "2021-08-22",
+        "2021-08-23",
+        "2021-08-24",
+        "2021-08-25",
+        "2021-08-26",
+        "2021-08-27",
+        "2021-08-29",
+        "2021-08-30",
+        "2021-08-31",
+      ]}
+    />
+  );
+});
+
 stories.add("Custom components - Title of weeks Component", () => {
   return (
     <RangePicker

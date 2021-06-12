@@ -19,6 +19,7 @@ export const RangePicker = ({
   disabledBeforeDate,
   disabledAfterDate,
   disabled = false,
+  allowDisabledDaysSpan = false,
   components,
   theme: themeProps,
   autoResponsive = true,
@@ -128,6 +129,7 @@ export const RangePicker = ({
             disabledBeforeToday={disabledBeforeToday}
             disabledBeforeDate={disabledBeforeDate}
             disabledAfterDate={disabledAfterDate}
+            allowDisabledDaysSpan={allowDisabledDaysSpan}
           />
         )}
       </ThemeProvider>

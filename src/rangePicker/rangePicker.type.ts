@@ -15,4 +15,5 @@ export interface RangePickerProps extends InitialProps {
   components?: RangePickerComponents;
   selectedDays?: RangePickerSelectedDays;
   onChange: RangePickerOnChange;
+  allowDisabledDaysSpan?: boolean;
 }
