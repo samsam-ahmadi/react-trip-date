@@ -38,6 +38,7 @@ stories.add("All Props", () => {
   return (
     <RangePicker
       jalali={boolean("jalali", false)}
+      allowDisabledDaysSpan={boolean("allow disabled days span", false)}
       disabled={boolean("disabled", false)}
       startOfWeek={number("start of week", 0)}
       autoResponsive={boolean("auto responsive", true)}
