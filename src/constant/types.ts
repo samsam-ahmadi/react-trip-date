@@ -18,7 +18,7 @@ export type InitialComponents = {
   };
   titleOfWeek?: {
     titles?: string[];
-    wrapper?: ElementType<{ jalali: boolean }>;
+    wrapper?: ElementType<{ jalali: boolean; startOfWeek: number; }>;
   };
 };
 

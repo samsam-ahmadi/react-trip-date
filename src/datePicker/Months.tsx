@@ -49,7 +49,7 @@ export const Months = ({
       const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
         createCalendar({
           source: source,
-          startOfWeek: jalali ? 7 : startOfWeek || 0,
+          startOfWeek: jalali ? 0 : startOfWeek || 0,
         }),
         7,
       );
@@ -59,7 +59,11 @@ export const Months = ({
           key={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
           data-test={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
         >
-          <TitleOfWeek jalali={jalali} components={components?.titleOfWeek} />
+          <TitleOfWeek
+            jalali={jalali}
+            startOfWeek={startOfWeek}
+            components={components?.titleOfWeek}
+          />
           {weeksDays.map(week => (
             <Weeks
               jalali={jalali}
