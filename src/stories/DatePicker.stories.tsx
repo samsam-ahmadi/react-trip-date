@@ -234,6 +234,8 @@ stories.add("Custom components - Header Icons component", () => {
 stories.add("Custom components - Header titles", () => {
   return (
     <DatePicker
+      jalali={boolean("jalali", false)}
+      startOfWeek={number("start of week", 0)}
       components={{
         titleOfWeek: {
           titles: ["1", "2", "3", "4", "5", "6", "7"],

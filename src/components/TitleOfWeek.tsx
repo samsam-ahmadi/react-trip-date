@@ -3,31 +3,37 @@ import { ElementType } from "react";
 
 type Props = {
   jalali: boolean;
+  startOfWeek: number;
   components?: {
     titles?: string[];
-    wrapper?: ElementType<{ jalali: boolean }>;
+    wrapper?: ElementType<{ jalali: boolean; startOfWeek: number }>;
   };
 };
 
 export const TitleOfWeek: React.FunctionComponent<Props> = ({
   jalali,
+  startOfWeek,
   components,
 }) => {
-  let titleDayFa = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
-  let titleDayEn = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-  let title = jalali ? titleDayFa : titleDayEn;
+  let titles = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
+  if (components?.titles) titles = components?.titles;
+  else if (jalali) titles = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
+
+  if (!jalali) {
+    let sow = startOfWeek % 7;
+    if (sow > 0) while (sow--) titles.push(titles.shift()!);
+  }
 
   if (components?.wrapper) {
     const WrapperC = components?.wrapper;
-    return <WrapperC jalali={jalali} />;
+    return <WrapperC jalali={jalali} startOfWeek={startOfWeek} />;
   }
 
   return (
-    <Wrapper jalali={jalali}>
-      {components?.titles &&
-        components?.titles.map(item => <p key={item}>{item}</p>)}
-
-      {!components?.titles && title.map(item => <p key={item}>{item}</p>)}
+    <Wrapper jalali={jalali} startOfWeek={startOfWeek}>
+      {titles.map(item => (
+        <p key={item}>{item}</p>
+      ))}
     </Wrapper>
   );
 };

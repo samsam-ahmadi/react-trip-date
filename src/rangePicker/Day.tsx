@@ -170,6 +170,15 @@ export const Day = ({
     }
   };
 
+  const getEndDateForClasses = () => {
+    if (selectedDays) {
+      if (selectedDays.to) return selectedDays.to;
+      if (hoverDay) return hoverDay;
+      return selectedDays.from;
+    }
+    return "";
+  };
+
   // Handle style between of days
   const handleRangeStyle = () => {
     if (!selectedDays?.from) {
@@ -178,7 +187,7 @@ export const Day = ({
     if (selectedDays?.from) {
       return dayjs(getDayFormat(day, jalali)).isBetween(
         selectedDays.from,
-        selectedDays?.to ? selectedDays.to : hoverDay!,
+        getEndDateForClasses(),
         null,
         "[]",
       );
@@ -208,17 +217,13 @@ export const Day = ({
         "start-date":
           selectedDays &&
           dateFormat ===
-            (dayjs(selectedDays.from).isSameOrBefore(
-              selectedDays?.to ? selectedDays?.to : hoverDay!,
-            )
+            (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
               ? selectedDays.from
               : selectedDays.to),
         "end-date":
           selectedDays &&
           dateFormat ===
-            (dayjs(selectedDays.from).isSameOrBefore(
-              selectedDays?.to ? selectedDays?.to : hoverDay!,
-            )
+            (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
               ? selectedDays.to
               : selectedDays.from),
 
