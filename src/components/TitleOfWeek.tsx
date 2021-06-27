@@ -16,7 +16,7 @@ export const TitleOfWeek: React.FunctionComponent<Props> = ({
   components,
 }) => {
   let titles = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-  if (components?.titles) titles = components?.titles;
+  if (components?.titles) titles = [...components?.titles];
   else if (jalali) titles = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 
   if (!jalali) {
