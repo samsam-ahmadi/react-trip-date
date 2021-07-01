@@ -114,6 +114,7 @@ export const Day = ({
 
     // First click and set the from date
     if (!selectedDays?.from && !selectedDays?.to) {
+      setHoverDay("");
       setSelectedDays({ from: dateFormat, to: "" });
       onChange({
         from: dateFormat,
@@ -161,12 +162,12 @@ export const Day = ({
 
     // Third click and set the from date and set the "to" date
     if (selectedDays?.from && selectedDays?.to) {
+      setHoverDay("");
       setSelectedDays({ from: dateFormat, to: "" });
       onChange({
         from: dateFormat,
         to: "",
       });
-      setHoverDay(dateFormat);
     }
   };
 
