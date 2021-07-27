@@ -9,24 +9,24 @@ import {
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
 
-let selectedDays = {
-  from: dayjs().add(2, "day").format(FORMAT_DATE),
-  to: dayjs().add(20, "day").format(FORMAT_DATE),
+const selectedDays = {
+  from: dayjs().subtract(-2, "day").format(FORMAT_DATE),
+  to: dayjs().subtract(-20, "day").format(FORMAT_DATE),
 };
 
-let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
-let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
+const disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
+const disabledAfterDate = dayjs().subtract(-21, "day").format(FORMAT_DATE);
 
-let initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
+const initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
 
-let disabledDays = [
-  dayjs().add(3, "day").format(FORMAT_DATE),
-  dayjs().add(9, "day").format(FORMAT_DATE),
-  dayjs().add(25, "day").format(FORMAT_DATE),
-  dayjs().add(40, "day").format(FORMAT_DATE),
-  dayjs().add(-2, "day").format(FORMAT_DATE),
-  dayjs().add(-9, "day").format(FORMAT_DATE),
-  dayjs().add(-10, "day").format(FORMAT_DATE),
+const disabledDays = [
+  dayjs().subtract(-3, "day").format(FORMAT_DATE),
+  dayjs().subtract(-9, "day").format(FORMAT_DATE),
+  dayjs().subtract(-25, "day").format(FORMAT_DATE),
+  dayjs().subtract(-40, "day").format(FORMAT_DATE),
+  dayjs().subtract(2, "day").format(FORMAT_DATE),
+  dayjs().subtract(9, "day").format(FORMAT_DATE),
+  dayjs().subtract(10, "day").format(FORMAT_DATE),
 ];
 
 const stories = storiesOf("Range Picker Component", module);

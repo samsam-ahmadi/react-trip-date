@@ -12,24 +12,24 @@ import { dayjs } from "libs/dayjs-config";
 
 const format = "YYYY-MM-DD";
 
-let disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
-let disabledAfterDate = dayjs().add(21, "day").format(FORMAT_DATE);
+const disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
+const disabledAfterDate = dayjs().subtract(-21, "day").format(FORMAT_DATE);
 
-let initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
+const initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
 
-let selectedDays = [
-  dayjs().add(2, "day").format(format),
-  dayjs().add(6, "day").format(format),
-  dayjs().add(15, "day").format(format),
+const selectedDays = [
+  dayjs().subtract(-2, "day").format(format),
+  dayjs().subtract(-6, "day").format(format),
+  dayjs().subtract(-15, "day").format(format),
 ];
 let disabledDays = [
-  dayjs().add(3, "day").format(format),
-  dayjs().add(9, "day").format(format),
-  dayjs().add(25, "day").format(format),
-  dayjs().add(40, "day").format(format),
-  dayjs().add(-2, "day").format(format),
-  dayjs().add(-9, "day").format(format),
-  dayjs().add(-10, "day").format(format),
+  dayjs().subtract(-3, "day").format(format),
+  dayjs().subtract(-9, "day").format(format),
+  dayjs().subtract(-25, "day").format(format),
+  dayjs().subtract(-40, "day").format(format),
+  dayjs().subtract(2, "day").format(format),
+  dayjs().subtract(9, "day").format(format),
+  dayjs().subtract(10, "day").format(format),
 ];
 
 const stories = storiesOf("Date Picker Component", module);
