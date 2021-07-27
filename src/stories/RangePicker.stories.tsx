@@ -5,7 +5,6 @@ import {
   boolean,
   number,
   text,
-  withKnobs,
 } from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
@@ -30,9 +29,7 @@ let disabledDays = [
   dayjs().add(-10, "day").format(FORMAT_DATE),
 ];
 
-const stories = storiesOf("Range Picker Component", module).addDecorator(
-  withKnobs,
-);
+const stories = storiesOf("Range Picker Component", module);
 
 stories.add("All Props", () => {
   return (

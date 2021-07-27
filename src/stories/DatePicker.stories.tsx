@@ -3,7 +3,6 @@ import {
   boolean,
   number,
   text,
-  withKnobs,
 } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react";
 
@@ -33,9 +32,8 @@ let disabledDays = [
   dayjs().add(-10, "day").format(format),
 ];
 
-const stories = storiesOf("Date Picker Component", module).addDecorator(
-  withKnobs,
-);
+const stories = storiesOf("Date Picker Component", module);
+
 stories.add("All Props", () => {
   return (
     <DatePicker
