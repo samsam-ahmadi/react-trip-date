@@ -6,9 +6,9 @@ import {
 } from "@storybook/addon-knobs";
 import { storiesOf } from "@storybook/react";
 
-import { DatePicker } from "../datePicker";
-import { FORMAT_DATE } from "../constant";
-import { dayjs } from "../libs/dayjs-config";
+import { DatePicker } from "datePicker";
+import { FORMAT_DATE } from "constant";
+import { dayjs } from "libs/dayjs-config";
 
 const format = "YYYY-MM-DD";
 
