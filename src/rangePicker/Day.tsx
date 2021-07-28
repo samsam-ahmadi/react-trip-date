@@ -60,7 +60,7 @@ export const Day = ({
         : today;
   }
   let dateFormat = getDayFormat(day, jalali);
-  const handleDisabledDate = () => {
+  const isDisabledDate = (dateFormat: string) => {
     return (
       disabledDays.includes(dateFormat) ||
       (disabledBeforeDate && dayjs(dateFormat).isBefore(disabledBeforeDate)) ||
@@ -182,18 +182,15 @@ export const Day = ({
 
   // Handle style between of days
   const handleRangeStyle = () => {
-    if (!selectedDays?.from) {
-      return false;
-    }
-    if (selectedDays?.from) {
-      return dayjs(getDayFormat(day, jalali)).isBetween(
-        selectedDays.from,
-        getEndDateForClasses(),
-        null,
-        "[]",
-      );
-    }
-    return false;
+    if (!selectedDays || !selectedDays.from) return false;
+
+    // Always apply style to the start date
+    if (dateFormat === selectedDays.from) return true;
+
+    const end_date = getEndDateForClasses();
+    if (isDisabledDate(end_date)) return false;
+
+    return dayjs(dateFormat).isBetween(selectedDays.from, end_date, null, "[]");
   };
 
   const hoverOnDay = () => {
@@ -210,7 +207,7 @@ export const Day = ({
       onMouseEnter={hoverOnDay}
       className={classNames({
         inactive: day.month() !== source.add(numberOfMonth, "month").month(),
-        disabled: handleDisabledDate() && !handleRangeStyle(),
+        disabled: isDisabledDate(dateFormat) && !handleRangeStyle(),
         "range-select": handleRangeStyle(),
         jalali: jalali,
         disable: disabled,
