@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "1.8.0",
+  "version": "1.8.2",
   "description": "date-picker and range-picker for React applications",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -21,6 +21,10 @@
     "rangePicker",
     "datePicker"
   ],
+  "peerDependencies": {
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
+  },
   "dependencies": {
     "dayjs": "^1.8.27",
     "jalaliday": "^2.3.0",
@@ -85,8 +89,6 @@
     "import-sort-style-renke": "^6.0.0",
     "lint-staged": "^10.2.6",
     "prettier": "^2.0.5",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
     "rollup": "^2.41.2",
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
