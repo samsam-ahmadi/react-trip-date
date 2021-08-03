@@ -5,5 +5,5 @@ module.exports = {
     "@storybook/addon-storysource",
     "@storybook/addon-links/register",
   ],
-  stories: ["../src/**/*.stories.[tj](s|sx)"],
+  stories: ["../src/**/*.stories.[tj]@(s|sx)"],
 };
