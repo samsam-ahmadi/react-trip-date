@@ -6,6 +6,7 @@ import { classNames } from "libs/classNames";
 import { dayjs } from "libs/dayjs-config";
 import { dayjsLocalized } from "libs/dayjsLocalized";
 import { getDayFormat } from "libs/getDayFormat";
+import { isMobile } from "libs/isMobile";
 
 import {
   RangePickerComponents,
@@ -113,7 +114,7 @@ export const Day = ({
     }
 
     // First click and set the from date
-    if (!selectedDays?.from && !selectedDays?.to) {
+    if (!selectedDays?.from && !selectedDays?.to.length) {
       setHoverDay("");
       setSelectedDays({ from: dateFormat, to: "" });
       onChange({
@@ -121,7 +122,7 @@ export const Day = ({
         to: "",
       });
     }
-    // Second click and set the to date
+    // Second click and set the second date
     if (disabledDays && !selectedDays?.to && selectedDays?.from) {
       // Get list of disabled days between the from and the day
       let disables = disabledDays.filter(item => {
@@ -156,12 +157,10 @@ export const Day = ({
       } else {
         handleChangeState(selectedDays?.from, dateFormat);
       }
-    } else if (!selectedDays?.to && selectedDays?.from) {
+    } else if (!selectedDays?.to.length && selectedDays?.from) {
       handleChangeState(selectedDays?.from, dateFormat);
-    }
-
-    // Third click and set the from date and set the "to" date
-    if (selectedDays?.from && selectedDays?.to) {
+    } else if (selectedDays?.from && selectedDays?.to) {
+      // Third click and set the from date and set the "to" date
       setHoverDay("");
       setSelectedDays({ from: dateFormat, to: "" });
       onChange({
@@ -204,7 +203,7 @@ export const Day = ({
     <Wrapper
       data-test={day.format(FORMAT_DATE)}
       onClick={onClick}
-      onMouseEnter={hoverOnDay}
+      onMouseEnter={isMobile() ? undefined : hoverOnDay}
       className={classNames({
         inactive: day.month() !== source.add(numberOfMonth, "month").month(),
         disabled: isDisabledDate(dateFormat) && !handleRangeStyle(),

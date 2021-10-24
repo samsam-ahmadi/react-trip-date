@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "1.8.2",
+  "version": "1.8.3",
   "description": "date-picker and range-picker for React applications",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -93,7 +93,9 @@
     "rollup-plugin-peer-deps-external": "^2.2.4",
     "rollup-plugin-postcss": "^4.0.0",
     "rollup-plugin-typescript2": "^0.30.0",
-    "tslib": "^2.1.0"
+    "tslib": "^2.1.0",
+    "react": "^17.0.1",
+    "react-dom": "^17.0.1"
   },
   "files": [
     "dist"
