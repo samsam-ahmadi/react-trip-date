@@ -6,4 +6,7 @@ module.exports = {
     "@storybook/addon-links/register",
   ],
   stories: ["../src/**/*.stories.[tj]@(s|sx)"],
+  core: {
+    builder: "webpack5",
+  },
 };
