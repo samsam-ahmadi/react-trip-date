@@ -1,4 +1,4 @@
-import { InitialComponents, InitialProps } from "constant";
+import { InitialComponents, InitialProps } from "../constant";
 
 export type DatePickerOnChange = (days: string[]) => void;
 
