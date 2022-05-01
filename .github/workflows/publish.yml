@@ -35,10 +35,10 @@ jobs:
           registry-url: https://registry.npmjs.org/
       - name: Install and Build 🔧
         run: |
-          npm cache clean --force 
-          npm install
-          npm run build
+          yarn cache clean 
+          yarn install
+          yarn build
       - name: Deploy 🚀
-        run: npm publish --access public
+        run: yarn publish --access public
         env:
           NODE_AUTH_TOKEN: ${{secrets.NPM_TOKEN}}

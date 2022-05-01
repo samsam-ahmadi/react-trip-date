@@ -12,8 +12,8 @@ jobs:
           persist-credentials: false
       - name: Install and Build 🔧
         run: |
-          npm install
-          npm run build-storybook
+          yarn install
+          yarn build-storybook
       - name: Deploy 🚀
         uses: crazy-max/ghaction-github-pages@v2
         with:
