@@ -1,10 +1,11 @@
 import styled from "styled-components";
 import { Dayjs } from "dayjs";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, SetStateAction, useState } from "react";
 import { InitialComponents } from "constant";
 
 import { ReactComponent as ArrowLeft } from "../assets/chevron-left.svg";
 import { ReactComponent as ArrowRight } from "../assets/chevron-right.svg";
+import { DisplayYears } from "./DisplayYears";
 
 type Props = {
   displayMonths: boolean;
@@ -25,6 +26,8 @@ export const Header = ({
   numberOfMonths,
   setDisplayMonths,
 }: Props) => {
+  const [displayYears, setDisplayYears] = useState(false);
+
   const prev = () => {
     if (displayMonths) {
       setSource(source.subtract(1, "year"));
@@ -46,15 +49,29 @@ export const Header = ({
 
     if (displayMonths) {
       return (
-        <p key={Math.random()} onClick={() => setDisplayMonths(prev => !prev)}>
-          {source.format(
-            components?.header?.format
-              ? components?.header?.format
-              : displayMonths
-              ? "YYYY"
-              : "YYYY-MMMM",
+        <>
+          <p
+            onClick={() =>
+              displayMonths
+                ? setDisplayYears(prev => !prev)
+                : setDisplayMonths(prev => !prev)
+            }
+          >
+            {source.format(
+              components?.header?.format
+                ? components?.header?.format
+                : displayMonths
+                ? "YYYY"
+                : "YYYY-MMMM",
+            )}
+          </p>
+          {displayYears && (
+            <DisplayYears
+              setDisplayYears={setDisplayYears}
+              setSource={setSource}
+            />
           )}
-        </p>
+        </>
       );
     }
 
@@ -63,13 +80,13 @@ export const Header = ({
         source = source.add(1, "day");
       }
       titles.push(
-        <p key={Math.random()} onClick={() => setDisplayMonths(prev => !prev)}>
+        <p key={i} onClick={() => setDisplayMonths(prev => !prev)}>
           {source
             .add(i, "month")
             .format(
               components?.header?.format
                 ? components?.header?.format
-                : "YYYY-MMMM",
+                : "YYYY MMMM",
             )}
         </p>,
       );
@@ -146,13 +163,16 @@ const Wrapper = styled.div<WrapperProps>`
   position: relative;
   background-color: ${({ theme }) => theme.primary.main};
   flex-direction: ${({ jalali }) => (jalali ? "row-reverse" : "row")};
+  border-radius: ${({ theme }) => theme.shape.borderRadius}px;
   p {
     color: #fff;
     text-align: center;
     cursor: pointer;
+    border-radius: ${({ theme }) => theme.shape.borderRadius}px;
     direction: ${({ jalali }) => (jalali ? "ltr" : "rtl")};
     width: ${({ numberOfMonths, displayMonths }) =>
-      displayMonths ? "100%" : `${100 / numberOfMonths}% `};
+      displayMonths ? "120px" : `${100 / numberOfMonths}% `};
+    margin: auto;
   }
   .action {
     position: absolute;

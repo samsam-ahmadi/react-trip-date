@@ -14,6 +14,9 @@ export const theme = {
   text: {
     disabled: "#BABABA",
   },
+  shape: {
+    borderRadius: 4,
+  },
 };
 
 export interface Theme {
@@ -31,5 +34,8 @@ export interface Theme {
   };
   text: {
     disabled: string;
+  };
+  shape: {
+    borderRadius: number;
   };
 }

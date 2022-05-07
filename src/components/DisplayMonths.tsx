@@ -57,10 +57,11 @@ const Wrapper = styled.div<StyleProps>`
     justify-content: center;
     text-align: center;
     display: flex;
-    background-color: ${({ theme }) => theme.primary.main};
     align-items: center;
     cursor: pointer;
     border: 2px solid #fff;
+    background-color: ${({ theme }) => theme.primary.main};
+    border-radius: ${({ theme }) => theme.shape.borderRadius}px;
     p {
       color: #fff;
     }
