@@ -5,7 +5,7 @@ import { dayjsLocalized } from "libs/dayjsLocalized";
 import { deepMerge } from "libs/mergeObjects";
 import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { DatePickerProps } from "./datePicker.type";
 import { Months } from "./Months";
@@ -31,6 +31,7 @@ export const DatePicker = ({
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps || []);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
   const [displayMonths, setDisplayMonths] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const [source, setSource] = useState(
     dayjsLocalized(jalali, initialMonthAndYear),
   );
@@ -63,8 +64,8 @@ export const DatePicker = ({
 
   useEffect(() => {
     const handleResize = () => {
-      if (document.querySelector(".tp-calendar")) {
-        let width = document.querySelector(".tp-calendar")!.clientWidth;
+      if (ref.current) {
+        let width = ref.current.clientWidth;
         if (width < 580) {
           setNumberOfMonths(1);
         } else {
@@ -90,7 +91,7 @@ export const DatePicker = ({
   }, [numberOfMonths, autoResponsive, numberOfMonthsProps]);
 
   return (
-    <div className="tp-calendar">
+    <div className="tp-calendar" ref={ref}>
       <ThemeProvider
         theme={
           themeProps ? (deepMerge(theme, themeProps) as DefaultTheme) : theme!
