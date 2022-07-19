@@ -14,7 +14,7 @@ export const DatePicker = ({
   jalali = false,
   disabled = false,
   autoResponsive = true,
-  startOfWeek = 0,
+  startOfWeek = 1,
   numberOfMonths: numberOfMonthsProps = 1,
   disabledDays = [],
   components,

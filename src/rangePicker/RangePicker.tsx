@@ -12,7 +12,7 @@ import { RangePickerProps } from "./rangePicker.type";
 
 export const RangePicker = ({
   jalali = false,
-  startOfWeek = 0,
+  startOfWeek = 1,
   numberOfMonths: numberOfMonthsProps = 1,
   disabledDays = [],
   disabledBeforeToday = false,
