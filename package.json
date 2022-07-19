@@ -66,6 +66,7 @@
     "@rollup/plugin-commonjs": "^22.0.0",
     "@rollup/plugin-node-resolve": "^13.2.1",
     "@rollup/plugin-url": "^6.1.0",
+    "@storybook/addon-docs": "^6.4.22",
     "@storybook/addon-knobs": "6.4.0",
     "@storybook/addon-links": "6.4.22",
     "@storybook/addon-storysource": "6.4.22",

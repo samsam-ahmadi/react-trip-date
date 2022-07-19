@@ -1,0 +1,308 @@
+import { DocsContainer, Meta } from "@storybook/addon-docs";
+import { DatePicker } from "datePicker";
+import { dayjs } from "libs/dayjs-config";
+
+<Meta
+  title="DatePicker - API"
+  parameters={{
+    docs: {
+      container: ({ children, ...rest }) => (
+        <DocsContainer {...rest}>{children}</DocsContainer>
+      ),
+    },
+  }}
+/>
+
+## React Trip Date
+
+<br />
+
+#### Everything you want, you can find in React Trip Date. It's a fully customizable component that you can change to match with your design system.
+
+<br />
+
+- RangePicker, DatePicker, Multiple Month, Define number of selectable days
+- Theme, Custom compoenents, Custom Days
+- Support Jalali and Gregorian
+- Use `day.js` It's 2KB immutable date
+
+## DatePicker APIs
+
+- [autoResponsive](#auto-responsive)
+- [custom components](#custom-components)
+- [disabled](#disabled)
+- [disabledAfterDate](#disabled-after-date)
+- [disabledBeforeDate](#disabled-before-date)
+- [disabledBeforeToday](#disabled-before-today)
+- [disabledDays](#disabled-days)
+- [initialMonthAndYear](#initial-month-and-year)
+- [jalali](#jalali)
+- [numberOfMonths](#number-of-months)
+- [numberOfSelectableDays](#number-of-selectable-days)
+- [onChange](#onchange)
+- [onRangeDateInScreen](#range-date-in-screen)
+- [selectedDays](#selected-days)
+- [startOfWeek](#start-of-week)
+
+<br />
+
+### Auto Responsive
+
+By activate it, If your window growth from x-axis, the number of months will be increase and vice versa.
+
+<DatePicker
+  autoResponsive={false}
+  numberOfMonths={1}
+  onChange={dates => console.log("dates", dates)}
+  dialog
+/>
+
+```jsx
+<DatePicker autoResponsive numberOfMonths={1} />
+```
+
+### Custom Components
+
+In this prop you have access to most of part of DatePicker and you can change every peace of it.
+
+- Titles of weeks
+- Icons in the header
+- Wrapper of header of weeks
+- Items of week's header
+- Days
+
+<DatePicker
+  components={{
+    days: ({ day, jalali }) => (
+      <div style={{ fontSize: 12, color: "red" }}>
+        *{dayjs(day).format("D")}*
+      </div>
+    ),
+    header: {
+      format: "YY**MMMM",
+      monthIcons: {
+        right: <span>next month</span>,
+        left: <span>prev month</span>,
+      },
+      yearIcons: {
+        right: <span>next year</span>,
+        left: <span>prev year</span>,
+      },
+    },
+    titleOfWeek: {
+      titles: ["A", "B", "C", "D", "E", "F", "G"],
+    },
+  }}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker
+  components={{
+    days: ({ day, jalali }) => (
+      <div style={{ fontSize: 12, color: "red" }}>
+        *{dayjs(day).format("D")}*
+      </div>
+    ),
+    header: {
+      format: "YY**MMMM",
+      monthIcons: {
+        right: <span>next month</span>,
+        left: <span>prev month</span>,
+      },
+      yearIcons: {
+        right: <span>next year</span>,
+        left: <span>prev year</span>,
+      },
+    },
+    titleOfWeek: {
+      titles: ["A", "B", "C", "D", "E", "F", "G"],
+    },
+  }}
+/>
+```
+
+### Disabled
+
+By Disable the calendar you can't be able to select date it.
+
+<DatePicker
+  selectedDays={[dayjs().format("YYYY-MM-DD")]}
+  disabled
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker disabled />
+```
+
+### Disabled After Date
+
+Disable days after specific date.
+
+<DatePicker
+  disabledAfterDate={dayjs().add(3, "days").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker disabledAfterDate={dayjs().add(3, "days").format("YYYY-MM-DD")} />
+```
+
+### Disabled Before Date
+
+Disable days Before specific date.
+
+<DatePicker
+  disabledBeforeDate={dayjs().add(-3, "days").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker disabledBeforeDate={dayjs().add(-3, "days").format("YYYY-MM-DD")} />
+```
+
+### Disabled Before Today
+
+Disable days Before today.
+
+<DatePicker
+  disabledBeforeToday
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker disabledBeforeToday />
+```
+
+### Disabled Days
+
+Disabled days.
+
+<DatePicker
+  disabledDays={[
+    dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+  ]}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+let disabledDays = [
+  dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+];
+
+<DatePicker disabledDays={disabledDays} />;
+```
+
+### onChange
+
+Get changes from DatePicker
+
+<DatePicker onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<DatePicker onChange={dates => console.log("dates", dates)} />
+```
+
+### Initial Month And Year
+
+Set initial month and year for date picker
+
+<DatePicker
+  initialMonthAndYear={dayjs().subtract(1, "year").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker
+  initialMonthAndYear={dayjs().subtract(1, "year").format("YYYY-MM-DD")}
+/>
+```
+
+### Jalali
+
+Change Calendar to Jalali
+
+<DatePicker jalali onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<DatePicker jalali />
+```
+
+### Number Of Months
+
+Define how many months displays in the page, if autoResponsive is enabled this won't work.
+
+<DatePicker
+  autoResponsive={false}
+  numberOfMonths={2}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker numberOfMonths={2} />
+```
+
+### Number Of Selectable Days
+
+Define how many days can be select.For this example user can select just 7 days.
+
+<DatePicker
+  numberOfSelectableDays={7}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker numberOfSelectableDays={7} />
+```
+
+### Range Date In Screen
+
+Listen on widnow to can get dates for every change of it.
+
+<DatePicker
+  onRangeDateInScreen={dates => console.log("window changed", dates)}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<DatePicker
+  onRangeDateInScreen={dates => console.log("window changed", dates)}
+/>
+```
+
+### Selected Days
+
+Initial Days that you can pass to DatePicker
+
+<DatePicker
+  selectedDays={[
+    dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+  ]}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+const selectedDays = [
+  dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+];
+<DatePicker selectedDays={selectedDays} />;
+```
+
+### Start Of Week
+
+Change Start Of week
+
+<DatePicker startOfWeek={1} onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<DatePicker startOfWeek={1} />
+```
