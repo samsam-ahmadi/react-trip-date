@@ -23,6 +23,7 @@ type Props = {
   components?: DatePickerComponents;
   onChange: DatePickerOnChange;
   setSelectedDays: Dispatch<SetStateAction<string[]>>;
+  dayClasses?: (day: Dayjs) => string[];
 };
 
 export const Day: React.FC<Props> = ({
@@ -40,6 +41,7 @@ export const Day: React.FC<Props> = ({
   numberOfSelectableDays,
   disabledBeforeDate,
   disabledAfterDate,
+  dayClasses,
 }) => {
   if (disabledBeforeToday) {
     const today = dayjs().format(FORMAT_DATE);
@@ -134,6 +136,10 @@ export const Day: React.FC<Props> = ({
   };
 
   const DayComponent = components?.days;
+  let extraDayClasses = "";
+  if (dayClasses) {
+    extraDayClasses = dayClasses(day).join(" ");
+  }
   return (
     <Wrapper
       data-test={day.format(FORMAT_DATE)}
@@ -147,7 +153,7 @@ export const Day: React.FC<Props> = ({
           dayjs()
             .calendar(jalali ? "jalali" : "gregory")
             .format(FORMAT_DATE) === day.format(FORMAT_DATE),
-      })}
+      }, extraDayClasses)}
     >
       {DayComponent && (
         <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />

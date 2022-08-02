@@ -1,5 +1,6 @@
 import { DefaultTheme } from "styled-components";
 import { ElementType, ReactNode } from "react";
+import { Dayjs } from "dayjs";
 
 type HeaderIconsPosition = {
   right: ReactNode;
@@ -35,6 +36,7 @@ export interface InitialProps {
   numberOfMonths?: number;
   initialMonthAndYear?: string;
   onRangeDateInScreen?: DatePickerWindowUpdated;
+  dayClasses?: (day: Dayjs) => string[];
 }
 
 type DatePickerWindow = { start: string; end: string };

@@ -33,6 +33,7 @@ interface Props {
   setSelectedDays: Dispatch<
     SetStateAction<RangePickerSelectedDays | undefined>
   >;
+  dayClasses?: (day: Dayjs) => string[];
 }
 
 export const Months = ({
@@ -52,6 +53,7 @@ export const Months = ({
   disabled,
   onChange,
   source: sourceProp,
+  dayClasses,
 }: Props) => {
   const renderMonths = () => {
     let months = [];
@@ -103,6 +105,7 @@ export const Months = ({
                   allowDisabledDaysSpan={allowDisabledDaysSpan}
                   disabledBeforeDate={disabledBeforeDate}
                   disabledAfterDate={disabledAfterDate}
+                  dayClasses={dayClasses}
                 />
               ))}
             </Weeks>

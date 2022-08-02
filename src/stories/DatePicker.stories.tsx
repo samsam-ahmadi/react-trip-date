@@ -183,6 +183,23 @@ stories.add("Selected Days", () => {
   );
 });
 
+stories.add("Custom Day Classes", () => {
+  return (
+    <>
+      <style type="text/css">{`
+        .odd { transform: rotate(-10deg); } .even { transform: rotate(10deg); }
+      `}</style>
+      <DatePicker
+        numberOfMonths={1}
+        autoResponsive={false}
+        initialMonthAndYear="2021-08"
+        onChange={dates => window.console.log(dates)}
+        dayClasses={day => [parseInt(day.format('D')) % 2 == 1 ? 'odd' : 'even' ]}
+      />
+    </>
+  );
+});
+
 stories.add("Number of Selectable Days", () => {
   return (
     <DatePicker
