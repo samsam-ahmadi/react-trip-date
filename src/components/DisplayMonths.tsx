@@ -37,7 +37,7 @@ export const DisplayMonths = ({
       );
     });
   };
-  return <Wrapper jalali={jalali}>{renderMonths()}</Wrapper>;
+  return <Wrapper className="tp-calendar-month-select" jalali={jalali}>{renderMonths()}</Wrapper>;
 };
 
 type StyleProps = {

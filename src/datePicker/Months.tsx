@@ -57,6 +57,7 @@ export const Months = ({
       );
       months.push(
         <Month
+          className="tp-calendar-month"
           numberOfMonths={numberOfMonths || 1}
           key={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
           data-test={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
@@ -68,6 +69,7 @@ export const Months = ({
           />
           {weeksDays.map(week => (
             <Weeks
+              className="tp-calendar-week"
               jalali={jalali}
               data-test={dayjs()
                 .set("month", 1)
@@ -102,5 +104,5 @@ export const Months = ({
     }
     return months;
   };
-  return <Wrapper jalali={jalali}>{renderMonths()}</Wrapper>;
+  return <Wrapper className="tp-calendar-months" jalali={jalali}>{renderMonths()}</Wrapper>;
 };

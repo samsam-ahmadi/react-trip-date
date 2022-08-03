@@ -27,7 +27,7 @@ export const DisplayYears = ({ setDisplayYears, setSource }: Props) => {
     );
   }
 
-  return <Wrapper ref={ref}> {years} </Wrapper>;
+  return <Wrapper className="tp-calendar-year-select" ref={ref}> {years} </Wrapper>;
 };
 
 const Wrapper = styled.div`

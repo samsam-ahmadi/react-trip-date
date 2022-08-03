@@ -30,7 +30,7 @@ export const TitleOfWeek: React.FunctionComponent<Props> = ({
   }
 
   return (
-    <Wrapper jalali={jalali} startOfWeek={startOfWeek}>
+    <Wrapper className="tp-calendar-week-titles" jalali={jalali} startOfWeek={startOfWeek}>
       {titles.map(item => (
         <p key={item}>{item}</p>
       ))}

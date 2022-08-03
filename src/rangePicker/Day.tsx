@@ -234,7 +234,7 @@ export const Day = ({
           dayjs()
             .calendar(jalali ? "jalali" : "gregory")
             .format(FORMAT_DATE) === day.format(FORMAT_DATE),
-      }, extraDayClasses)}
+      }, extraDayClasses, "tp-calendar-day")}
     >
       {DayComponent && (
         <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
