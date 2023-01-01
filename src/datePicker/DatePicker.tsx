@@ -27,6 +27,7 @@ export const DatePicker = ({
   onChange,
   initialMonthAndYear,
   onRangeDateInScreen,
+  dayClasses,
 }: DatePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps || []);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
@@ -130,6 +131,7 @@ export const DatePicker = ({
             disabledBeforeDate={disabledBeforeDate}
             disabledBeforeToday={disabledBeforeToday}
             numberOfSelectableDays={numberOfSelectableDays}
+            dayClasses={dayClasses}
           />
         )}
       </ThemeProvider>

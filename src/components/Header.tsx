@@ -96,6 +96,7 @@ export const Header = ({
 
   return (
     <Wrapper
+      className="tp-calendar-header"
       numberOfMonths={numberOfMonths}
       jalali={jalali}
       displayMonths={displayMonths}

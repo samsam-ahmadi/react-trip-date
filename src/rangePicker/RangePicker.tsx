@@ -27,6 +27,7 @@ export const RangePicker = ({
   onChange,
   initialMonthAndYear,
   onRangeDateInScreen,
+  dayClasses,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
@@ -133,6 +134,7 @@ export const RangePicker = ({
             disabledBeforeDate={disabledBeforeDate}
             disabledAfterDate={disabledAfterDate}
             allowDisabledDaysSpan={allowDisabledDaysSpan}
+            dayClasses={dayClasses}
           />
         )}
       </ThemeProvider>

@@ -33,6 +33,7 @@ interface Props {
   setSelectedDays: Dispatch<
     SetStateAction<RangePickerSelectedDays | undefined>
   >;
+  dayClasses?: (day: Dayjs) => string[];
 }
 
 export const Day = ({
@@ -52,6 +53,7 @@ export const Day = ({
   disabledBeforeToday,
   disabledBeforeDate,
   disabledAfterDate,
+  dayClasses,
 }: Props) => {
   if (disabledBeforeToday) {
     const today = dayjs().format(FORMAT_DATE);
@@ -199,6 +201,10 @@ export const Day = ({
   };
 
   const DayComponent = components?.days;
+  let extraDayClasses = "";
+  if (dayClasses) {
+    extraDayClasses = dayClasses(day).join(" ");
+  }
   return (
     <Wrapper
       data-test={day.format(FORMAT_DATE)}
@@ -228,7 +234,7 @@ export const Day = ({
           dayjs()
             .calendar(jalali ? "jalali" : "gregory")
             .format(FORMAT_DATE) === day.format(FORMAT_DATE),
-      })}
+      }, extraDayClasses, "tp-calendar-day")}
     >
       {DayComponent && (
         <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
