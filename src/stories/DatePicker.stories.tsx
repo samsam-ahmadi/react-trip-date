@@ -1,20 +1,12 @@
-import {
-  array,
-  boolean,
-  number,
-  text,
-} from "@storybook/addon-knobs";
-import { storiesOf } from "@storybook/react";
-
 import { DatePicker } from "datePicker";
 import { FORMAT_DATE } from "constant";
+import { array, boolean, number, text } from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
+import { storiesOf } from "@storybook/react";
 
 const format = "YYYY-MM-DD";
-
 const disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
 const disabledAfterDate = dayjs().subtract(-21, "day").format(FORMAT_DATE);
-
 const initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
 
 const selectedDays = [
@@ -22,6 +14,7 @@ const selectedDays = [
   dayjs().subtract(-6, "day").format(format),
   dayjs().subtract(-15, "day").format(format),
 ];
+
 let disabledDays = [
   dayjs().subtract(-3, "day").format(format),
   dayjs().subtract(-9, "day").format(format),

@@ -1,0 +1,300 @@
+import { DocsContainer, Meta } from "@storybook/addon-docs";
+import { RangePicker } from "rangePicker";
+import { dayjs } from "libs/dayjs-config";
+
+<Meta
+  title="RangePicker - API"
+  parameters={{
+    docs: {
+      container: ({ children, ...rest }) => (
+        <DocsContainer {...rest}>{children}</DocsContainer>
+      ),
+    },
+  }}
+/>
+
+## React Trip Date
+
+<br />
+
+#### Everything you want, you can find in React Trip Date. It's a fully customizable component that you can change to match with your design system.
+
+<br />
+
+- RangePicker, DatePicker, Multiple Month, Define number of selectable days
+- Theme, Custom compoenents, Custom Days
+- Support Jalali and Gregorian
+- Use `day.js` It's 2KB immutable date
+
+## RangePicker APIs
+
+- [autoResponsive](#auto-responsive)
+- [allowDisabledDaysSpan](#allow-disabled-days-span)
+- [custom components](#custom-components)
+- [disabled](#disabled)
+- [disabledAfterDate](#disabled-after-date)
+- [disabledBeforeDate](#disabled-before-date)
+- [disabledBeforeToday](#disabled-before-today)
+- [disabledDays](#disabled-days)
+- [initialMonthAndYear](#initial-month-and-year)
+- [jalali](#jalali)
+- [numberOfMonths](#number-of-months)
+- [numberOfSelectableDays](#number-of-selectable-days)
+- [onChange](#onchange)
+- [onRangeDateInScreen](#range-date-in-screen)
+- [selectedDays](#selected-days)
+- [startOfWeek](#start-of-week)
+
+<br />
+
+### Auto Responsive
+
+By activate it, If your window growth from x-axis, the number of months will be increase and vice versa.
+
+<RangePicker autoResponsive onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<RangePicker autoResponsive />
+```
+
+### Custom Components
+
+In this prop you have access to most of part of DatePicker and you can change every peace of it.
+
+- Titles of weeks
+- Icons in the header
+- Wrapper of header of weeks
+- Items of week's header
+- Days
+
+<RangePicker
+  components={{
+    days: ({ day, jalali }) => (
+      <div style={{ fontSize: 12, color: "red" }}>
+        *{dayjs(day).format("D")}*
+      </div>
+    ),
+    header: {
+      format: "YY**MMMM",
+      monthIcons: {
+        right: <span>next month</span>,
+        left: <span>prev month</span>,
+      },
+      yearIcons: {
+        right: <span>next year</span>,
+        left: <span>prev year</span>,
+      },
+    },
+    titleOfWeek: {
+      titles: ["A", "B", "C", "D", "E", "F", "G"],
+    },
+  }}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker
+  components={{
+    days: ({ day, jalali }) => (
+      <div style={{ fontSize: 12, color: "red" }}>
+        *{dayjs(day).format("D")}*
+      </div>
+    ),
+    header: {
+      format: "YY**MMMM",
+      monthIcons: {
+        right: <span>next month</span>,
+        left: <span>prev month</span>,
+      },
+      yearIcons: {
+        right: <span>next year</span>,
+        left: <span>prev year</span>,
+      },
+    },
+    titleOfWeek: {
+      titles: ["A", "B", "C", "D", "E", "F", "G"],
+    },
+  }}
+/>
+```
+
+### Disabled
+
+By Disable the calendar you can't be able to select date it.
+
+<RangePicker
+  selectedDays={{
+    from: dayjs().subtract(-2, "day").format("YYYY-MM-DD"),
+    to: dayjs().subtract(-20, "day").format("YYYY-MM-DD"),
+  }}
+  disabled
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker disabled />
+```
+
+### Disabled After Date
+
+Disable days after specific date.
+
+<RangePicker
+  disabledAfterDate={dayjs().add(3, "days").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker disabledAfterDate={dayjs().add(3, "days").format("YYYY-MM-DD")} />
+```
+
+### Disabled Before Date
+
+Disable days Before specific date.
+
+<RangePicker
+  disabledBeforeDate={dayjs().add(-3, "days").format("YYYY-MM-DD")}
+/>
+
+```jsx
+<RangePicker
+  disabledBeforeDate={dayjs().add(-3, "days").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+```
+
+### Disabled Before Today
+
+Disable days Before today.
+
+<RangePicker
+  disabledBeforeToday
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker disabledBeforeToday />
+```
+
+### Disabled Days
+
+Disabled days.
+
+<RangePicker
+  disabledDays={[
+    dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+    dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+  ]}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+let disabledDays = [
+  dayjs().subtract(-3, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-9, "day").format("YYYY-MM-DD"),
+  dayjs().subtract(-12, "day").format("YYYY-MM-DD"),
+];
+
+<RangePicker
+  disabledDays={disabledDays}
+  onChange={dates => console.log("dates", dates)}
+/>;
+```
+
+### onChange
+
+Get changes from RangePicker
+
+<RangePicker onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<RangePicker
+  onChange={dates => console.log("dates", dates)}
+  onChange={dates => console.log("dates", dates)}
+/>
+```
+
+### Initial Month And Year
+
+Set initial month and year for date picker
+
+<RangePicker
+  initialMonthAndYear={dayjs().subtract(1, "year").format("YYYY-MM-DD")}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker
+  initialMonthAndYear={dayjs().subtract(1, "year").format("YYYY-MM-DD")}
+/>
+```
+
+### Jalali
+
+Change Calendar to Jalali
+
+<RangePicker jalali onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<RangePicker jalali />
+```
+
+### Number Of Months
+
+Define how many months displays in the page, if autoResponsive is enabled this won't work.
+
+<RangePicker
+  numberOfMonths={2}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker numberOfMonths={2} />
+```
+
+### Range Date In Screen
+
+Listen on widnow to can get dates for every change of it.
+
+<RangePicker
+  onRangeDateInScreen={dates => console.log("window changed", dates)}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker
+  onRangeDateInScreen={dates => console.log("window changed", dates)}
+/>
+```
+
+### Selected Days
+
+Initial Days that you can pass to RangePicker
+
+<RangePicker
+  selectedDays={{
+    from: dayjs().subtract(-2, "day").format("YYYY-MM-DD"),
+    to: dayjs().subtract(-20, "day").format("YYYY-MM-DD"),
+  }}
+  onChange={dates => console.log("dates", dates)}
+/>
+
+```jsx
+<RangePicker
+  selectedDays={{
+    from: dayjs().subtract(-2, "day").format("YYYY-MM-DD"),
+    to: dayjs().subtract(-20, "day").format("YYYY-MM-DD"),
+  }}
+/>
+```
+
+### Start Of Week
+
+Change Start Of week
+
+<RangePicker startOfWeek={1} onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<RangePicker startOfWeek={1} />
+```

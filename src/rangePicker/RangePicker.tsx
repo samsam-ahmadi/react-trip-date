@@ -5,14 +5,14 @@ import { dayjsLocalized } from "libs/dayjsLocalized";
 import { deepMerge } from "libs/mergeObjects";
 import { getDayFormat } from "libs/getDayFormat";
 import { theme } from "constant";
-import { useEffect, useState } from "react";
+import { useEffect, useRef, useState } from "react";
 
 import { Months } from "./Months";
 import { RangePickerProps } from "./rangePicker.type";
 
 export const RangePicker = ({
   jalali = false,
-  startOfWeek = 0,
+  startOfWeek = 1,
   numberOfMonths: numberOfMonthsProps = 1,
   disabledDays = [],
   disabledBeforeToday = false,
@@ -32,6 +32,7 @@ export const RangePicker = ({
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
   const [displayMonths, setDisplayMonths] = useState(false);
+  const ref = useRef<HTMLDivElement>(null);
   const [source, setSource] = useState(
     dayjsLocalized(jalali, initialMonthAndYear),
   );
@@ -65,11 +66,13 @@ export const RangePicker = ({
 
   useEffect(() => {
     const handleResize = () => {
-      let width = document.querySelector(".tp-calendar")!.clientWidth;
-      if (width < 580) {
-        setNumberOfMonths(1);
-      } else {
-        setNumberOfMonths(Math.floor(width / 320));
+      if (ref.current) {
+        let width = ref.current.clientWidth;
+        if (width < 580) {
+          setNumberOfMonths(1);
+        } else {
+          setNumberOfMonths(Math.floor(width / 320));
+        }
       }
     };
 
@@ -90,7 +93,7 @@ export const RangePicker = ({
   }, [numberOfMonths, autoResponsive, numberOfMonthsProps]);
 
   return (
-    <div className="tp-calendar">
+    <div className="tp-calendar" ref={ref}>
       <ThemeProvider
         theme={
           themeProps ? (deepMerge(theme, themeProps) as DefaultTheme) : theme
