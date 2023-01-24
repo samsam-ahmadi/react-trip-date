@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "1.12.0",
+  "version": "1.12.1",
   "description": "date-picker and range-picker for React applications",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -22,8 +22,8 @@
     "datePicker"
   ],
   "peerDependencies": {
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1"
+    "react": "^16.9.0 || ^17 || ^18",
+    "react-dom": "^16.9.0 || ^17 || ^18"
   },
   "dependencies": {
     "dayjs": "^1.11.7",

@@ -1,12 +1,12 @@
 import { Dayjs } from "dayjs";
-import { ReactElement } from "react";
+import { FC, ReactElement } from "react";
 import { createCalendar } from "libs/createCalendar";
 import { dayjs } from "libs/dayjs-config";
 import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
 import { CalendarProps } from "./calendar.type";
 
-export const Calendar: React.FC<CalendarProps> = ({
+export const Calendar: FC<CalendarProps> = ({
   jalali,
   startOfWeek = 1,
   children,

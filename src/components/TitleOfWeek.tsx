@@ -1,5 +1,5 @@
 import styled from "styled-components";
-import { ElementType } from "react";
+import { ElementType, FC } from "react";
 
 type Props = {
   jalali: boolean;
@@ -10,11 +10,7 @@ type Props = {
   };
 };
 
-export const TitleOfWeek: React.FunctionComponent<Props> = ({
-  jalali,
-  startOfWeek,
-  components,
-}) => {
+export const TitleOfWeek: FC<Props> = ({ jalali, startOfWeek, components }) => {
   let titles = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
   if (components?.titles) titles = [...components?.titles];
   else if (jalali) titles = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
@@ -25,12 +21,16 @@ export const TitleOfWeek: React.FunctionComponent<Props> = ({
   }
 
   if (components?.wrapper) {
-    const WrapperC = components?.wrapper;
+    const WrapperC = components.wrapper;
     return <WrapperC jalali={jalali} startOfWeek={startOfWeek} />;
   }
 
   return (
-    <Wrapper className="tp-calendar-week-titles" jalali={jalali} startOfWeek={startOfWeek}>
+    <Wrapper
+      className="tp-calendar-week-titles"
+      jalali={jalali}
+      startOfWeek={startOfWeek}
+    >
       {titles.map(item => (
         <p key={item}>{item}</p>
       ))}

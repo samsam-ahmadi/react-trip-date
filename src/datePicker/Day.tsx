@@ -1,6 +1,6 @@
 import styled from "styled-components";
 import { Dayjs } from "dayjs";
-import { Dispatch, SetStateAction } from "react";
+import { Dispatch, FC, SetStateAction } from "react";
 import { FORMAT_DATE } from "constant";
 import { classNames } from "libs/classNames";
 import { dayjs } from "libs/dayjs-config";
@@ -26,7 +26,7 @@ type Props = {
   dayClasses?: (day: Dayjs) => string[];
 };
 
-export const Day: React.FC<Props> = ({
+export const Day: FC<Props> = ({
   day,
   jalali,
   source,
@@ -144,16 +144,20 @@ export const Day: React.FC<Props> = ({
     <Wrapper
       data-test={day.format(FORMAT_DATE)}
       onClick={handleClick}
-      className={classNames({
-        inactive: day.month() !== source.add(numberOfMonth, "month").month(),
-        selected: handleSelectedDate(),
-        disabled: handleDisabledDate(),
-        disable: disabled,
-        today:
-          dayjs()
-            .calendar(jalali ? "jalali" : "gregory")
-            .format(FORMAT_DATE) === day.format(FORMAT_DATE),
-      }, extraDayClasses, "tp-calendar-day")}
+      className={classNames(
+        {
+          inactive: day.month() !== source.add(numberOfMonth, "month").month(),
+          selected: handleSelectedDate(),
+          disabled: handleDisabledDate(),
+          disable: disabled,
+          today:
+            dayjs()
+              .calendar(jalali ? "jalali" : "gregory")
+              .format(FORMAT_DATE) === day.format(FORMAT_DATE),
+        },
+        extraDayClasses,
+        "tp-calendar-day",
+      )}
     >
       {DayComponent && (
         <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
