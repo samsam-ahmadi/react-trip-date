@@ -1,4 +1,4 @@
-﻿# React-Trip-Date &middot; [![npm](https://img.shields.io/npm/v/react-trip-date.svg)](https://www.npmjs.com/package/react-trip-date) ![downloads](https://img.shields.io/npm/dt/react-trip-date.svg)
+﻿# React-Trip-Date &middot; [![npm](https://img.shields.io/npm/v/react-trip-date.svg)](https://www.npmjs.com/package/react-trip-date) ![downloads](https://img.shields.io/npm/dt/react-trip-date.svg) ![Gzip](https://deno.bundlejs.com/?q=react-trip-date&badge=)
 
 ![Demo for React Trip Date](demo.gif)
 
