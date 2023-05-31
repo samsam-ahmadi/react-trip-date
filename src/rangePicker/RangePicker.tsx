@@ -11,30 +11,31 @@ import { Months } from "./Months";
 import { RangePickerProps } from "./rangePicker.type";
 
 export const RangePicker = ({
-  jalali = false,
-  startOfWeek = 1,
-  numberOfMonths: numberOfMonthsProps = 1,
-  disabledDays = [],
-  disabledBeforeToday = false,
-  disabledBeforeDate,
-  disabledAfterDate,
-  disabled = false,
+  autoResponsive = true,
   allowDisabledDaysSpan = false,
   components,
-  theme: themeProps,
-  autoResponsive = true,
-  selectedDays: selectedDaysProps,
-  onChange,
-  initialMonthAndYear,
-  onRangeDateInScreen,
+  disabled = false,
   dayClasses,
+  disabledAfterDate,
+  disabledBeforeToday = false,
+  disabledBeforeDate,
+  disabledDays = [],
+  initialMonthAndYear,
+  jalali = false,
+  locale,
+  numberOfMonths: numberOfMonthsProps = 1,
+  onChange,
+  onRangeDateInScreen,
+  selectedDays: selectedDaysProps,
+  startOfWeek = 1,
+  theme: themeProps,
 }: RangePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
   const [hoverDay, setHoverDay] = useState<string>();
   const [displayMonths, setDisplayMonths] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [source, setSource] = useState(
-    dayjsLocalized(jalali, initialMonthAndYear),
+    dayjsLocalized(jalali, initialMonthAndYear, locale),
   );
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 

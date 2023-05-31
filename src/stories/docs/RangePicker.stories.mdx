@@ -38,6 +38,7 @@ import { dayjs } from "libs/dayjs-config";
 - [disabledDays](#disabled-days)
 - [initialMonthAndYear](#initial-month-and-year)
 - [jalali](#jalali)
+- [locale](#locale)
 - [numberOfMonths](#number-of-months)
 - [numberOfSelectableDays](#number-of-selectable-days)
 - [onChange](#onchange)
@@ -238,6 +239,16 @@ Change Calendar to Jalali
 
 ```jsx
 <RangePicker jalali />
+```
+
+### Locale
+
+Change locale of the calendar
+
+<RangePicker locale="de" onChange={dates => console.log("dates", dates)} />
+
+```jsx
+<RangePicker locale="de" />
 ```
 
 ### Number Of Months

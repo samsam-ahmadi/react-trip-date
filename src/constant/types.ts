@@ -19,24 +19,25 @@ export type InitialComponents = {
   };
   titleOfWeek?: {
     titles?: string[];
-    wrapper?: ElementType<{ jalali: boolean; startOfWeek: number; }>;
+    wrapper?: ElementType<{ jalali: boolean; startOfWeek: number }>;
   };
 };
 
 export interface InitialProps {
   autoResponsive?: boolean;
-  theme?: DeepPartial<DefaultTheme>;
+  dayClasses?: (day: Dayjs) => string[];
+  disabled?: boolean;
   disabledBeforeToday?: boolean;
   disabledBeforeDate?: string;
   disabledAfterDate?: string;
   disabledDays?: string[];
-  jalali?: boolean;
-  disabled?: boolean;
-  startOfWeek?: number;
-  numberOfMonths?: number;
   initialMonthAndYear?: string;
+  jalali?: boolean;
+  locale?: string;
+  numberOfMonths?: number;
   onRangeDateInScreen?: DatePickerWindowUpdated;
-  dayClasses?: (day: Dayjs) => string[];
+  startOfWeek?: number;
+  theme?: DeepPartial<DefaultTheme>;
 }
 
 type DatePickerWindow = { start: string; end: string };

@@ -1,9 +1,9 @@
 import _dayjs from "dayjs";
 import isBetween from "dayjs/plugin/isBetween";
 import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
-import jalaliday from "jalaliday";
+import jalaliPlugin from "@zoomit/dayjs-jalali-plugin";
 
-_dayjs.extend(jalaliday);
+_dayjs.extend(jalaliPlugin);
 _dayjs.extend(isBetween);
 _dayjs.extend(isSameOrBefore);
 

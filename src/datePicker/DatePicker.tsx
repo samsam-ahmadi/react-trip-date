@@ -11,30 +11,31 @@ import { DatePickerProps } from "./datePicker.type";
 import { Months } from "./Months";
 
 export const DatePicker = ({
-  jalali = false,
-  disabled = false,
   autoResponsive = true,
-  startOfWeek = 1,
-  numberOfMonths: numberOfMonthsProps = 1,
-  disabledDays = [],
   components,
-  theme: themeProps,
-  numberOfSelectableDays = 0,
-  disabledBeforeToday = false,
-  disabledBeforeDate,
-  disabledAfterDate,
-  selectedDays: selectedDaysProps,
-  onChange,
-  initialMonthAndYear,
-  onRangeDateInScreen,
   dayClasses,
+  disabled = false,
+  disabledBeforeToday = false,
+  disabledAfterDate,
+  disabledBeforeDate,
+  disabledDays = [],
+  initialMonthAndYear,
+  jalali = false,
+  locale,
+  numberOfMonths: numberOfMonthsProps = 1,
+  numberOfSelectableDays = 0,
+  onChange,
+  onRangeDateInScreen,
+  selectedDays: selectedDaysProps,
+  startOfWeek = 1,
+  theme: themeProps,
 }: DatePickerProps) => {
   const [selectedDays, setSelectedDays] = useState(selectedDaysProps || []);
   const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
   const [displayMonths, setDisplayMonths] = useState(false);
   const ref = useRef<HTMLDivElement>(null);
   const [source, setSource] = useState(
-    dayjsLocalized(jalali, initialMonthAndYear),
+    dayjsLocalized(jalali, initialMonthAndYear, locale),
   );
 
   useEffect(() => {
