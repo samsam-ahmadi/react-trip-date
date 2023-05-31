@@ -1,11 +1,6 @@
 import { FORMAT_DATE } from "constant";
 import { RangePicker } from "rangePicker";
-import {
-  array,
-  boolean,
-  number,
-  text,
-} from "@storybook/addon-knobs";
+import { array, boolean, number, text } from "@storybook/addon-knobs";
 import { dayjs } from "libs/dayjs-config";
 import { storiesOf } from "@storybook/react";
 
@@ -226,7 +221,9 @@ stories.add("Custom Day Classes", () => {
         autoResponsive={false}
         initialMonthAndYear="2021-08"
         onChange={dates => window.console.log(dates)}
-        dayClasses={day => [parseInt(day.format('D')) % 2 == 1 ? 'odd' : 'even' ]}
+        dayClasses={day => [
+          parseInt(day.format("D")) % 2 === 1 ? "odd" : "even",
+        ]}
       />
     </>
   );

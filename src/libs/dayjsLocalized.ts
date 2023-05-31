@@ -8,7 +8,7 @@ export const dayjsLocalized = (
   locale = "en",
 ): Dayjs => {
   try {
-    require(`dayjs/locale/${locale}`);
+    require(`dayjs/locale/${locale}.js`);
   } catch (error) {
     new Error(`This ${locale} Doesn't exist`);
   }
