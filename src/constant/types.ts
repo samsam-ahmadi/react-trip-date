@@ -33,7 +33,7 @@ export interface InitialProps {
   disabledDays?: string[];
   initialMonthAndYear?: string;
   jalali?: boolean;
-  locale?: string;
+  locale?: "en" | "de" | "es" |"fa" |"fr" |"it" | "ja"| "zh"| "ru"| "tr";
   numberOfMonths?: number;
   onRangeDateInScreen?: DatePickerWindowUpdated;
   startOfWeek?: number;
