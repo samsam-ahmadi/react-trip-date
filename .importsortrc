@@ -1,6 +1,0 @@
-{
-  ".js, .jsx, .ts, .tsx": {
-    "parser": "babylon",
-    "style": "renke",
-  },
-}

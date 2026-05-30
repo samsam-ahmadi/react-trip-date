@@ -1,4 +1,3 @@
-
 # See https://help.github.com/ignore-files/ for more about ignoring files.
 
 # dependencies
@@ -9,12 +8,15 @@ node_modules
 build
 dist
 storybook-static
+docs-build
 
 # misc
 .vs-code
 .vscode
 .idea
 .DS_Store
+**/.DS_Store
+*.zip
 .env
 .env.local
 .env.development.local
@@ -27,4 +29,9 @@ yarn-error.log*
 
 .eslintcache
 coverage
-docs-build
+
+# Vite / Vitest
+.vite
+.vite-temp
+vite.config.ts.timestamp-*
+vite.config.js.timestamp-*
