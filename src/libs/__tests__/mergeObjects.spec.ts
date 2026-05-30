@@ -23,4 +23,32 @@ describe("libs - mergeObjects", () => {
       ),
     ).toMatchObject({ primary: { main: "#fff", dark: "#111" } });
   });
+
+  it("does not mutate the target object", () => {
+    const target = { primary: { main: "#000", dark: "#111" } };
+    deepMerge(target, { primary: { main: "#fff" } });
+    expect(target).toEqual({ primary: { main: "#000", dark: "#111" } });
+  });
+
+  it("does not mutate the target's nested objects (shared-reference safe)", () => {
+    const sharedPrimary = { main: "#000", dark: "#111" };
+    const target = { primary: sharedPrimary };
+    deepMerge(target, { primary: { main: "#fff" } });
+    expect(sharedPrimary).toEqual({ main: "#000", dark: "#111" });
+  });
+
+  it("does not mutate the source object", () => {
+    const source = { primary: { main: "#fff" } };
+    deepMerge({ primary: { main: "#000" } }, source);
+    expect(source).toEqual({ primary: { main: "#fff" } });
+  });
+
+  it("repeated merges with the same theme yield equivalent results (no drift)", () => {
+    const base = { primary: { main: "#000", dark: "#111" } };
+    const override = { primary: { main: "#fff" } };
+    const first = deepMerge(base, override);
+    const second = deepMerge(base, override);
+    expect(first).toEqual(second);
+    expect(base).toEqual({ primary: { main: "#000", dark: "#111" } });
+  });
 });
