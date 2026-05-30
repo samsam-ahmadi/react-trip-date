@@ -1,0 +1,55 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Introduction" />
+
+# react-trip-date
+
+Accessible, fully customizable date and range picker for React 18 / 19.
+
+- 📅 **DatePicker**, **RangePicker**, headless **Calendar** primitive
+- 🌍 Gregorian + **Jalali** (Persian) calendars, 10 built-in locales via Day.js
+- 🎨 Theme-able via `styled-components` v6 — drop-in compatible with Material-UI tokens
+- ♿ Full keyboard navigation, ARIA grid semantics, `axe`-clean
+- 📐 Auto-responsive multi-month layout
+- 🪶 Tree-shakable ESM build, zero runtime dependencies besides Day.js
+
+## Install
+
+```bash
+yarn add react-trip-date styled-components dayjs
+# or
+npm install react-trip-date styled-components dayjs
+```
+
+`react`, `react-dom`, and `styled-components` are peer dependencies.
+
+## Quick start
+
+```tsx
+import { DatePicker } from "react-trip-date";
+
+export function Example() {
+  return <DatePicker onChange={dates => console.log(dates)} />;
+}
+```
+
+```tsx
+import { useState } from "react";
+import { RangePicker } from "react-trip-date";
+
+export function Example() {
+  const [range, setRange] = useState({ from: "", to: "" });
+  return <RangePicker selectedDays={range} onChange={setRange} />;
+}
+```
+
+## What changed in v2?
+
+See [Migration v1 → v2](?path=/docs/docs-migration-v1-v2--docs) for the full list. TL;DR:
+
+- React 18 / 19 only (dropped 16 / 17).
+- `styled-components` v6 peer dep.
+- Modernized build (Vite lib mode, ESM-first `exports` map).
+- Full keyboard navigation + ARIA `grid` semantics.
+- Shared `useCalendarController` hook powers both pickers (smaller bundle, fewer bugs).
+- Removed deprecated `addon-knobs` Storybook; new docs powered by autodocs + MDX2.

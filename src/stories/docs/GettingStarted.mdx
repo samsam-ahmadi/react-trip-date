@@ -1,0 +1,77 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Getting Started" />
+
+# Getting Started
+
+## Controlled vs uncontrolled
+
+Both pickers are uncontrolled by default — pass an `onChange` and they manage their own state.
+
+```tsx
+<DatePicker onChange={dates => save(dates)} />
+```
+
+Pass `selectedDays` to make the picker controlled:
+
+```tsx
+const [dates, setDates] = useState<string[]>([]);
+<DatePicker selectedDays={dates} onChange={setDates} />;
+```
+
+For `RangePicker`, `selectedDays` is `{ from: string; to: string }`:
+
+```tsx
+const [range, setRange] = useState({ from: "", to: "" });
+<RangePicker selectedDays={range} onChange={setRange} />;
+```
+
+All dates are `YYYY-MM-DD` strings. They are **always Gregorian** on the wire, regardless of whether `jalali` is on — that way you can safely store them in your database and convert at the display layer.
+
+## Single-date vs multi-date
+
+`DatePicker` is multi-select by default. To behave like a classic single-date picker:
+
+```tsx
+<DatePicker numberOfSelectableDays={1} onChange={([date]) => save(date)} />
+```
+
+Cap the number of selectable days:
+
+```tsx
+<DatePicker numberOfSelectableDays={5} onChange={save} />
+```
+
+## Multi-month layouts
+
+```tsx
+<DatePicker numberOfMonths={3} autoResponsive={false} />
+```
+
+With `autoResponsive` (default), the component watches its own width via `ResizeObserver` and scales the month count to fit. Disable it if you want a fixed layout.
+
+## Initial month / year
+
+```tsx
+<DatePicker initialMonthAndYear="2024-08-01" />
+```
+
+## Disable specific days
+
+```tsx
+<DatePicker
+  disabledBeforeToday
+  disabledAfterDate="2024-12-31"
+  disabledDays={["2024-08-15", "2024-08-16"]}
+/>
+```
+
+## Window callback
+
+`onRangeDateInScreen` fires whenever the visible month window changes. Useful for prefetching availability data:
+
+```tsx
+<DatePicker
+  onRangeDateInScreen={({ start, end }) => prefetchAvailability(start, end)}
+/>
+```

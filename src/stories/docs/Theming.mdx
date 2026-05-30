@@ -1,0 +1,65 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Theming" />
+
+# Theming
+
+react-trip-date uses `styled-components` v6. The default theme is shaped to be **drop-in compatible with Material-UI**.
+
+## The theme shape
+
+```ts
+interface Theme {
+  primary: { light: string; main: string; dark: string };
+  grey: { 700: string; 900: string };
+  background: { default: string };
+  text: { disabled: string };
+  shape: { borderRadius: number };
+}
+```
+
+## Override per picker
+
+Pass `theme` directly:
+
+```tsx
+<DatePicker
+  theme={{
+    primary: { light: "#d4e8ff", main: "#3f50b5", dark: "#002884" },
+    shape: { borderRadius: 8 },
+  }}
+/>
+```
+
+You only have to pass the keys you want to override — the rest fall back to the default theme via deep-merge.
+
+## Use the app-level `ThemeProvider`
+
+If you already have a `styled-components` `ThemeProvider`, the picker will pick up tokens whose shape matches the `Theme` interface above. Easiest path: declare your global theme to extend the picker's.
+
+```tsx
+import "styled-components";
+import type { Theme } from "react-trip-date";
+
+declare module "styled-components" {
+  export interface DefaultTheme extends Theme {}
+}
+```
+
+## CSS hooks
+
+Every internal `styled` element also gets a stable class name so you can target it with global CSS if you do not want to use the theme prop:
+
+| Class                      | Element                                 |
+| -------------------------- | --------------------------------------- |
+| `tp-calendar`              | Root container                          |
+| `tp-calendar-header`       | Header strip (month/year + nav buttons) |
+| `tp-calendar-week-titles`  | Weekday row (Mo Tu We …)                |
+| `tp-calendar-months`       | Wrapper around all months in view       |
+| `tp-calendar-month`        | One month                               |
+| `tp-calendar-week`         | One row inside a month                  |
+| `tp-calendar-day`          | One day cell                            |
+| `tp-calendar-month-select` | Month picker overlay                    |
+| `tp-calendar-year-select`  | Year picker overlay                     |
+
+Modifier classes on `.tp-calendar-day`: `selected`, `disabled`, `disable`, `inactive`, `today`, `range-select`, `start-date`, `end-date`, `same`.

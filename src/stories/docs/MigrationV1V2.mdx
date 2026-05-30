@@ -1,0 +1,68 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Migration v1 → v2" />
+
+# Migration v1 → v2
+
+react-trip-date v2 is a modernization release. The public component API is largely unchanged — most apps will only need to bump peer deps. The breaking changes below explain what to update.
+
+## Peer dependencies
+
+| Peer                | v1                          | v2              |
+| ------------------- | --------------------------- | --------------- |
+| `react`             | `^16.9.0 \|\| ^17 \|\| ^18` | `^18 \|\| ^19`  |
+| `react-dom`         | same                        | `^18 \|\| ^19`  |
+| `styled-components` | bundled (v5)                | **peer** (`^6`) |
+
+`styled-components` is no longer bundled — install it explicitly:
+
+```bash
+yarn add styled-components@^6
+```
+
+## Module format
+
+v2 ships as ESM-first with a proper `exports` map:
+
+```json
+{
+  "type": "module",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.js",
+      "require": "./dist/index.cjs"
+    }
+  }
+}
+```
+
+If you were importing from a deep path (`react-trip-date/dist/...`), switch to the public entry: `import { DatePicker } from "react-trip-date"`.
+
+## styled-components v6 — SSR (Next.js etc.)
+
+The v6 SSR setup differs from v5. If you render server-side, update your registry per the [styled-components v6 SSR docs](https://styled-components.com/docs/advanced#server-side-rendering).
+
+## TypeScript
+
+v2 is built with TS 5.6 and exports stricter prop types. A few previously-permissive props are now narrowed:
+
+- `locale` is typed as `"en" | "de" | "es" | "fa" | "fr" | "it" | "ja" | "zh" | "ru" | "tr"`.
+- `theme` accepts a `DeepPartial<Theme>` — partial overrides are allowed and deep-merged.
+
+## Removed / changed
+
+- **DOM**: internal styled components now use [transient props](https://styled-components.com/docs/api#transient-props) (`$jalali`, `$numberOfMonths`, ...). You should not see `jalali="false"` attributes on `<div>` anymore. No app code change required.
+- **`Calendar`**: the buggy Sunday-shift on the source date is gone. If you relied on the off-by-one behavior, audit your render-prop child.
+- **Resize**: the responsive layout now uses `ResizeObserver` on the picker's own container instead of `window.resize`. Reacts to layout changes (drawers, splits) you previously had to refresh manually.
+- **Storybook**: the demo site rebuilt on Storybook 8. The story paths have changed; update any deep links.
+- **Removed `addon-knobs`**: replaced with Storybook controls/args. No runtime impact.
+
+## What's new
+
+- Full keyboard navigation (`←` `→` `↑` `↓` `Home` `End` `PageUp` `PageDown`, with `Shift` for years).
+- ARIA `grid` semantics: `role="grid"`, `aria-selected`, `aria-disabled`, `aria-current="date"`.
+- `axe`-clean stories in Storybook.
+- New `useCalendarController` hook powers both pickers; smaller bundle, fewer effects.
+- `onRangeDateInScreen` now fires from a `ResizeObserver`, not a `window` listener.
+- Improved tree-shaking — only the picker you import is in your bundle.
