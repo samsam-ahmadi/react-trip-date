@@ -1,22 +1,24 @@
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 import react from "@vitejs/plugin-react";
 import { defineConfig } from "vite";
 import dts from "vite-plugin-dts";
 import svgr from "vite-plugin-svgr";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Avoid __dirname / import.meta.url so this config loads under both
+// Node's CJS and ESM resolvers (different Storybook loaders pick
+// different ones depending on Node version).
+const ROOT = process.cwd();
 
 export default defineConfig({
   resolve: {
     alias: {
-      calendar: resolve(__dirname, "src/calendar"),
-      components: resolve(__dirname, "src/components"),
-      constant: resolve(__dirname, "src/constant"),
-      datePicker: resolve(__dirname, "src/datePicker"),
-      libs: resolve(__dirname, "src/libs"),
-      rangePicker: resolve(__dirname, "src/rangePicker"),
+      calendar: resolve(ROOT, "src/calendar"),
+      components: resolve(ROOT, "src/components"),
+      constant: resolve(ROOT, "src/constant"),
+      datePicker: resolve(ROOT, "src/datePicker"),
+      libs: resolve(ROOT, "src/libs"),
+      rangePicker: resolve(ROOT, "src/rangePicker"),
     },
   },
   plugins: [
@@ -48,9 +50,9 @@ export default defineConfig({
   build: {
     sourcemap: true,
     lib: {
-      entry: resolve(__dirname, "src/index.ts"),
+      entry: resolve(ROOT, "src/index.ts"),
       formats: ["es", "cjs"],
-      fileName: format => (format === "es" ? "index.js" : "index.cjs"),
+      fileName: format => (format === "es" ? "index.mjs" : "index.cjs"),
     },
     rollupOptions: {
       external: [

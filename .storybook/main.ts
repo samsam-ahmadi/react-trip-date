@@ -1,9 +1,11 @@
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 import type { StorybookConfig } from "@storybook/react-vite";
 import type { Plugin, PluginOption } from "vite";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+// Avoid __dirname / import.meta.url so this config loads under both
+// the esbuild-register loader (Node 20 CJS) and Node's native TS
+// stripping (Node 22+ ESM).
+const ROOT = process.cwd();
 
 const PROJECT_PLUGINS_TO_DROP = new Set([
   // vite-plugin-dts emits library .d.ts files — it should never run when
@@ -52,12 +54,12 @@ const config: StorybookConfig = {
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {
       ...(config.resolve.alias as Record<string, string>),
-      calendar: resolve(__dirname, "../src/calendar"),
-      components: resolve(__dirname, "../src/components"),
-      constant: resolve(__dirname, "../src/constant"),
-      datePicker: resolve(__dirname, "../src/datePicker"),
-      libs: resolve(__dirname, "../src/libs"),
-      rangePicker: resolve(__dirname, "../src/rangePicker"),
+      calendar: resolve(ROOT, "src/calendar"),
+      components: resolve(ROOT, "src/components"),
+      constant: resolve(ROOT, "src/constant"),
+      datePicker: resolve(ROOT, "src/datePicker"),
+      libs: resolve(ROOT, "src/libs"),
+      rangePicker: resolve(ROOT, "src/rangePicker"),
     };
     return config;
   },

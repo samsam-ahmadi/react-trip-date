@@ -1,21 +1,20 @@
-import { dirname, resolve } from "node:path";
-import { fileURLToPath } from "node:url";
+import { resolve } from "node:path";
 
 import react from "@vitejs/plugin-react";
 import svgr from "vite-plugin-svgr";
 import { defineConfig } from "vitest/config";
 
-const __dirname = dirname(fileURLToPath(import.meta.url));
+const ROOT = process.cwd();
 
 export default defineConfig({
   resolve: {
     alias: {
-      calendar: resolve(__dirname, "src/calendar"),
-      components: resolve(__dirname, "src/components"),
-      constant: resolve(__dirname, "src/constant"),
-      datePicker: resolve(__dirname, "src/datePicker"),
-      libs: resolve(__dirname, "src/libs"),
-      rangePicker: resolve(__dirname, "src/rangePicker"),
+      calendar: resolve(ROOT, "src/calendar"),
+      components: resolve(ROOT, "src/components"),
+      constant: resolve(ROOT, "src/constant"),
+      datePicker: resolve(ROOT, "src/datePicker"),
+      libs: resolve(ROOT, "src/libs"),
+      rangePicker: resolve(ROOT, "src/rangePicker"),
     },
   },
   plugins: [
