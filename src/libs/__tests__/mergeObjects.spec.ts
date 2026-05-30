@@ -1,15 +1,26 @@
-import { deepMerge } from "libs/mergeObjects";
+import { describe, expect, it } from "vitest";
+
+import { deepMerge } from "../mergeObjects";
 
 describe("libs - mergeObjects", () => {
-  it("expect return empty if Objects are empty", () => {
+  it("returns an empty object when merging empty objects", () => {
     expect(deepMerge({}, {})).toMatchObject({});
   });
 
-  it("expect return combine objects truly", () => {
+  it("merges flat objects", () => {
     expect(deepMerge({ a: 1 }, { a: 2, b: 3 })).toMatchObject({ a: 2, b: 3 });
   });
 
-  it("expect return combine objects truly if source object is empty", () => {
+  it("returns the target when no sources are provided", () => {
     expect(deepMerge({ a: 1 })).toMatchObject({ a: 1 });
+  });
+
+  it("deep-merges nested objects", () => {
+    expect(
+      deepMerge(
+        { primary: { main: "#000", dark: "#111" } },
+        { primary: { main: "#fff" } },
+      ),
+    ).toMatchObject({ primary: { main: "#fff", dark: "#111" } });
   });
 });

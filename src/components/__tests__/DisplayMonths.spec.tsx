@@ -1,85 +1,85 @@
-import { Dayjs } from "dayjs";
-import { TestProviders } from "libs/TestProviders";
-import { dayjs } from "libs/dayjs-config";
 import { fireEvent, render, screen } from "@testing-library/react";
+import { Dayjs } from "dayjs";
+import { describe, expect, it, vi } from "vitest";
 
-describe("Components - DisplayMonths", () => {
-  it("should DisplayMonths work correctly", async () => {
-    const setDisplayMonths = jest.fn();
-    const setSource = jest.fn();
-    await renderDisplayMonths({
-      jalali: false,
-      source: dayjs(),
-      setDisplayMonths,
-      setSource,
-    });
-  });
-  it("should DisplayMonths display months gregory", async () => {
-    const setDisplayMonths = jest.fn();
-    const setSource = jest.fn();
-    await renderDisplayMonths({
-      jalali: false,
-      source: dayjs(),
-      setDisplayMonths,
-      setSource,
-    });
-    expect(screen.getAllByTestId("month-item-to-select")).toHaveLength(12);
-    expect(screen.getByText("April")).toBeTruthy();
-  });
-
-  it("should DisplayMonths display months Jalali", async () => {
-    const setDisplayMonths = jest.fn();
-    const setSource = jest.fn();
-    await renderDisplayMonths({
-      jalali: true,
-      source: dayjs().calendar("jalali").locale("fa"),
-      setDisplayMonths,
-      setSource,
-    });
-    expect(screen.getAllByTestId("month-item-to-select")).toHaveLength(12);
-    expect(screen.getByText("اردیبهشت")).toBeTruthy();
-  });
-
-  it("should DisplayMonths select a month", async () => {
-    const setDisplayMonths = jest.fn();
-    const setSource = jest.fn();
-    await renderDisplayMonths({
-      jalali: false,
-      source: dayjs(),
-      setDisplayMonths,
-      setSource,
-    });
-    const getFirstItemOfMonth = screen.getAllByTestId(
-      "month-item-to-select",
-    )[0];
-    fireEvent.click(getFirstItemOfMonth);
-    expect(setSource).toHaveBeenCalledTimes(1);
-    expect(setDisplayMonths).toHaveBeenCalledTimes(1);
-  });
-});
+import { dayjs } from "../../libs/dayjs-config";
+import { TestProviders } from "../../libs/TestProviders";
+import { DisplayMonths } from "../DisplayMonths";
 
 interface RenderProps {
   source: Dayjs;
   jalali: boolean;
   setSource: (date: Dayjs) => void;
-  setDisplayMonths: (date: boolean) => void;
+  setDisplayMonths: (open: boolean) => void;
 }
 
-const renderDisplayMonths = async ({
+const renderDisplayMonths = ({
   jalali,
   setDisplayMonths,
   setSource,
   source,
-}: RenderProps) => {
-  const { DisplayMonths } = require("../DisplayMonths");
-  return render(
+}: RenderProps) =>
+  render(
     <TestProviders>
       <DisplayMonths
         jalali={jalali}
-        setDisplayMonths={setDisplayMonths}
-        setSource={setSource}
+        setDisplayMonths={
+          setDisplayMonths as unknown as React.Dispatch<
+            React.SetStateAction<boolean>
+          >
+        }
+        setSource={
+          setSource as unknown as React.Dispatch<React.SetStateAction<Dayjs>>
+        }
         source={source}
       />
     </TestProviders>,
   );
-};
+
+describe("Components - DisplayMonths", () => {
+  it("renders without crashing", () => {
+    renderDisplayMonths({
+      jalali: false,
+      source: dayjs(),
+      setDisplayMonths: vi.fn(),
+      setSource: vi.fn(),
+    });
+    expect(screen.getAllByTestId("month-item-to-select")).toHaveLength(12);
+  });
+
+  it("renders 12 gregorian months", () => {
+    renderDisplayMonths({
+      jalali: false,
+      source: dayjs(),
+      setDisplayMonths: vi.fn(),
+      setSource: vi.fn(),
+    });
+    expect(screen.getAllByTestId("month-item-to-select")).toHaveLength(12);
+    expect(screen.getByText("April")).toBeInTheDocument();
+  });
+
+  it("renders 12 jalali months", () => {
+    renderDisplayMonths({
+      jalali: true,
+      source: dayjs().calendar("jalali").locale("fa"),
+      setDisplayMonths: vi.fn(),
+      setSource: vi.fn(),
+    });
+    expect(screen.getAllByTestId("month-item-to-select")).toHaveLength(12);
+    expect(screen.getByText("اردیبهشت")).toBeInTheDocument();
+  });
+
+  it("invokes setSource and setDisplayMonths when a month is clicked", () => {
+    const setSource = vi.fn();
+    const setDisplayMonths = vi.fn();
+    renderDisplayMonths({
+      jalali: false,
+      source: dayjs(),
+      setDisplayMonths,
+      setSource,
+    });
+    fireEvent.click(screen.getAllByTestId("month-item-to-select")[0]);
+    expect(setSource).toHaveBeenCalledTimes(1);
+    expect(setDisplayMonths).toHaveBeenCalledTimes(1);
+  });
+});
