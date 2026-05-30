@@ -1,14 +1,16 @@
+import { useState } from "react";
 import { DefaultTheme, ThemeProvider } from "styled-components";
-import { DisplayMonths } from "components/DisplayMonths";
-import { Header } from "components";
-import { dayjsLocalized } from "libs/dayjsLocalized";
-import { deepMerge } from "libs/mergeObjects";
-import { getDayFormat } from "libs/getDayFormat";
-import { theme } from "constant";
-import { useEffect, useRef, useState } from "react";
 
+import { Header } from "../components";
 import { Months } from "./Months";
-import { RangePickerProps } from "./rangePicker.type";
+import { DisplayMonths } from "../components/DisplayMonths";
+import { theme } from "../constant";
+import { RangePickerProps, RangePickerSelectedDays } from "./rangePicker.type";
+import { deepMerge } from "../libs/mergeObjects";
+import { useCalendarController } from "../libs/useCalendarController";
+import { useControlled } from "../libs/useControlled";
+
+const EMPTY_RANGE: RangePickerSelectedDays = { from: "", to: "" };
 
 export const RangePicker = ({
   autoResponsive = true,
@@ -23,83 +25,53 @@ export const RangePicker = ({
   initialMonthAndYear,
   jalali = false,
   locale,
-  numberOfMonths: numberOfMonthsProps = 1,
+  numberOfMonths: numberOfMonthsProp = 1,
   onChange,
   onRangeDateInScreen,
-  selectedDays: selectedDaysProps,
+  selectedDays: selectedDaysProp,
   startOfWeek = 1,
-  theme: themeProps,
+  theme: themeProp,
 }: RangePickerProps) => {
-  const [selectedDays, setSelectedDays] = useState(selectedDaysProps);
+  const [selectedDays, setSelectedDays] =
+    useControlled<RangePickerSelectedDays>(
+      selectedDaysProp,
+      selectedDaysProp ?? EMPTY_RANGE,
+      onChange,
+    );
   const [hoverDay, setHoverDay] = useState<string>();
-  const [displayMonths, setDisplayMonths] = useState(false);
-  const ref = useRef<HTMLDivElement>(null);
-  const [source, setSource] = useState(
-    dayjsLocalized(jalali, initialMonthAndYear, locale),
-  );
-  const [numberOfMonths, setNumberOfMonths] = useState(numberOfMonthsProps);
 
-  useEffect(() => {
-    if (onRangeDateInScreen) {
-      let endDate = source.add(Math.max(0, numberOfMonths - 1), "month");
-      endDate = endDate.date(endDate.daysInMonth());
-      const startDate = source.date(1);
-      onRangeDateInScreen({
-        start: getDayFormat(startDate, jalali),
-        end: getDayFormat(endDate),
-      });
-    }
-  }, [jalali, numberOfMonths, onRangeDateInScreen, source]);
+  const initialFocusDate =
+    !initialMonthAndYear && selectedDays?.from ? selectedDays.from : undefined;
 
-  useEffect(() => {
-    if (!initialMonthAndYear && selectedDays?.from) {
-      setSource(dayjsLocalized(jalali, selectedDays?.from));
-    } else if (initialMonthAndYear) {
-      setSource(dayjsLocalized(jalali, initialMonthAndYear));
-    }
-    // we remove selectedDays  dependency to just run if we have any changes for initialMonthAndYear
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [jalali, initialMonthAndYear]);
+  const {
+    ref,
+    source,
+    setSource,
+    numberOfMonths,
+    displayMonths,
+    setDisplayMonths,
+  } = useCalendarController({
+    autoResponsive,
+    initialMonthAndYear,
+    jalali,
+    locale,
+    numberOfMonthsProp,
+    onRangeDateInScreen,
+    initialFocusDate,
+  });
 
-  useEffect(() => {
-    setSelectedDays(selectedDaysProps);
-  }, [selectedDaysProps]);
-
-  useEffect(() => {
-    const handleResize = () => {
-      if (ref.current) {
-        let width = ref.current.clientWidth;
-        if (width < 580) {
-          setNumberOfMonths(1);
-        } else {
-          setNumberOfMonths(Math.floor(width / 320));
-        }
-      }
-    };
-
-    if (autoResponsive) {
-      if (typeof window !== "undefined") {
-        window.addEventListener("resize", handleResize);
-        handleResize();
-      }
-    } else {
-      setNumberOfMonths(numberOfMonthsProps);
-    }
-
-    return () => {
-      if (typeof window !== "undefined") {
-        window.removeEventListener("resize", handleResize);
-      }
-    };
-  }, [numberOfMonths, autoResponsive, numberOfMonthsProps]);
+  const mergedTheme = themeProp
+    ? (deepMerge({ ...theme }, themeProp) as DefaultTheme)
+    : (theme as DefaultTheme);
 
   return (
-    <div className="tp-calendar" ref={ref}>
-      <ThemeProvider
-        theme={
-          themeProps ? (deepMerge(theme, themeProps) as DefaultTheme) : theme
-        }
-      >
+    <div
+      className="tp-calendar"
+      ref={ref}
+      role="group"
+      aria-label="Date range picker"
+    >
+      <ThemeProvider theme={mergedTheme}>
         <Header
           jalali={jalali}
           source={source}
@@ -120,7 +92,6 @@ export const RangePicker = ({
           <Months
             source={source}
             jalali={jalali}
-            onChange={onChange}
             disabled={disabled}
             setSource={setSource}
             hoverDay={hoverDay}

@@ -1,5 +1,5 @@
+import { ElementType } from "react";
 import styled from "styled-components";
-import { ElementType, FC } from "react";
 
 type Props = {
   jalali: boolean;
@@ -10,9 +10,9 @@ type Props = {
   };
 };
 
-export const TitleOfWeek: FC<Props> = ({ jalali, startOfWeek, components }) => {
+export const TitleOfWeek = ({ jalali, startOfWeek, components }: Props) => {
   let titles = ["Su", "Mo", "Tu", "We", "Th", "Fr", "Sa"];
-  if (components?.titles) titles = [...components?.titles];
+  if (components?.titles) titles = [...components.titles];
   else if (jalali) titles = ["ش", "ی", "د", "س", "چ", "پ", "ج"];
 
   if (!jalali) {
@@ -26,23 +26,22 @@ export const TitleOfWeek: FC<Props> = ({ jalali, startOfWeek, components }) => {
   }
 
   return (
-    <Wrapper
-      className="tp-calendar-week-titles"
-      jalali={jalali}
-      startOfWeek={startOfWeek}
-    >
+    <Wrapper className="tp-calendar-week-titles" $jalali={jalali} role="row">
       {titles.map(item => (
-        <p key={item}>{item}</p>
+        // eslint-disable-next-line jsx-a11y/no-noninteractive-element-to-interactive-role
+        <p key={item} role="columnheader" aria-label={item}>
+          {item}
+        </p>
       ))}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div<Props>`
+const Wrapper = styled.div<{ $jalali: boolean }>`
   display: flex;
   text-align: center;
   justify-content: center;
-  flex-direction: ${({ jalali }) => (jalali ? "row-reverse" : "row")};
+  flex-direction: ${({ $jalali }) => ($jalali ? "row-reverse" : "row")};
   border-bottom: 1px solid #e2e2e2;
   margin: 30px 0 15px 0;
   p {
