@@ -1,8 +1,25 @@
 import { dirname, resolve } from "node:path";
 import { fileURLToPath } from "node:url";
 import type { StorybookConfig } from "@storybook/react-vite";
+import type { Plugin, PluginOption } from "vite";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
+
+const PROJECT_PLUGINS_TO_DROP = new Set([
+  // vite-plugin-dts emits library .d.ts files — it should never run when
+  // Storybook is the host (it would overwrite dist/index.d.ts and fights
+  // with Storybook's own type handling).
+  "vite:dts",
+]);
+
+const filterProjectPlugins = (
+  plugins: PluginOption[] | undefined,
+): PluginOption[] =>
+  (plugins ?? []).filter(plugin => {
+    if (!plugin || Array.isArray(plugin)) return true;
+    const name = (plugin as Plugin).name;
+    return !name || !PROJECT_PLUGINS_TO_DROP.has(name);
+  });
 
 const config: StorybookConfig = {
   framework: {
@@ -31,6 +48,7 @@ const config: StorybookConfig = {
     },
   },
   async viteFinal(config) {
+    config.plugins = filterProjectPlugins(config.plugins);
     config.resolve = config.resolve ?? {};
     config.resolve.alias = {
       ...(config.resolve.alias as Record<string, string>),

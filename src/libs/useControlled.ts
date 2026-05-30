@@ -1,5 +1,12 @@
 import { Dispatch, SetStateAction, useCallback, useRef, useState } from "react";
 
+// `process` may be undefined in browser-only consumers that don't replace
+// `process.env.NODE_ENV` at bundle time. Resolve once at module load.
+const IS_DEV =
+  typeof process !== "undefined" &&
+  typeof process.env !== "undefined" &&
+  process.env.NODE_ENV !== "production";
+
 /**
  * Controlled/uncontrolled state helper. If `controlled` is defined the value
  * is sourced from the parent each render and `onChange` is invoked when the
@@ -16,7 +23,7 @@ export function useControlled<T>(
   const isControlled = controlled !== undefined;
   const { current: wasControlled } = useRef(isControlled);
 
-  if (process.env.NODE_ENV !== "production" && isControlled !== wasControlled) {
+  if (IS_DEV && isControlled !== wasControlled) {
     // eslint-disable-next-line no-console
     console.warn(
       "[react-trip-date] A controlled prop was switched between controlled and uncontrolled. Pick one for the lifetime of the component.",
