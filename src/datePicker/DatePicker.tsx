@@ -58,7 +58,7 @@ export const DatePicker = ({
   });
 
   const mergedTheme = themeProp
-    ? (deepMerge(theme, themeProp) as DefaultTheme)
+    ? (deepMerge(theme, themeProp) as unknown as DefaultTheme)
     : (theme as DefaultTheme);
 
   return (
