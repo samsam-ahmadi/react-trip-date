@@ -100,6 +100,7 @@
     "@vitest/coverage-v8": "^2.1.4",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",
     "eslint": "^8.57.1",
+    "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.31.0",
     "eslint-plugin-jsx-a11y": "^6.10.2",
     "eslint-plugin-react": "^7.37.2",

@@ -9,7 +9,7 @@ export type RangePickerSelectedDays = {
   to: string;
 };
 
-export interface RangePickerComponents extends InitialComponents {}
+export type RangePickerComponents = InitialComponents;
 
 export interface RangePickerProps extends InitialProps {
   components?: RangePickerComponents;
