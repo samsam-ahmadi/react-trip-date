@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "2.0.0",
+  "version": "2.0.1",
   "description": "Accessible, fully customizable date and range picker for React applications.",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -114,7 +114,7 @@
     "storybook": "^8.4.0",
     "styled-components": "^6.1.13",
     "typescript": "^5.6.3",
-    "vite": "^6.4.2",
+    "vite": "^5.4.10",
     "vite-plugin-dts": "^4.3.0",
     "vite-plugin-svgr": "^4.3.0",
     "vitest": "^2.1.4"
