@@ -14,7 +14,7 @@
 - 📐 Auto-responsive multi-month layout (via `ResizeObserver`)
 - 🪶 ESM-first, tree-shakable, sourcemaps included
 
-[Storybook & live docs →](https://killthejs.com/react-trip-date/)
+[Storybook & live docs →](https://samsam-ahmadi.com/react-trip-date/)
 
 ## Install
 
@@ -70,14 +70,14 @@ import { Calendar } from "react-trip-date";
 
 Full prop tables and live examples in Storybook:
 
-- [DatePicker](https://killthejs.com/react-trip-date/?path=/docs/components-datepicker--docs)
-- [RangePicker](https://killthejs.com/react-trip-date/?path=/docs/components-rangepicker--docs)
-- [Calendar](https://killthejs.com/react-trip-date/?path=/docs/components-calendar--docs)
-- [Theming](https://killthejs.com/react-trip-date/?path=/docs/docs-theming--docs)
-- [Localization](https://killthejs.com/react-trip-date/?path=/docs/docs-localization--docs)
-- [Accessibility & keyboard nav](https://killthejs.com/react-trip-date/?path=/docs/docs-accessibility--docs)
-- [Recipes](https://killthejs.com/react-trip-date/?path=/docs/docs-recipes--docs)
-- [Migration v1 → v2](https://killthejs.com/react-trip-date/?path=/docs/docs-migration-v1-%E2%86%92-v2--docs)
+- [DatePicker](https://samsam-ahmadi.com/react-trip-date/?path=/docs/components-datepicker--docs)
+- [RangePicker](https://samsam-ahmadi.com/react-trip-date/?path=/docs/components-rangepicker--docs)
+- [Calendar](https://samsam-ahmadi.com/react-trip-date/?path=/docs/components-calendar--docs)
+- [Theming](https://samsam-ahmadi.com/react-trip-date/?path=/docs/docs-theming--docs)
+- [Localization](https://samsam-ahmadi.com/react-trip-date/?path=/docs/docs-localization--docs)
+- [Accessibility & keyboard nav](https://samsam-ahmadi.com/react-trip-date/?path=/docs/docs-accessibility--docs)
+- [Recipes](https://samsam-ahmadi.com/react-trip-date/?path=/docs/docs-recipes--docs)
+- [Migration v1 → v2](https://samsam-ahmadi.com/react-trip-date/?path=/docs/docs-migration-v1-%E2%86%92-v2--docs)
 
 ## Develop
 
