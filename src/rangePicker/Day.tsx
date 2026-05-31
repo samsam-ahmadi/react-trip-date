@@ -1,18 +1,25 @@
-import styled from "styled-components";
 import { Dayjs } from "dayjs";
-import { Dispatch, SetStateAction } from "react";
-import { FORMAT_DATE } from "constant";
-import { classNames } from "libs/classNames";
-import { dayjs } from "libs/dayjs-config";
-import { dayjsLocalized } from "libs/dayjsLocalized";
-import { getDayFormat } from "libs/getDayFormat";
-import { isMobile } from "libs/isMobile";
+import {
+  Dispatch,
+  KeyboardEvent,
+  MouseEvent,
+  MutableRefObject,
+  SetStateAction,
+  useEffect,
+  useRef,
+} from "react";
+import styled from "styled-components";
 
+import { FORMAT_DATE } from "../constant";
 import {
   RangePickerComponents,
-  RangePickerOnChange,
   RangePickerSelectedDays,
 } from "./rangePicker.type";
+import { classNames } from "../libs/classNames";
+import { dayjs } from "../libs/dayjs-config";
+import { getDayFormat } from "../libs/getDayFormat";
+import { handleDayKeyDown } from "../libs/handleDayKeyDown";
+import { isMobile } from "../libs/isMobile";
 
 interface Props {
   day: Dayjs;
@@ -27,18 +34,23 @@ interface Props {
   disabledAfterDate?: string;
   allowDisabledDaysSpan: boolean;
   components?: RangePickerComponents;
-  onChange: RangePickerOnChange;
   selectedDays?: RangePickerSelectedDays;
   setHoverDay: Dispatch<SetStateAction<string | undefined>>;
-  setSelectedDays: Dispatch<
-    SetStateAction<RangePickerSelectedDays | undefined>
-  >;
+  setSelectedDays: Dispatch<SetStateAction<RangePickerSelectedDays>>;
+  setSource: Dispatch<SetStateAction<Dayjs>>;
   dayClasses?: (day: Dayjs) => string[];
+  focusedDate: string;
+  setFocusedDate: (date: string) => void;
+  focusRef: MutableRefObject<string | null>;
+  requestFocus: (date: string) => void;
 }
+
+const TODAY_GREG = () => dayjs().format(FORMAT_DATE);
 
 export const Day = ({
   day,
   source,
+  setSource,
   jalali,
   selectedDays,
   disabledDays,
@@ -46,7 +58,6 @@ export const Day = ({
   hoverDay,
   disabled,
   components,
-  onChange,
   setHoverDay,
   setSelectedDays,
   numberOfMonth,
@@ -54,144 +65,128 @@ export const Day = ({
   disabledBeforeDate,
   disabledAfterDate,
   dayClasses,
+  focusedDate,
+  setFocusedDate,
+  focusRef,
+  requestFocus,
 }: Props) => {
-  if (disabledBeforeToday) {
-    const today = dayjs().format(FORMAT_DATE);
-    disabledBeforeDate =
-      disabledBeforeDate && dayjs(disabledBeforeDate).isAfter(today)
-        ? disabledBeforeDate
-        : today;
-  }
-  let dateFormat = getDayFormat(day, jalali);
-  const isDisabledDate = (dateFormat: string) => {
-    return (
-      disabledDays.includes(dateFormat) ||
-      (disabledBeforeDate && dayjs(dateFormat).isBefore(disabledBeforeDate)) ||
-      (disabledAfterDate && dayjs(dateFormat).isAfter(disabledAfterDate))
-    );
+  const ref = useRef<HTMLButtonElement>(null);
+  const dateFormat = getDayFormat(day, jalali);
+  const isFocused = focusedDate === dateFormat;
+
+  const effectiveBefore = (() => {
+    if (!disabledBeforeToday) return disabledBeforeDate;
+    const today = TODAY_GREG();
+    return disabledBeforeDate && dayjs(disabledBeforeDate).isAfter(today)
+      ? disabledBeforeDate
+      : today;
+  })();
+
+  const isDisabledDate = (target: string): boolean => {
+    if (disabledDays.includes(target)) return true;
+    if (effectiveBefore && dayjs(target).isBefore(effectiveBefore)) return true;
+    if (disabledAfterDate && dayjs(target).isAfter(disabledAfterDate))
+      return true;
+    return false;
+  };
+
+  useEffect(() => {
+    if (
+      isFocused &&
+      ref.current &&
+      focusRef.current === dateFormat &&
+      document.activeElement !== ref.current
+    ) {
+      ref.current.focus({ preventScroll: true });
+      focusRef.current = null;
+    }
+  }, [isFocused, dateFormat, focusRef]);
+
+  const commit = (next: RangePickerSelectedDays) => {
+    setSelectedDays(next);
   };
 
   const handleChangeState = (from: string, to: string) => {
     if (disabled) return;
-
     if (dayjs(from).isBefore(to)) {
-      setSelectedDays({
-        from,
-        to,
-      });
-      onChange({
-        from,
-        to,
-      });
+      commit({ from, to });
     } else {
-      setSelectedDays({
-        from: to,
-        to: from,
-      });
-      onChange({
-        from: to,
-        to: from,
-      });
+      commit({ from: to, to: from });
     }
   };
-  const onClick = () => {
-    if (disabled) return;
-    // Handle disable dates
-    if (disabledDays) {
-      if (
-        (disabledBeforeDate &&
-          dayjs(dateFormat).isBefore(
-            dayjsLocalized(jalali, disabledBeforeDate),
-            "day",
-          )) ||
-        (disabledAfterDate &&
-          dayjs(dateFormat).isAfter(
-            dayjsLocalized(jalali, disabledAfterDate),
-            "day",
-          )) ||
-        disabledDays.includes(dateFormat)
-      ) {
-        return false;
-      }
+
+  const handleSelect = () => {
+    if (disabled || isDisabledDate(dateFormat)) return;
+
+    // First click — set the "from" date.
+    if (!selectedDays?.from && !selectedDays?.to) {
+      setHoverDay("");
+      commit({ from: dateFormat, to: "" });
+      return;
     }
 
-    // First click and set the from date
-    if (!selectedDays?.from && !selectedDays?.to.length) {
-      setHoverDay("");
-      setSelectedDays({ from: dateFormat, to: "" });
-      onChange({
-        from: dateFormat,
-        to: "",
-      });
-    }
-    // Second click and set the second date
-    if (disabledDays && !selectedDays?.to && selectedDays?.from) {
-      // Get list of disabled days between the from and the day
-      let disables = disabledDays.filter(item => {
-        if (dayjs(item).isBetween(selectedDays.from, dateFormat, null, "[]")) {
-          return true;
-        }
-        return false;
-      });
-      // Check if we have a disabled days between them
+    // Second click — set the "to" date.
+    if (selectedDays?.from && !selectedDays?.to) {
+      const disables = disabledDays.filter(item =>
+        dayjs(item).isBetween(selectedDays.from, dateFormat, null, "[]"),
+      );
       if (disables.length && !allowDisabledDaysSpan) {
-        disables.sort((prev, next) => {
-          return dayjs(disables[0]).isBefore(hoverDay!)
+        const probe = hoverDay ?? dateFormat;
+        const sorted = [...disables].sort((prev, next) =>
+          dayjs(disables[0]).isBefore(probe)
             ? dayjs(prev).isSameOrBefore(next)
               ? -1
               : 1
             : dayjs(prev).isSameOrBefore(next)
-            ? 1
-            : -1;
-        });
-        // We check here to ensure we set the day before the disabled day
-        if (dayjs(disables[0]).isBefore(hoverDay!)) {
+              ? 1
+              : -1,
+        );
+        const clamp = sorted[0];
+        if (dayjs(clamp).isBefore(probe)) {
           handleChangeState(
-            selectedDays?.from,
-            getDayFormat(dayjs(disables[0]).subtract(1, "day"), jalali),
+            selectedDays.from,
+            getDayFormat(dayjs(clamp).subtract(1, "day"), jalali),
           );
         } else {
           handleChangeState(
-            selectedDays?.from,
-            getDayFormat(dayjs(disables[0]).add(1, "day"), jalali),
+            selectedDays.from,
+            getDayFormat(dayjs(clamp).add(1, "day"), jalali),
           );
         }
       } else {
-        handleChangeState(selectedDays?.from, dateFormat);
+        handleChangeState(selectedDays.from, dateFormat);
       }
-    } else if (!selectedDays?.to.length && selectedDays?.from) {
-      handleChangeState(selectedDays?.from, dateFormat);
-    } else if (selectedDays?.from && selectedDays?.to) {
-      // Third click and set the from date and set the "to" date
-      setHoverDay("");
-      setSelectedDays({ from: dateFormat, to: "" });
-      onChange({
-        from: dateFormat,
-        to: "",
-      });
+      return;
     }
+
+    // Third click — reset.
+    setHoverDay("");
+    commit({ from: dateFormat, to: "" });
   };
 
-  const getEndDateForClasses = () => {
-    if (selectedDays) {
-      if (selectedDays.to) return selectedDays.to;
-      if (hoverDay) return hoverDay;
-      return selectedDays.from;
-    }
-    return "";
+  const handleClick = (event: MouseEvent<HTMLButtonElement>) => {
+    event.preventDefault();
+    if (disabled) return;
+    setFocusedDate(dateFormat);
+    handleSelect();
   };
 
-  // Handle style between of days
-  const handleRangeStyle = () => {
-    if (!selectedDays || !selectedDays.from) return false;
-
-    // Always apply style to the start date
-    if (dateFormat === selectedDays.from) return true;
-
-    const end_date = getEndDateForClasses();
-    if (isDisabledDate(end_date)) return false;
-
-    return dayjs(dateFormat).isBetween(selectedDays.from, end_date, null, "[]");
+  const handleKeyDown = (event: KeyboardEvent<HTMLButtonElement>) => {
+    if (
+      handleDayKeyDown(event, {
+        day,
+        source,
+        setSource,
+        setFocusedDate,
+        requestFocus,
+      })
+    ) {
+      return;
+    }
+    if (event.key === "Enter" || event.key === " ") {
+      event.preventDefault();
+      handleSelect();
+    }
   };
 
   const hoverOnDay = () => {
@@ -200,51 +195,90 @@ export const Day = ({
     }
   };
 
+  const getEndDateForClasses = () => {
+    if (!selectedDays) return "";
+    if (selectedDays.to) return selectedDays.to;
+    if (hoverDay) return hoverDay;
+    return selectedDays.from;
+  };
+
+  const isRangeSelected = (): boolean => {
+    if (!selectedDays || !selectedDays.from) return false;
+    if (dateFormat === selectedDays.from) return true;
+    const endDate = getEndDateForClasses();
+    if (isDisabledDate(endDate)) return false;
+    return dayjs(dateFormat).isBetween(selectedDays.from, endDate, null, "[]");
+  };
+
+  const isInactiveMonth =
+    day.month() !== source.add(numberOfMonth, "month").month();
+  const isToday =
+    dayjs()
+      .calendar(jalali ? "jalali" : "gregory")
+      .format(FORMAT_DATE) === day.format(FORMAT_DATE);
+
+  const disabledClass = isDisabledDate(dateFormat) && !isRangeSelected();
+  const startDateClass =
+    !!selectedDays &&
+    dateFormat ===
+      (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
+        ? selectedDays.from
+        : selectedDays.to);
+  const endDateClass =
+    !!selectedDays &&
+    dateFormat ===
+      (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
+        ? selectedDays.to
+        : selectedDays.from);
+
   const DayComponent = components?.days;
-  let extraDayClasses = "";
-  if (dayClasses) {
-    extraDayClasses = dayClasses(day).join(" ");
-  }
+  const extraDayClasses = dayClasses ? dayClasses(day).join(" ") : "";
+
   return (
     <Wrapper
+      ref={ref}
+      type="button"
       data-test={day.format(FORMAT_DATE)}
-      onClick={onClick}
+      onClick={handleClick}
+      onKeyDown={handleKeyDown}
       onMouseEnter={isMobile() ? undefined : hoverOnDay}
-      className={classNames({
-        inactive: day.month() !== source.add(numberOfMonth, "month").month(),
-        disabled: isDisabledDate(dateFormat) && !handleRangeStyle(),
-        "range-select": handleRangeStyle(),
-        jalali: jalali,
-        disable: disabled,
-        same: selectedDays && dayjs(selectedDays.from).isSame(selectedDays.to),
-        "start-date":
-          selectedDays &&
-          dateFormat ===
-            (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
-              ? selectedDays.from
-              : selectedDays.to),
-        "end-date":
-          selectedDays &&
-          dateFormat ===
-            (dayjs(selectedDays.from).isSameOrBefore(getEndDateForClasses())
-              ? selectedDays.to
-              : selectedDays.from),
-
-        today:
-          dayjs()
-            .calendar(jalali ? "jalali" : "gregory")
-            .format(FORMAT_DATE) === day.format(FORMAT_DATE),
-      }, extraDayClasses, "tp-calendar-day")}
-    >
-      {DayComponent && (
-        <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
+      tabIndex={isFocused ? 0 : -1}
+      role="gridcell"
+      aria-selected={startDateClass || endDateClass || isRangeSelected()}
+      aria-disabled={disabledClass || disabled || undefined}
+      aria-current={isToday ? "date" : undefined}
+      aria-label={day.format("dddd, MMMM D, YYYY")}
+      disabled={disabled}
+      className={classNames(
+        {
+          inactive: isInactiveMonth,
+          disabled: disabledClass,
+          "range-select": isRangeSelected(),
+          jalali,
+          disable: disabled,
+          same:
+            !!selectedDays && dayjs(selectedDays.from).isSame(selectedDays.to),
+          "start-date": startDateClass,
+          "end-date": endDateClass,
+          today: isToday,
+        },
+        extraDayClasses,
+        "tp-calendar-day",
       )}
-      {!DayComponent && day.format("DD")}
+    >
+      {DayComponent ? (
+        <DayComponent day={day.format(FORMAT_DATE)} jalali={jalali} />
+      ) : (
+        day.format("DD")
+      )}
     </Wrapper>
   );
 };
 
-const Wrapper = styled.div`
+const Wrapper = styled.button`
+  border: 0;
+  background: transparent;
+  font: inherit;
   width: 40px;
   height: 40px;
   transition: all 0.15s ease-in-out;
@@ -256,6 +290,12 @@ const Wrapper = styled.div`
   margin-bottom: 5px;
   cursor: pointer;
   color: ${({ theme }) => theme.grey[900]};
+
+  &:focus-visible {
+    outline: 2px solid ${({ theme }) => theme.primary.dark};
+    outline-offset: 2px;
+  }
+
   &:hover {
     background-color: ${({ theme }) => theme.primary.light};
     color: ${({ theme }) => theme.grey[700]};
@@ -279,11 +319,11 @@ const Wrapper = styled.div`
   &.disabled {
     color: ${({ theme }) => theme.text.disabled};
     position: relative;
+    cursor: not-allowed;
 
     &:hover {
       background-color: transparent;
       color: ${({ theme }) => theme.text.disabled};
-      cursor: not-allowed;
     }
 
     &::after {

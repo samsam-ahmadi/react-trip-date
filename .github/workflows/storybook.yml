@@ -1,23 +1,41 @@
-name: Build And Deploy StoryBook
-on: 
+name: Build And Deploy Storybook
+on:
   push:
-    paths: ["src/**", ".storybook/**"] 
+    branches: [master]
+    paths:
+      - "src/**"
+      - ".storybook/**"
+      - "package.json"
+      - "yarn.lock"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
     steps:
-      - name: Checkout 🛎️
-        uses: actions/checkout@v2.3.1
+      - name: Checkout
+        uses: actions/checkout@v4
+      - name: Setup Node
+        uses: actions/setup-node@v4
         with:
-          persist-credentials: false
-      - name: Install and Build 🔧
-        run: |
-          yarn install
-          yarn build-storybook
-      - name: Deploy 🚀
-        uses: crazy-max/ghaction-github-pages@v2
+          node-version: 20
+          cache: yarn
+      - name: Install
+        run: yarn install --frozen-lockfile
+      - name: Build Storybook
+        run: yarn build-storybook
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
         with:
-          target_branch: gh-pages
-          build_dir: docs-build
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          path: docs-build
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

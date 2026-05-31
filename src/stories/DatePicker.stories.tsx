@@ -1,281 +1,206 @@
-import { DatePicker } from "datePicker";
-import { FORMAT_DATE } from "constant";
-import { array, boolean, number, text } from "@storybook/addon-knobs";
-import { dayjs } from "libs/dayjs-config";
-import { storiesOf } from "@storybook/react";
+import type { Meta, StoryObj } from "@storybook/react";
 
-const format = "YYYY-MM-DD";
-const disabledBeforeDate = dayjs().subtract(2, "day").format(FORMAT_DATE);
-const disabledAfterDate = dayjs().subtract(-21, "day").format(FORMAT_DATE);
-const initialMonthAndYear = dayjs().subtract(1, "year").format(FORMAT_DATE);
+import { FORMAT_DATE } from "../constant";
+import { DatePicker } from "../datePicker";
+import { dayjs } from "../libs/dayjs-config";
 
-const selectedDays = [
-  dayjs().subtract(-2, "day").format(format),
-  dayjs().subtract(-6, "day").format(format),
-  dayjs().subtract(-15, "day").format(format),
-];
+const today = dayjs();
 
-let disabledDays = [
-  dayjs().subtract(-3, "day").format(format),
-  dayjs().subtract(-9, "day").format(format),
-  dayjs().subtract(-25, "day").format(format),
-  dayjs().subtract(-40, "day").format(format),
-  dayjs().subtract(2, "day").format(format),
-  dayjs().subtract(9, "day").format(format),
-  dayjs().subtract(10, "day").format(format),
-];
-
-const stories = storiesOf("Date Picker Component", module);
-
-stories.add("All Props", () => {
-  return (
-    <DatePicker
-      jalali={boolean("jalali", false)}
-      startOfWeek={number("start of week", 0)}
-      disabled={boolean("disabled", false)}
-      autoResponsive={boolean("auto responsive", true)}
-      disabledBeforeToday={boolean("disabled before today", false)}
-      disabledBeforeDate={text("disabled before date", disabledBeforeDate)}
-      disabledAfterDate={text("disabled after date", disabledAfterDate)}
-      numberOfMonths={number("number of months", 4)}
-      initialMonthAndYear={text("initial month and year", initialMonthAndYear)}
-      onRangeDateInScreen={window => console.log("window changed", window)}
-      numberOfSelectableDays={number("number of selectable days", 5)}
-      selectedDays={array("selected days", selectedDays)}
-      disabledDays={array("disabled days", disabledDays)}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
-
-stories.add("Theme", () => {
-  const theme = {
-    primary: {
-      light: "#757ce8",
-      main: "#3f50b5",
-      dark: "#002884",
+const meta: Meta<typeof DatePicker> = {
+  title: "Components/DatePicker",
+  component: DatePicker,
+  tags: ["autodocs"],
+  parameters: {
+    docs: {
+      description: {
+        component:
+          "Accessible, fully customizable date picker. Supports Gregorian and Jalali calendars, multi-month layouts, controlled/uncontrolled selection, and full keyboard navigation.",
+      },
     },
-    grey: {
-      700: "#707070",
-      900: "#1b1b1d",
+  },
+  argTypes: {
+    jalali: {
+      control: "boolean",
+      description:
+        "Render the calendar in the Jalali (Persian) calendar system.",
     },
-    background: {
-      default: "#f5f5f5",
+    locale: {
+      control: "select",
+      options: ["en", "de", "es", "fa", "fr", "it", "ja", "zh", "ru", "tr"],
+      description: "Day.js locale used for month and weekday names.",
     },
-    text: {
-      disabled: "#BABABA",
+    numberOfMonths: {
+      control: { type: "number", min: 1, max: 4 },
+      description: "How many months to render side-by-side.",
     },
-  };
+    numberOfSelectableDays: {
+      control: { type: "number", min: 0, max: 10 },
+      description:
+        "Cap the number of days that can be selected at once. 0 = unlimited, 1 = single-date mode.",
+    },
+    startOfWeek: {
+      control: { type: "number", min: 0, max: 6 },
+      description:
+        "First column of the calendar. 0 = Sunday, 1 = Monday, etc. Ignored when `jalali` is true.",
+    },
+    autoResponsive: {
+      control: "boolean",
+      description:
+        "Automatically grow/shrink the number of visible months based on container width.",
+    },
+    disabled: { control: "boolean", description: "Disable the entire picker." },
+    disabledBeforeToday: {
+      control: "boolean",
+      description: "Disable any date strictly before today.",
+    },
+    disabledBeforeDate: {
+      control: "text",
+      description: "Disable any date strictly before this `YYYY-MM-DD`.",
+    },
+    disabledAfterDate: {
+      control: "text",
+      description: "Disable any date strictly after this `YYYY-MM-DD`.",
+    },
+    onChange: { action: "change" },
+    onRangeDateInScreen: { action: "rangeDateInScreen" },
+  },
+  args: {
+    jalali: false,
+    locale: "en",
+    numberOfMonths: 1,
+    numberOfSelectableDays: 0,
+    startOfWeek: 1,
+    autoResponsive: true,
+    disabled: false,
+    disabledBeforeToday: false,
+  },
+};
 
-  return (
-    <DatePicker theme={theme} onChange={dates => console.log("dates", dates)} />
-  );
-});
+export default meta;
+type Story = StoryObj<typeof DatePicker>;
 
-stories.add("Simple", () => {
-  return <DatePicker onChange={dates => console.log("dates", dates)} />;
-});
+export const Default: Story = {};
 
-stories.add("Jalali", () => {
-  return <DatePicker jalali onChange={dates => console.log("dates", dates)} />;
-});
+export const Jalali: Story = {
+  args: { jalali: true },
+};
 
-stories.add("Multiple Month", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const MultipleMonths: Story = {
+  args: { numberOfMonths: 2, autoResponsive: false },
+};
 
-stories.add("Auto Responsive", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      autoResponsive={boolean("auto responsive", true)}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const DisabledBeforeToday: Story = {
+  args: { disabledBeforeToday: true, numberOfMonths: 2, autoResponsive: false },
+};
 
-stories.add("Initial Month/Year and onRangeDateInScreen callback", () => {
-  return (
-    <DatePicker
-      initialMonthAndYear={text("initial month and year", initialMonthAndYear)}
-      onRangeDateInScreen={window => console.log("window changed", window)}
-      numberOfMonths={number("number of months", 2)}
-      jalali={boolean("jalali", false)}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const DisabledRange: Story = {
+  args: {
+    disabledBeforeDate: today.subtract(2, "day").format(FORMAT_DATE),
+    disabledAfterDate: today.add(21, "day").format(FORMAT_DATE),
+    numberOfMonths: 2,
+    autoResponsive: false,
+  },
+};
 
-stories.add("Disabled Calendar", () => {
-  return (
-    <div>
-      <DatePicker
-        disabled={boolean("disabled", true)}
-        onChange={dates => console.log("dates", dates)}
-      />
-    </div>
-  );
-});
+export const DisabledDays: Story = {
+  args: {
+    disabledDays: [
+      today.add(3, "day").format(FORMAT_DATE),
+      today.add(9, "day").format(FORMAT_DATE),
+      today.add(10, "day").format(FORMAT_DATE),
+    ],
+    numberOfMonths: 2,
+    autoResponsive: false,
+  },
+};
 
-stories.add("Disabled Before Today", () => {
-  return (
-    <div>
-      <DatePicker
-        numberOfMonths={2}
-        disabledBeforeToday
-        onChange={dates => console.log("dates", dates)}
-      />
-    </div>
-  );
-});
+export const PreselectedDays: Story = {
+  args: {
+    selectedDays: [
+      today.add(2, "day").format(FORMAT_DATE),
+      today.add(6, "day").format(FORMAT_DATE),
+      today.add(15, "day").format(FORMAT_DATE),
+    ],
+    numberOfMonths: 2,
+    autoResponsive: false,
+  },
+};
 
-stories.add("Disabled Before Date and Disabled after Date", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
-      disabledAfterDate={text("disabled after", disabledAfterDate)}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const SingleDateMode: Story = {
+  args: { numberOfSelectableDays: 1 },
+};
 
-stories.add("Disabled Before Today and Disabled Before Date", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      disabledBeforeToday={boolean("disabled before today", true)}
-      disabledBeforeDate={text("disabled before", disabledBeforeDate)}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const NumberOfSelectableDays: Story = {
+  args: { numberOfSelectableDays: 3, numberOfMonths: 2, autoResponsive: false },
+};
 
-stories.add("Disabled Days", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      disabledDays={disabledDays}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const DisabledCalendar: Story = {
+  args: { disabled: true },
+};
 
-stories.add("Selected Days", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      selectedDays={selectedDays}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const CustomDayClasses: Story = {
+  args: {
+    autoResponsive: false,
+    numberOfMonths: 1,
+    dayClasses: day => [
+      Number(day.format("D")) % 2 === 1 ? "tp-odd" : "tp-even",
+    ],
+  },
+  parameters: {
+    docs: {
+      description: {
+        story:
+          "Apply custom CSS classes per day via the `dayClasses` callback. Combine with your own stylesheet to highlight weekends, holidays, etc.",
+      },
+    },
+  },
+};
 
-stories.add("Custom Day Classes", () => {
-  return (
-    <>
-      <style type="text/css">{`
-        .odd { transform: rotate(-10deg); } .even { transform: rotate(10deg); }
-      `}</style>
-      <DatePicker
-        numberOfMonths={1}
-        autoResponsive={false}
-        initialMonthAndYear="2021-08"
-        onChange={dates => window.console.log(dates)}
-        dayClasses={day => [
-          parseInt(day.format("D")) % 2 === 1 ? "odd" : "even",
-        ]}
-      />
-    </>
-  );
-});
+export const CustomTheme: Story = {
+  args: {
+    theme: {
+      primary: { light: "#ffd4e5", main: "#e91e63", dark: "#ad1457" },
+      grey: { 700: "#707070", 900: "#1b1b1d" },
+      background: { default: "#fff" },
+      text: { disabled: "#bababa" },
+      shape: { borderRadius: 8 },
+    },
+  },
+};
 
-stories.add("Number of Selectable Days", () => {
-  return (
-    <DatePicker
-      numberOfMonths={2}
-      numberOfSelectableDays={5}
-      selectedDays={selectedDays}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+export const CustomDayComponent: Story = {
+  args: {
+    components: {
+      days: ({ day }) => (
+        <div style={{ color: "#e91e63", fontWeight: 600 }}>
+          {dayjs(day).format("D")}
+        </div>
+      ),
+    },
+  },
+};
 
-stories.add("Custom components - Title of weeks Component", () => {
-  return (
-    <DatePicker
-      components={{
-        titleOfWeek: {
-          wrapper: ({ jalali }) => (
-            <div>This is a custom title of weeks component</div>
-          ),
+export const CustomWeekdayTitles: Story = {
+  args: {
+    components: {
+      titleOfWeek: { titles: ["1", "2", "3", "4", "5", "6", "7"] },
+    },
+  },
+};
+
+export const CustomHeaderIcons: Story = {
+  args: {
+    components: {
+      header: {
+        monthIcons: {
+          right: <span aria-hidden>→</span>,
+          left: <span aria-hidden>←</span>,
         },
-      }}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
-
-stories.add("Custom components - Header Icons component", () => {
-  return (
-    <DatePicker
-      components={{
-        header: {
-          monthIcons: {
-            right: <span>next month</span>,
-            left: <span>prev month</span>,
-          },
-          yearIcons: {
-            right: <span>next year</span>,
-            left: <span>prev year</span>,
-          },
+        yearIcons: {
+          right: <span aria-hidden>»</span>,
+          left: <span aria-hidden>«</span>,
         },
-      }}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
-
-stories.add("Custom components - Header titles", () => {
-  return (
-    <DatePicker
-      jalali={boolean("jalali", false)}
-      startOfWeek={number("start of week", 0)}
-      components={{
-        titleOfWeek: {
-          titles: ["1", "2", "3", "4", "5", "6", "7"],
-        },
-      }}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
-
-stories.add("Custom components - Header Calendar format", () => {
-  return (
-    <DatePicker
-      components={{
-        header: {
-          format: "YY**MMMM",
-        },
-      }}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
-
-stories.add("Custom components - Day", () => {
-  return (
-    <DatePicker
-      components={{
-        days: ({ day, jalali }) => <div style={{ color: "red" }}>{day}</div>,
-      }}
-      onChange={dates => console.log("dates", dates)}
-    />
-  );
-});
+      },
+    },
+  },
+};

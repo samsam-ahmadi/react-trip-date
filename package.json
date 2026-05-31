@@ -1,12 +1,29 @@
 {
   "name": "react-trip-date",
-  "version": "1.13.1",
-  "description": "date-picker and range-picker for React applications",
+  "version": "2.0.0",
+  "description": "Accessible, fully customizable date and range picker for React applications.",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
-  "main": "dist/index.js",
-  "module": "dist/index.es.js",
-  "jsnext:main": "dist/index.es.js",
+  "main": "./dist/index.cjs",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/index.d.ts",
+      "import": "./dist/index.mjs",
+      "require": "./dist/index.cjs"
+    },
+    "./package.json": "./package.json"
+  },
+  "sideEffects": [
+    "./dist/index.mjs",
+    "./dist/index.cjs"
+  ],
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
   "repository": {
     "type": "git",
     "url": "https://github.com/samsam-ahmadi/react-trip-date.git"
@@ -16,92 +33,91 @@
   },
   "homepage": "https://killthejs.com/react-trip-date/",
   "keywords": [
-    "reactDatePicker",
-    "reactRangePicker",
-    "rangePicker",
-    "datePicker"
+    "react",
+    "date",
+    "datepicker",
+    "date-picker",
+    "rangepicker",
+    "range-picker",
+    "calendar",
+    "jalali",
+    "persian",
+    "gregorian",
+    "accessible",
+    "a11y",
+    "typescript"
   ],
-  "peerDependencies": {
-    "react": "^16.9.0 || ^17 || ^18",
-    "react-dom": "^16.9.0 || ^17 || ^18"
-  },
-  "dependencies": {
-    "dayjs": "^1.11.7",
-    "react-scripts": "5.0.1",
-    "styled-components": "^5.3.5",
-    "typescript": "^4.9.4"
+  "engines": {
+    "node": ">=18"
   },
   "scripts": {
-    "start": "react-scripts start",
-    "build": "rollup -c",
-    "test": "react-scripts test",
-    "sort": "import-sort --write 'src/**/*.{ts,tsx,js,jsx}'",
-    "sort:check": "import-sort -l 'src/**/*.{ts,tsx,js,jsx}'",
-    "storybook": "start-storybook -p 9009",
-    "deploy": "gh-pages -d storybook-static",
-    "build-storybook": "build-storybook -c .storybook -o docs-build"
+    "dev": "storybook dev -p 9009",
+    "build": "vite build && tsc -p tsconfig.build.json",
+    "build:lib": "vite build",
+    "build:types": "tsc -p tsconfig.build.json",
+    "storybook": "storybook dev -p 9009",
+    "build-storybook": "storybook build -o docs-build",
+    "test": "vitest",
+    "test:run": "vitest run",
+    "test:coverage": "vitest run --coverage",
+    "typecheck": "tsc -p tsconfig.json --noEmit",
+    "lint": "eslint \"src/**/*.{ts,tsx}\"",
+    "lint:fix": "eslint \"src/**/*.{ts,tsx}\" --fix",
+    "format": "prettier --write \"src/**/*.{ts,tsx,js,jsx,json,css,md,mdx}\"",
+    "prepare": "husky",
+    "prepublishOnly": "yarn build"
   },
-  "eslintConfig": {
-    "extends": [
-      "react-app",
-      "react-app/jest"
-    ]
+  "peerDependencies": {
+    "react": "^18.0.0 || ^19.0.0",
+    "react-dom": "^18.0.0 || ^19.0.0",
+    "styled-components": "^6.0.0"
   },
-  "browserslist": {
-    "production": [
-      ">0.2%",
-      "not dead",
-      "not op_mini all"
-    ],
-    "development": [
-      "last 1 chrome version",
-      "last 1 firefox version",
-      "last 1 safari version"
-    ]
+  "dependencies": {
+    "dayjs": "^1.11.13"
   },
   "devDependencies": {
-    "@commitlint/cli": "^16.2.3",
-    "@commitlint/config-conventional": "^16.2.1",
-    "@rollup/plugin-commonjs": "^22.0.0",
-    "@rollup/plugin-node-resolve": "^13.2.1",
-    "@rollup/plugin-url": "^6.1.0",
-    "@storybook/addon-docs": "^6.5.15",
-    "@storybook/addon-knobs": "6.4.0",
-    "@storybook/addon-links": "6.5.15",
-    "@storybook/addon-storysource": "6.5.15",
-    "@storybook/addons": "6.5.15",
-    "@storybook/builder-webpack5": "6.5.15",
-    "@storybook/core": "6.5.15",
-    "@storybook/manager-webpack5": "6.5.15",
-    "@storybook/preset-create-react-app": "4.1.2",
-    "@storybook/react": "6.5.15",
-    "@svgr/rollup": "^6.2.1",
-    "@testing-library/jest-dom": "^5.16.4",
-    "@testing-library/react": "^13.1.1",
-    "@testing-library/user-event": "^14.1.1",
-    "@types/jest": "^27.4.1",
-    "@types/node": "^17.0.29",
-    "@types/react": "^17.0.1",
-    "@types/react-dom": "^17.0.1",
-    "@types/styled-components": "^5.1.25",
+    "@commitlint/cli": "^19.5.0",
+    "@commitlint/config-conventional": "^19.5.0",
+    "@storybook/addon-a11y": "^8.4.0",
+    "@storybook/addon-essentials": "^8.4.0",
+    "@storybook/addon-interactions": "^8.4.0",
+    "@storybook/addon-themes": "^8.4.0",
+    "@storybook/blocks": "^8.4.0",
+    "@storybook/react": "^8.4.0",
+    "@storybook/react-vite": "^8.4.0",
+    "@storybook/test": "^8.4.0",
+    "@testing-library/dom": "^10",
+    "@testing-library/jest-dom": "^6.6.0",
+    "@testing-library/react": "^16.0.1",
+    "@testing-library/user-event": "^14.5.2",
+    "@types/node": "^20.16.0",
+    "@types/react": "^18.3.12",
+    "@types/react-dom": "^18.3.1",
+    "@typescript-eslint/eslint-plugin": "^8.13.0",
+    "@typescript-eslint/parser": "^8.13.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^2.1.4",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",
-    "eslint-config-react-app": "^7.0.1",
-    "gh-pages": "^3.2.3",
-    "husky": "^7.0.0",
-    "import-sort-cli": "^6.0.0",
-    "import-sort-style-renke": "^6.0.0",
-    "lint-staged": "^12.4.1",
-    "prettier": "^2.6.2",
-    "react": "^17.0.1",
-    "react-dom": "^17.0.1",
-    "rollup": "^2.70.2",
-    "rollup-plugin-peer-deps-external": "^2.2.4",
-    "rollup-plugin-postcss": "^4.0.2",
-    "rollup-plugin-typescript2": "^0.31.2",
-    "tslib": "^2.4.0",
-    "webpack": "5"
+    "eslint": "^8.57.1",
+    "eslint-import-resolver-typescript": "^4.4.4",
+    "eslint-plugin-import": "^2.31.0",
+    "eslint-plugin-jsx-a11y": "^6.10.2",
+    "eslint-plugin-react": "^7.37.2",
+    "eslint-plugin-react-hooks": "^5.0.0",
+    "eslint-plugin-storybook": "^0.10.1",
+    "husky": "^9.1.6",
+    "jsdom": "^25.0.1",
+    "lint-staged": "^15.2.10",
+    "prettier": "^3.3.3",
+    "react": "^18.3.1",
+    "react-dom": "^18.3.1",
+    "storybook": "^8.4.0",
+    "styled-components": "^6.1.13",
+    "typescript": "^5.6.3",
+    "vite": "^5.4.10",
+    "vite-plugin-dts": "^4.3.0",
+    "vite-plugin-svgr": "^4.3.0",
+    "vitest": "^2.1.4"
   },
-  "files": [
-    "dist"
-  ]
+  "packageManager": "yarn@1.22.22+sha512.a6b2f7906b721bba3d67d4aff083df04dad64c399707841b7acf00f6b133b7ac24255f2652fa22ae3534329dc6180534e98d17432037ff6fd140556e2bb3137e"
 }

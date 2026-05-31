@@ -1,72 +1,39 @@
-/**
- * Author: https://gist.github.com/mir4ef/c172583bdb968951d9e57fb50d44c3f7
- */
+type AnyRecord = Record<string, unknown>;
 
-interface IIsObject {
-  (item: any): boolean;
-}
-
-interface IObject {
-  [key: string]: any;
-}
-
-interface IDeepMerge {
-  (target: IObject, ...sources: Array<IObject>): IObject;
-}
+const isPlainObject = (value: unknown): value is AnyRecord =>
+  typeof value === "object" &&
+  value !== null &&
+  !Array.isArray(value) &&
+  Object.getPrototypeOf(value) === Object.prototype;
 
 /**
- * @description Method to check if an item is an object. Date and Function are considered
- * an object, so if you need to exclude those, please update the method accordingly.
- * @param item - The item that needs to be checked
- * @return {Boolean} Whether or not @item is an object
+ * Recursively merge plain objects without mutating any source. Arrays are
+ * concatenated and deduped. Anything that is not a plain object is replaced.
  */
-const isObject: IIsObject = (item: any): boolean => {
-  return item === Object(item) && !Array.isArray(item);
-};
+export const deepMerge = (
+  target: AnyRecord,
+  ...sources: ReadonlyArray<AnyRecord | undefined>
+): AnyRecord => {
+  let result: AnyRecord = isPlainObject(target) ? { ...target } : {};
 
-/**
- * @description Method to perform a deep merge of objects
- * @param {Object} target - The targeted object that needs to be merged with the supplied @sources
- * @param {Array<Object>} sources - The source(s) that will be used to update the @target object
- * @return {Object} The final merged object
- */
-export const deepMerge: IDeepMerge = (
-  target: IObject,
-  ...sources: Array<IObject>
-): IObject => {
-  // return the target if no sources passed
-  if (!sources.length) {
-    return target;
-  }
-
-  const result: IObject = target;
-
-  if (isObject(result)) {
-    const len: number = sources.length;
-
-    for (let i = 0; i < len; i += 1) {
-      const elm: any = sources[i];
-
-      if (isObject(elm)) {
-        for (const key in elm) {
-          if (elm.hasOwnProperty(key)) {
-            if (isObject(elm[key])) {
-              if (!result[key] || !isObject(result[key])) {
-                result[key] = {};
-              }
-              deepMerge(result[key], elm[key]);
-            } else {
-              if (Array.isArray(result[key]) && Array.isArray(elm[key])) {
-                // concatenate the two arrays and remove any duplicate primitive values
-                result[key] = Array.from(new Set(result[key].concat(elm[key])));
-              } else {
-                result[key] = elm[key];
-              }
-            }
-          }
-        }
+  for (const source of sources) {
+    if (!isPlainObject(source)) continue;
+    const next: AnyRecord = { ...result };
+    for (const key of Object.keys(source)) {
+      const srcValue = source[key];
+      const tgtValue = next[key];
+      if (isPlainObject(srcValue)) {
+        next[key] = deepMerge(
+          isPlainObject(tgtValue) ? tgtValue : {},
+          srcValue,
+        );
+      } else if (Array.isArray(srcValue) && Array.isArray(tgtValue)) {
+        next[key] = Array.from(new Set([...tgtValue, ...srcValue]));
+      } else {
+        next[key] = srcValue;
       }
     }
+    result = next;
   }
 
   return result;

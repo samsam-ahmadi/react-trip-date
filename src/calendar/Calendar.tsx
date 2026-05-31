@@ -1,26 +1,22 @@
 import { Dayjs } from "dayjs";
-import { FC, ReactElement } from "react";
-import { createCalendar } from "libs/createCalendar";
-import { dayjs } from "libs/dayjs-config";
-import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
 
 import { CalendarProps } from "./calendar.type";
+import { createCalendar } from "../libs/createCalendar";
+import { dayjs } from "../libs/dayjs-config";
+import { sliceDaysOfMonthToWeeks } from "../libs/sliceDaysOfMonthToWeeks";
 
-export const Calendar: FC<CalendarProps> = ({
+export const Calendar = ({
   jalali,
   startOfWeek = 1,
   children,
-}): ReactElement => {
-  let source = dayjs();
-  if (source.get("day") === 0) {
-    source = source.add(1, "day");
-  }
-  let weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
+}: CalendarProps) => {
+  const source = dayjs().calendar(jalali ? "jalali" : "gregory");
+  const weeks: Dayjs[][] = sliceDaysOfMonthToWeeks(
     createCalendar({
-      source: source,
-      startOfWeek: jalali ? 7 : startOfWeek,
+      source,
+      startOfWeek: jalali ? 6 : startOfWeek,
     }),
     7,
   );
-  return children(weeksDays);
+  return <>{children(weeks)}</>;
 };

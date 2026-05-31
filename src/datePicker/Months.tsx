@@ -1,12 +1,12 @@
-import dayjs, { Dayjs } from "dayjs";
-import { Dispatch, SetStateAction } from "react";
-import { TitleOfWeek } from "components/TitleOfWeek";
-import { createCalendar } from "libs/createCalendar";
-import { sliceDaysOfMonthToWeeks } from "libs/sliceDaysOfMonthToWeeks";
+import { Dayjs } from "dayjs";
+import { Dispatch, SetStateAction, useRef, useState } from "react";
 
-import { DatePickerComponents, DatePickerOnChange } from "./datePicker.type";
-import { Day } from "./Day";
 import { Month, Weeks, Wrapper } from "./datePicker.style";
+import { DatePickerComponents } from "./datePicker.type";
+import { Day } from "./Day";
+import { TitleOfWeek } from "../components/TitleOfWeek";
+import { createCalendar } from "../libs/createCalendar";
+import { sliceDaysOfMonthToWeeks } from "../libs/sliceDaysOfMonthToWeeks";
 
 interface Props {
   source: Dayjs;
@@ -20,12 +20,15 @@ interface Props {
   disabledBeforeDate?: string;
   disabledAfterDate?: string;
   numberOfSelectableDays: number;
-  onChange: DatePickerOnChange;
   components?: DatePickerComponents;
   setSource: Dispatch<SetStateAction<Dayjs>>;
   setSelectedDays: Dispatch<SetStateAction<string[]>>;
   dayClasses?: (day: Dayjs) => string[];
 }
+
+const FMT = "YYYY-MM-DD";
+const monthKey = (source: Dayjs) => source.format("YYYY-MM");
+const weekKey = (firstDay: Dayjs) => firstDay.format(FMT);
 
 export const Months = ({
   numberOfSelectableDays,
@@ -40,69 +43,83 @@ export const Months = ({
   disabledAfterDate,
   jalali,
   disabled,
-  onChange,
   source: sourceProp,
+  setSource,
   dayClasses,
 }: Props) => {
-  const renderMonths = () => {
-    let months = [];
-    for (let i = 0; i < numberOfMonths; i++) {
-      let source = sourceProp.add(i, "month");
-      const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
-        createCalendar({
-          source: source,
-          startOfWeek: jalali ? 6 : startOfWeek || 0,
-        }),
-        7,
-      );
-      months.push(
-        <Month
-          className="tp-calendar-month"
-          numberOfMonths={numberOfMonths || 1}
-          key={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
-          data-test={dayjs().set("month", 1).set("day", 1).diff(source, "d")}
-        >
-          <TitleOfWeek
-            jalali={jalali}
-            startOfWeek={startOfWeek}
-            components={components?.titleOfWeek}
-          />
-          {weeksDays.map(week => (
-            <Weeks
-              className="tp-calendar-week"
-              jalali={jalali}
-              data-test={dayjs()
-                .set("month", 1)
-                .set("day", 1)
-                .diff(week[0], "d")}
-              key={dayjs().set("month", 1).set("day", 1).diff(week[0], "d")}
-            >
-              {week.map(day => (
-                <Day
-                  day={day}
-                  jalali={jalali}
-                  numberOfMonth={i}
-                  disabled={disabled}
-                  onChange={onChange}
-                  source={sourceProp}
-                  components={components}
-                  disabledDays={disabledDays}
-                  key={day.format("YYYY-MM-DD")}
-                  selectedDays={selectedDays}
-                  setSelectedDays={setSelectedDays}
-                  disabledBeforeToday={disabledBeforeToday}
-                  disabledBeforeDate={disabledBeforeDate}
-                  disabledAfterDate={disabledAfterDate}
-                  numberOfSelectableDays={numberOfSelectableDays}
-                  dayClasses={dayClasses}
-                />
-              ))}
-            </Weeks>
-          ))}
-        </Month>,
-      );
-    }
-    return months;
+  const [focusedDate, setFocusedDate] = useState<string>(
+    () => selectedDays[0] ?? sourceProp.format(FMT),
+  );
+  const focusRef = useRef<string | null>(null);
+  const requestFocus = (date: string) => {
+    focusRef.current = date;
   };
-  return <Wrapper className="tp-calendar-months" jalali={jalali}>{renderMonths()}</Wrapper>;
+
+  const months = [];
+  for (let i = 0; i < numberOfMonths; i++) {
+    const monthSource = sourceProp.add(i, "month");
+    const weeksDays: Dayjs[][] = sliceDaysOfMonthToWeeks(
+      createCalendar({
+        source: monthSource,
+        startOfWeek: jalali ? 6 : startOfWeek,
+      }),
+      7,
+    );
+    months.push(
+      <Month
+        className="tp-calendar-month"
+        $numberOfMonths={numberOfMonths || 1}
+        key={monthKey(monthSource)}
+        data-test={monthKey(monthSource)}
+        role="grid"
+        aria-label={monthSource.format("MMMM YYYY")}
+      >
+        <TitleOfWeek
+          jalali={jalali}
+          startOfWeek={startOfWeek}
+          components={components?.titleOfWeek}
+        />
+        {weeksDays.map(week => (
+          <Weeks
+            className="tp-calendar-week"
+            $jalali={jalali}
+            data-test={weekKey(week[0])}
+            key={weekKey(week[0])}
+            role="row"
+          >
+            {week.map(day => (
+              <Day
+                day={day}
+                jalali={jalali}
+                numberOfMonth={i}
+                disabled={disabled}
+                source={sourceProp}
+                setSource={setSource}
+                components={components}
+                disabledDays={disabledDays}
+                key={day.format(FMT)}
+                selectedDays={selectedDays}
+                setSelectedDays={setSelectedDays}
+                disabledBeforeToday={disabledBeforeToday}
+                disabledBeforeDate={disabledBeforeDate}
+                disabledAfterDate={disabledAfterDate}
+                numberOfSelectableDays={numberOfSelectableDays}
+                dayClasses={dayClasses}
+                focusedDate={focusedDate}
+                setFocusedDate={setFocusedDate}
+                focusRef={focusRef}
+                requestFocus={requestFocus}
+              />
+            ))}
+          </Weeks>
+        ))}
+      </Month>,
+    );
+  }
+
+  return (
+    <Wrapper className="tp-calendar-months" $jalali={jalali}>
+      {months}
+    </Wrapper>
+  );
 };

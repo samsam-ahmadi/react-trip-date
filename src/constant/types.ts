@@ -1,6 +1,6 @@
-import { DefaultTheme } from "styled-components";
-import { ElementType, ReactNode } from "react";
 import { Dayjs } from "dayjs";
+import { ElementType, ReactNode } from "react";
+import { DefaultTheme } from "styled-components";
 
 type HeaderIconsPosition = {
   right: ReactNode;
@@ -33,7 +33,7 @@ export interface InitialProps {
   disabledDays?: string[];
   initialMonthAndYear?: string;
   jalali?: boolean;
-  locale?: "en" | "de" | "es" |"fa" |"fr" |"it" | "ja"| "zh"| "ru"| "tr";
+  locale?: "en" | "de" | "es" | "fa" | "fr" | "it" | "ja" | "zh" | "ru" | "tr";
   numberOfMonths?: number;
   onRangeDateInScreen?: DatePickerWindowUpdated;
   startOfWeek?: number;

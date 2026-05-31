@@ -1,20 +1,20 @@
-import styled from "styled-components";
+import styled, { css } from "styled-components";
 
-type WrapperProps = {
-  jalali: boolean;
+type DirectionalProps = {
+  $jalali: boolean;
 };
 
-export const Wrapper = styled.div<WrapperProps>`
+type MonthProps = {
+  $numberOfMonths: number;
+};
+
+export const Wrapper = styled.div<DirectionalProps>`
   display: flex;
   justify-content: space-between;
   align-items: center;
   position: relative;
-  flex-direction: ${({ jalali }) => (jalali ? "row-reverse" : "row")};
+  flex-direction: ${({ $jalali }) => ($jalali ? "row-reverse" : "row")};
 `;
-
-type MonthProps = {
-  numberOfMonths: number;
-};
 
 export const Month = styled.div<MonthProps>`
   height: 350px;
@@ -22,12 +22,12 @@ export const Month = styled.div<MonthProps>`
   position: relative;
   align-items: center;
   flex-direction: column;
-  width: ${({ numberOfMonths }) => `${100 / numberOfMonths}%`};
+  width: ${({ $numberOfMonths }) => css`calc(${100 / $numberOfMonths}%)`};
 `;
 
-export const Weeks = styled.div<WrapperProps>`
+export const Weeks = styled.div<DirectionalProps>`
   display: flex;
   align-items: center;
   position: relative;
-  flex-direction: ${({ jalali }) => (jalali ? "row-reverse" : "row")};
+  flex-direction: ${({ $jalali }) => ($jalali ? "row-reverse" : "row")};
 `;

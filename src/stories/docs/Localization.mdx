@@ -1,0 +1,47 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Localization" />
+
+# Localization
+
+react-trip-date delegates locale handling to **Day.js**. Ten locales are pre-bundled with the library:
+
+`en`, `de`, `es`, `fa`, `fr`, `it`, `ja`, `ru`, `tr`, `zh`
+
+```tsx
+<DatePicker locale="de" />
+<DatePicker locale="ja" />
+```
+
+## Jalali (Persian) calendar
+
+```tsx
+<DatePicker jalali onChange={dates => save(dates)} />
+```
+
+Notes:
+
+- When `jalali` is `true`, the `locale` prop is ignored — Persian is implied.
+- The wire format is **always Gregorian `YYYY-MM-DD`**. The picker converts under the hood. Store Gregorian, display Jalali.
+- `startOfWeek` is also overridden when `jalali` is on (Saturday).
+
+## Adding more locales
+
+If you need a locale that isn't bundled, register it before mounting the picker:
+
+```tsx
+import "dayjs/locale/pt";
+import { DatePicker } from "react-trip-date";
+
+<DatePicker locale="pt" />;
+```
+
+## Custom weekday titles
+
+```tsx
+<DatePicker
+  components={{
+    titleOfWeek: { titles: ["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"] },
+  }}
+/>
+```

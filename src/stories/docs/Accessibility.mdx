@@ -1,0 +1,35 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Accessibility" />
+
+# Accessibility & keyboard nav
+
+react-trip-date v2 ships with full ARIA grid semantics and keyboard navigation out of the box.
+
+## Semantics
+
+- Root container: `role="group"` with `aria-label`.
+- Month grid: `role="grid"`, weekday header `role="row"`, days `role="gridcell"`.
+- Selected days have `aria-selected="true"`.
+- Disabled days have `aria-disabled="true"`.
+- Today has `aria-current="date"`.
+- Navigation buttons have descriptive `aria-label`s ("Previous month, March 2026", etc.).
+
+## Keyboard
+
+| Key                                   | Action                              |
+| ------------------------------------- | ----------------------------------- |
+| `←` / `→`                             | Move focus by ±1 day                |
+| `↑` / `↓`                             | Move focus by ±1 week               |
+| `Home`                                | Move focus to the start of the week |
+| `End`                                 | Move focus to the end of the week   |
+| `PageUp` / `PageDown`                 | Move focus by ±1 month              |
+| `Shift + PageUp` / `Shift + PageDown` | Move focus by ±1 year               |
+| `Enter` / `Space`                     | Select the focused day              |
+| `Esc`                                 | Close any open month/year overlay   |
+
+Focus is managed with a roving `tabindex` within the visible month. When the focus advances past the visible window, the component automatically scrolls to the next/previous month.
+
+## Storybook a11y addon
+
+Every story in this Storybook is checked by `@storybook/addon-a11y` (axe). The "Accessibility" tab in the addons panel lists any violations.

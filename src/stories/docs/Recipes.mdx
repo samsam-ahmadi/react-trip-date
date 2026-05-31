@@ -1,0 +1,124 @@
+import { Meta } from "@storybook/blocks";
+
+<Meta title="Docs/Recipes" />
+
+# Recipes
+
+## Picker inside a popover
+
+```tsx
+import { useRef, useState } from "react";
+import { DatePicker } from "react-trip-date";
+
+function PopoverDate() {
+  const [open, setOpen] = useState(false);
+  const [date, setDate] = useState<string | null>(null);
+  const ref = useRef<HTMLDivElement>(null);
+
+  return (
+    <div ref={ref} style={{ position: "relative" }}>
+      <button onClick={() => setOpen(o => !o)}>{date ?? "Pick a date"}</button>
+      {open && (
+        <div style={{ position: "absolute", top: "100%", zIndex: 10 }}>
+          <DatePicker
+            numberOfSelectableDays={1}
+            onChange={([d]) => {
+              setDate(d ?? null);
+              setOpen(false);
+            }}
+          />
+        </div>
+      )}
+    </div>
+  );
+}
+```
+
+## Range picker in a form
+
+```tsx
+import { useState } from "react";
+import { RangePicker } from "react-trip-date";
+
+function BookingForm() {
+  const [range, setRange] = useState({ from: "", to: "" });
+
+  return (
+    <form
+      onSubmit={e => {
+        e.preventDefault();
+        submitBooking(range);
+      }}
+    >
+      <RangePicker
+        selectedDays={range}
+        onChange={setRange}
+        numberOfMonths={2}
+      />
+      <button type="submit" disabled={!range.from || !range.to}>
+        Book
+      </button>
+    </form>
+  );
+}
+```
+
+## React Hook Form integration
+
+```tsx
+import { Controller, useForm } from "react-hook-form";
+import { DatePicker } from "react-trip-date";
+
+function Form() {
+  const { control, handleSubmit } = useForm({
+    defaultValues: { dates: [] as string[] },
+  });
+
+  return (
+    <form onSubmit={handleSubmit(console.log)}>
+      <Controller
+        name="dates"
+        control={control}
+        render={({ field }) => (
+          <DatePicker selectedDays={field.value} onChange={field.onChange} />
+        )}
+      />
+    </form>
+  );
+}
+```
+
+## Prefetch availability while scrolling
+
+```tsx
+<RangePicker
+  numberOfMonths={2}
+  onRangeDateInScreen={({ start, end }) => {
+    queryClient.prefetchQuery({
+      queryKey: ["availability", start, end],
+      queryFn: () => api.availability(start, end),
+    });
+  }}
+  onChange={save}
+/>
+```
+
+## Headless `Calendar`
+
+Render your own UI:
+
+```tsx
+import { Calendar } from "react-trip-date";
+
+<Calendar jalali={false} startOfWeek={1}>
+  {weeks =>
+    weeks.map((week, i) => (
+      <div key={i} className="row">
+        {week.map(day => (
+          <span key={day.format("YYYY-MM-DD")}>{day.format("DD")}</span>
+        ))}
+      </div>
+    ))
+  }
+</Calendar>;
+```
