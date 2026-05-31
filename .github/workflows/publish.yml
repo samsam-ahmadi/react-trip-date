@@ -8,6 +8,11 @@ jobs:
   build:
     name: Build & Publish
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      # Needed for `npm publish --provenance`: attests the tarball was
+      # built by this GitHub Actions run.
+      id-token: write
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v4
@@ -26,6 +31,10 @@ jobs:
       - name: Build
         run: yarn build
       - name: Publish
-        run: yarn publish --access public --non-interactive
+        # Use npm directly. `yarn publish` in yarn 1.x interactively
+        # prompts for a new version and also runs through a "Bumping
+        # version…" step in --non-interactive mode, which has caused
+        # silent re-publish attempts of the existing version.
+        run: npm publish --access public --provenance
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
