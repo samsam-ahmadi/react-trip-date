@@ -14,6 +14,14 @@ permissions:
   pages: write
   id-token: write
 
+# Allow only one Pages deploy at a time. If a new push happens while a
+# previous deploy is still running, cancel that one — otherwise both
+# uploads write the same `github-pages` artifact and deploy-pages fails
+# with "Multiple artifacts named 'github-pages' were unexpectedly found".
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
 jobs:
   build-and-deploy:
     runs-on: ubuntu-latest
