@@ -20,9 +20,14 @@ export const DisplayMonths = ({
     setDisplayMonths(false);
   };
 
+  // Anchor the day at 1 before changing month — otherwise dayjs rolls a
+  // day-of-month like 31 into the next month when the target month is
+  // shorter, producing duplicates / skips when the source falls late in
+  // its month.
+  const firstOfMonth = source.date(1);
   const months: Dayjs[] = [];
   for (let i = 0; i < 12; i++) {
-    months[i] = source.month(i);
+    months[i] = firstOfMonth.month(i);
   }
 
   return (
