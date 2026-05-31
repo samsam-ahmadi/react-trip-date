@@ -1,6 +1,6 @@
 {
   "name": "react-trip-date",
-  "version": "2.0.1",
+  "version": "2.1.0",
   "description": "Accessible, fully customizable date and range picker for React applications.",
   "author": "Samsam Ahmadi",
   "license": "GPL-3.0",
@@ -19,6 +19,10 @@
     "./dist/index.mjs",
     "./dist/index.cjs"
   ],
+  "publishConfig": {
+    "access": "public",
+    "provenance": true
+  },
   "files": [
     "dist",
     "README.md",
@@ -78,6 +82,12 @@
   "devDependencies": {
     "@commitlint/cli": "^19.5.0",
     "@commitlint/config-conventional": "^19.5.0",
+    "@semantic-release/changelog": "^6.0.3",
+    "@semantic-release/commit-analyzer": "^13.0.1",
+    "@semantic-release/git": "^10.0.1",
+    "@semantic-release/github": "^12.0.8",
+    "@semantic-release/npm": "^13.1.5",
+    "@semantic-release/release-notes-generator": "^14.1.1",
     "@storybook/addon-a11y": "^8.4.0",
     "@storybook/addon-essentials": "^8.4.0",
     "@storybook/addon-interactions": "^8.4.0",
@@ -98,6 +108,7 @@
     "@vitejs/plugin-react": "^4.3.3",
     "@vitest/coverage-v8": "^2.1.4",
     "@zoomit/dayjs-jalali-plugin": "^0.0.7",
+    "conventional-changelog-conventionalcommits": "^9.3.1",
     "eslint": "^8.57.1",
     "eslint-import-resolver-typescript": "^4.4.4",
     "eslint-plugin-import": "^2.31.0",
@@ -111,6 +122,7 @@
     "prettier": "^3.3.3",
     "react": "^18.3.1",
     "react-dom": "^18.3.1",
+    "semantic-release": "^25.0.3",
     "storybook": "^8.4.0",
     "styled-components": "^6.1.13",
     "typescript": "^5.6.3",
