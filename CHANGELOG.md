@@ -1,3 +1,9 @@
+## [2.1.1](https://github.com/samsam-ahmadi/react-trip-date/compare/v2.1.0...v2.1.1) (2026-05-31)
+
+### Bug Fixes
+
+- **jalali:** preserve plugin's jmonths augmentation of the fa locale ([4d98e80](https://github.com/samsam-ahmadi/react-trip-date/commit/4d98e800384d320ba9f5999642e831a9025c0160))
+
 # Changelog
 
 ## 2.0.0 — 2026-05-30
