@@ -1,21 +1,39 @@
-name: Release And Publish Package
+name: Release
 on:
   push:
-    tags:
-      - "v*.*.*"
+    branches: [master]
+  workflow_dispatch:
+
+# semantic-release reads commits since the last tag, computes the next
+# version, creates the tag + GitHub release, publishes to npm with
+# provenance, and commits the version bump + CHANGELOG back to master.
+# Only `feat:` and `fix:` commits trigger a release; `chore:`, `docs:`,
+# `ci:`, `build:`, `test:`, `style:` are recorded but never bump the
+# version. `BREAKING CHANGE:` or `!` after the type triggers a major.
+concurrency:
+  group: release
+  cancel-in-progress: false
+
+permissions:
+  contents: write
+  issues: write
+  pull-requests: write
+  id-token: write
 
 jobs:
-  build:
-    name: Build & Publish
+  release:
+    name: Build, version, publish
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      # Needed for `npm publish --provenance`: attests the tarball was
-      # built by this GitHub Actions run.
-      id-token: write
     steps:
-      - name: Checkout Repository
+      - name: Checkout
         uses: actions/checkout@v4
+        with:
+          # semantic-release needs the full history to read tags + commits.
+          fetch-depth: 0
+          # Use the bot's token, not the actor token. This lets the
+          # commit semantic-release pushes back appear under the
+          # default github-actions[bot] identity.
+          persist-credentials: false
       - name: Setup Node
         uses: actions/setup-node@v4
         with:
@@ -26,15 +44,18 @@ jobs:
         run: yarn install --frozen-lockfile
       - name: Type-check
         run: yarn typecheck
+      - name: Lint
+        run: yarn lint
       - name: Test
-        run: yarn test --run
+        run: yarn test:run
       - name: Build
         run: yarn build
-      - name: Publish
-        # Use npm directly. `yarn publish` in yarn 1.x interactively
-        # prompts for a new version and also runs through a "Bumping
-        # version…" step in --non-interactive mode, which has caused
-        # silent re-publish attempts of the existing version.
-        run: npm publish --access public --provenance
+      - name: Release
         env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          # NPM_TOKEN is the one used by @semantic-release/npm.
+          # NODE_AUTH_TOKEN is the canonical name setup-node binds for npm.
+          # Set both so it works regardless of plugin version.
+          NPM_TOKEN: ${{ secrets.NPM_TOKEN }}
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npx semantic-release
