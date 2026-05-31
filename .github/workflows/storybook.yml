@@ -7,6 +7,9 @@ on:
       - ".storybook/**"
       - "package.json"
       - "yarn.lock"
+      # Re-deploy when this workflow itself changes, otherwise edits to
+      # the Node version / build steps never apply to Pages.
+      - ".github/workflows/storybook.yml"
   workflow_dispatch:
 
 permissions:
